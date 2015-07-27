@@ -101,6 +101,36 @@ public class LNC {
             return 0;
             
     }
+    public void Eliminar(int num)
+    {
+        NC elim = BuscarColumna(num);
+        if(elim!=null)
+        {
+            if(elim==this.Primero)
+            {
+                if(elim.Next!=null)
+                    elim.Next.Back = null;
+                this.Primero = elim.Next;
+            
+        
+            }
+            else if(elim==this.Ultimo)
+            {
+                if(elim.Back!=null)
+                    elim.Back.Next = null;
+                this.Ultimo = elim.Back;
+            
+            }
+            else
+            {
+                elim.Back.Next = elim.Next;
+                elim.Next.Back = elim.Back;
+            }
+            
+        }
+        
+    }
+    
     
     
 

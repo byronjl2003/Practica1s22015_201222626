@@ -1,5 +1,7 @@
 package MDisp;
 
+import Objetos.Objeto;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -56,7 +58,7 @@ public class NC {
                 return null;
             
         }
-        public NCasilla Agregar(String dato, int dimension,NF fila)
+        public NCasilla Agregar(Objeto dato, int dimension,NF fila)
         {
             NCasilla casilla = Buscar(fila);
             if ( casilla == null)// no existe la casilla central

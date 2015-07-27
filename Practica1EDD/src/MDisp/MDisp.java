@@ -1,5 +1,7 @@
 package MDisp;
 
+import Objetos.Objeto;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -24,15 +26,29 @@ public class MDisp {
             return this.Lcolumnas.Vacio();
         }
 
-        public void Insertar(int col,int fil,int dimension,String dato)
+        public void Insertar(int col,int fil,int dimension,Objeto dato)
         {
             NC Columna = this.Lcolumnas.AgregarColumna(col);
             NF Fila = this.Lcolumnas.ListaFilas.Agregar(fil);
             NCasilla casilla = Columna.Agregar(dato,dimension,Fila);
            
         }
-        public int Eliminar(int fil, int col)
+        public int Eliminar(int num, int flag)
         {
+            if(flag==0)
+            {
+                
+                int resp =  this.Lcolumnas.ListaFilas.ConexionesPorElim(num);
+                this.Lcolumnas.ListaFilas.Eliminar(num);
+                return resp;
+            }
+            else if(flag==1)
+            {
+                int resp =  this.Lcolumnas.ConexionesPorElim(num);
+                this.Lcolumnas.Eliminar(num);
+                return resp;
+            }
+            return -1;
             
         }
 

@@ -1,5 +1,7 @@
 package MDisp;
 
+import Objetos.Objeto;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -26,7 +28,7 @@ public class NCasilla {
 
     }
 
-    public void Agregar(String dato, int dimension)
+    public void Agregar(Objeto dato, int dimension)
     {
         if (Buscar(dimension) == null)
         {
