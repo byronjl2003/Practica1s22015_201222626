@@ -12,14 +12,14 @@ package MDisp;
  */
 public class NC {
     
-    public String Letra;
+    public int  numero;
     public NCasilla Primero;
     public NCasilla Ultimo;
     public NC Next;
     public NC Back;
-    public NC(String letra)
+    public NC(int num)
     {
-        this.Letra = letra;
+        this.numero = num;
         this.Primero = this.Ultimo =null;
     }
     public Boolean Vacia()
@@ -138,7 +138,7 @@ public class NC {
 
         public String ToString()
         {
-            return "C_" + Letra;
+            return "C_" + this.numero;
         }
 
     

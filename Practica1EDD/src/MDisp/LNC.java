@@ -27,19 +27,19 @@ public class LNC {
         {
             return this.Primero==null;
         }
-    public NC AgregarColumna(String letra)
+    public NC AgregarColumna(int num)
     {
-        NC Columna = BuscarColumna(letra);
+        NC Columna = BuscarColumna(num);
         if (Columna == null)
         { 
-            NC nuevo = new NC(letra);
+            NC nuevo = new NC(num);
                 if (Vacio())
                 {
                     this.Primero = this.Ultimo = nuevo;
                     return nuevo;
                 }
                 
-                else if (this.Primero.Letra.compareTo(letra)  > 0)
+                else if (this.Primero.numero  > num)
                 {
 
                     nuevo.Next = this.Primero;
@@ -48,7 +48,7 @@ public class LNC {
                     return nuevo;
                     
                 }
-                else if (this.Ultimo.Letra.compareTo(letra) < 0)
+                else if (this.Ultimo.numero < num)
                 {
                     nuevo.Back = this.Ultimo;
                     this.Ultimo.Next = nuevo;
@@ -60,7 +60,7 @@ public class LNC {
                     NC aux = this.Primero;
                     while (aux != null)
                     {
-                        if (aux.Letra.compareTo(letra) > 0)
+                        if (aux.numero > num)
                         {
                             nuevo.Next = aux;
                             nuevo.Back = aux.Back;
@@ -81,23 +81,45 @@ public class LNC {
                 return Columna;
            
         }
+    
+    public int ConexionesPorElim(int num)
+    {
+        NC col = BuscarColumna(num);
+        if(col!=null)
+        {
+            NCasilla casilla = col.Primero;
+            while(casilla!=null)
+            {
+                if(casilla.Derecha!=null)
+                    casilla.Derecha.Izquierda = casilla.Izquierda;
+                if(casilla.Izquierda!=null)
+                    casilla.Izquierda.Derecha = casilla.Derecha;
+            }
+            return 1;
+        }
+        else
+            return 0;
+            
+    }
+    
+    
 
         
 
-        public NC BuscarColumna(String letra)
+        public NC BuscarColumna(int num)
         {
             if (!Vacio())
             {
-                if (this.Primero.Letra.compareTo(letra) == 0)
+                if (this.Primero.numero == num)
                     return this.Primero;
-                else if (this.Ultimo.Letra.compareTo(letra) == 0)
+                else if (this.Ultimo.numero == num)
                     return this.Ultimo;
                 else
                 {
                     NC aux = this.Primero;
                     while (aux != null)
                     {
-                        if (aux.Letra.compareTo(letra)== 0)
+                        if (aux.numero== num)
                         {
                             return aux;
                         }

@@ -75,6 +75,29 @@ public class LNF {
             else
                 return fila;
         }
+    
+    public int ConexionesPorElim(int num)
+    {
+        NF col = Buscar(num);
+        if(col!=null)
+        {
+            NCasilla casilla = col.Primero;
+            while(casilla!=null)
+            {
+                if(casilla.Derecha!=null)
+                    casilla.Derecha.Izquierda = casilla.Izquierda;
+                if(casilla.Izquierda!=null)
+                    casilla.Izquierda.Derecha = casilla.Derecha;
+            }
+            return 1;
+        }
+        else
+            return 0;
+            
+    }
+    
+    
+    
         public NF Buscar(int num)
         {
             if (!Vacio())
@@ -159,8 +182,8 @@ public class LNF {
                         NCasilla auxc = aux.TraerPrimeroPorDim(i + 1);
                         if (auxc != null)
                         {
-                            recolectores[i].append(aux.ToString() + " -> " + auxc.Buscar(i+1).ToString()+auxc.Ptrcolumna.Letra+ auxc.Ptrfila.Num + ";\n");
-                            recolectores[i].append(auxc.Buscar(i + 1).ToString() + auxc.Ptrcolumna.Letra + auxc.Ptrfila.Num + " -> " + aux.ToString() + ";\n");
+                            recolectores[i].append(aux.ToString() + " -> " + auxc.Buscar(i+1).ToString()+auxc.Ptrcolumna.numero+ auxc.Ptrfila.Num + ";\n");
+                            recolectores[i].append(auxc.Buscar(i + 1).ToString() + auxc.Ptrcolumna.numero + auxc.Ptrfila.Num + " -> " + aux.ToString() + ";\n");
                         }
 
 

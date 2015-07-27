@@ -13,8 +13,8 @@ import Objetos.Objeto;
  * @author byron
  */
 public class NL {
-    Objeto objeto;
-    NL next,back;
+    private Objeto objeto;
+    private NL next,back;
     
     public NL(Objeto oj)
     {
@@ -25,7 +25,7 @@ public class NL {
     }
     public String Tostring()
     {
-       switch(this.objeto.id)
+       switch(this.getObjeto().id)
        {
            case 0:
                return"Suelo";
@@ -49,6 +49,48 @@ public class NL {
                
                
        }
+    }
+
+    /**
+     * @return the objeto
+     */
+    public Objeto getObjeto() {
+        return objeto;
+    }
+
+    /**
+     * @param objeto the objeto to set
+     */
+    public void setObjeto(Objeto objeto) {
+        this.objeto = objeto;
+    }
+
+    /**
+     * @return the next
+     */
+    public NL getNext() {
+        return next;
+    }
+
+    /**
+     * @param next the next to set
+     */
+    public void setNext(NL next) {
+        this.next = next;
+    }
+
+    /**
+     * @return the back
+     */
+    public NL getBack() {
+        return back;
+    }
+
+    /**
+     * @param back the back to set
+     */
+    public void setBack(NL back) {
+        this.back = back;
     }
     
     

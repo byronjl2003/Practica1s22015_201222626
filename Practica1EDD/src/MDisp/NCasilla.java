@@ -129,7 +129,7 @@ public class NCasilla {
                     NM aux2 = casillaaux.Buscar(aux.Dimension);
                     if (aux2 != null)
                     {
-                        relations[aux.Dimension - 1] = relations[aux.Dimension - 1] + aux.ToString() + this.Ptrcolumna.Letra + this.Ptrfila.Num + " -> " + aux2.ToString() + casillaaux.Ptrcolumna.Letra + casillaaux.Ptrfila.Num + "; " + aux2.ToString() + casillaaux.Ptrcolumna.Letra + casillaaux.Ptrfila.Num + " -> " + aux.ToString() + this.Ptrcolumna.Letra + this.Ptrfila.Num + ";";
+                        relations[aux.Dimension - 1] = relations[aux.Dimension - 1] + aux.ToString() + this.Ptrcolumna.numero + this.Ptrfila.Num + " -> " + aux2.ToString() + casillaaux.Ptrcolumna.numero + casillaaux.Ptrfila.Num + "; " + aux2.ToString() + casillaaux.Ptrcolumna.numero + casillaaux.Ptrfila.Num + " -> " + aux.ToString() + this.Ptrcolumna.numero + this.Ptrfila.Num + ";";
                         break;
                     }
                     else
@@ -172,7 +172,7 @@ public class NCasilla {
                         NM aux2 = casillaaux.Buscar(aux.Dimension);
                         if (aux2 != null)
                         {
-                            relations[aux.Dimension - 1] = relations[aux.Dimension - 1] + aux.ToString() + this.Ptrcolumna.Letra + this.Ptrfila.Num + " -> " + aux2.ToString() + casillaaux.Ptrcolumna.Letra + casillaaux.Ptrfila.Num + "; " + aux2.ToString() + casillaaux.Ptrcolumna.Letra + casillaaux.Ptrfila.Num + " -> " + aux.ToString() + this.Ptrcolumna.Letra + this.Ptrfila.Num + ";";
+                            relations[aux.Dimension - 1] = relations[aux.Dimension - 1] + aux.ToString() + this.Ptrcolumna.numero + this.Ptrfila.Num + " -> " + aux2.ToString() + casillaaux.Ptrcolumna.numero + casillaaux.Ptrfila.Num + "; " + aux2.ToString() + casillaaux.Ptrcolumna.numero + casillaaux.Ptrfila.Num + " -> " + aux.ToString() + this.Ptrcolumna.numero + this.Ptrfila.Num + ";";
                             break;
                         }
                         else
@@ -191,7 +191,7 @@ public class NCasilla {
         }
         public String ToString()
         {
-            return "Casilla"+this.Ptrcolumna.Letra+this.Ptrfila.Num;
+            return "Casilla"+this.Ptrcolumna.numero+this.Ptrfila.Num;
         }
 
     

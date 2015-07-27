@@ -24,12 +24,16 @@ public class MDisp {
             return this.Lcolumnas.Vacio();
         }
 
-        public void Insertar(String col,int fil,int dimension,String dato)
+        public void Insertar(int col,int fil,int dimension,String dato)
         {
             NC Columna = this.Lcolumnas.AgregarColumna(col);
             NF Fila = this.Lcolumnas.ListaFilas.Agregar(fil);
             NCasilla casilla = Columna.Agregar(dato,dimension,Fila);
            
+        }
+        public int Eliminar(int fil, int col)
+        {
+            
         }
 
         public void graficarMDispersa()

@@ -36,13 +36,13 @@ public class NF {
             {
                
                     
-                if (node.Ptrcolumna.Letra.compareTo( this.Primero.Ptrcolumna.Letra) < 0)
+                if (node.Ptrcolumna.numero  < this.Primero.Ptrcolumna.numero)
                 {
                     node.Derecha = this.Primero;
                     this.Primero.Izquierda = node;
                     this.Primero = node;
                 }
-                else if (node.Ptrcolumna.Letra.compareTo( this.Primero.Ptrcolumna.Letra) > 0)
+                else if (node.Ptrcolumna.numero > this.Primero.Ptrcolumna.numero)
                 {
                     node.Izquierda = this.Ultimo;
                     this.Ultimo.Derecha = node;
@@ -53,7 +53,7 @@ public class NF {
                     NCasilla aux = this.Primero;
                     while (aux != null)
                     {
-                        if (node.Ptrcolumna.Letra.compareTo( this.Primero.Ptrcolumna.Letra) > 0)
+                        if (node.Ptrcolumna.numero > Primero.Ptrcolumna.numero)
                         {
                             break;
                         }
