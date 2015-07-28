@@ -15,14 +15,24 @@ import java.awt.Image;
  */
 public class Mario extends Objeto {
     
-    
-
-    
-
-    @Override
-    public void setImage(Image image) {
-        super.setImage(this.getImgs().mario1()); //To change body of generated methods, choose Tools | Templates.
+    public Mario(String nom,Image img)
+    {
+        this.nombre = nom;
+        this.id = 6;
+        this.setCordx(0);
+        this.setCordy(0); 
+        this.setImage(img);
+        this.setPosfx(0);
+        this.setPosfy(0);
+        this.setVx(5);
+        this.setVy(0);
     }
+    
+    
+
+    
+
+    
 
     @Override
     public void render(Graphics g) {

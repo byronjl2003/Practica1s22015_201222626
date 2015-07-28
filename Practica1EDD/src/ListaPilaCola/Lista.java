@@ -134,6 +134,37 @@ public class Lista {
        else
            return null;
    }
+   
+   void Descontar()
+   {
+       
+   }
+   
+   public void EliminarDeLista(NL nodo)
+   {
+       
+       if(nodo==this.primero)
+       {
+           this.primero.getNext().setBack(null);
+           this.primero = this.primero.getNext();
+           Descontar();
+           
+       }
+       else if(nodo==this.ultimo)
+       {
+           
+       }
+       else
+       {
+           NL aux = this.primero;
+           while(aux!=null)
+           {
+                //if()
+           }
+           
+       }
+       
+   }
     
    
     

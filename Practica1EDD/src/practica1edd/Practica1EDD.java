@@ -5,6 +5,8 @@
  */
 package practica1edd;
 
+import GUI.VentanaPrincipal;
+
 /**
  *
  * @author byron
@@ -16,6 +18,7 @@ public class Practica1EDD {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-    }
+        VentanaPrincipal v = new VentanaPrincipal();
     
+}
 }

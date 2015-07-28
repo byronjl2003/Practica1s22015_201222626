@@ -15,11 +15,12 @@ import javax.swing.ImageIcon;
  */
 public abstract class Objeto extends ImageIcon {
     private int cordx,cordy,vx,vy,posfx,posfy;
-    private imagen imgs;
+   
     public int id;
+    public String nombre;
     public Objeto()
     {
-        imgs = new imagen();
+        
         
     }
     public abstract void render(Graphics g);
@@ -111,19 +112,6 @@ public abstract class Objeto extends ImageIcon {
         this.posfy = posfy;
     }
 
-    /**
-     * @return the imgs
-     */
-    public imagen getImgs() {
-        return imgs;
-    }
-
-    /**
-     * @param imgs the imgs to set
-     */
-    public void setImgs(imagen imgs) {
-        this.imgs = imgs;
-    }
     
     
     
