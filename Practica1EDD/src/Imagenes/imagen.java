@@ -15,6 +15,36 @@ import javax.swing.ImageIcon;
 public class imagen {
     
     public imagen(){}
+    public Image general(int id)
+    {
+        switch(id)
+        {
+            case 0:
+                return this.piso();
+            case 1:
+                return this.pared();
+            case 2:
+                return this.derg1();
+            case 3:
+                return this.derqk1();
+            case 4:
+                return this.ficha1();
+            case 5:
+                return this.hongo();
+            case 6:
+                return this.mario1();
+            case 7:
+                return this.castillo();
+            default:
+                return null;
+                
+                
+                
+              
+                
+                
+        }
+    }
     public Image mario1()
     {
         return new ImageIcon(getClass().getResource("Mario1.png")).getImage();
@@ -115,6 +145,18 @@ public class imagen {
     public Image fondoj()
     {
         return new ImageIcon(getClass().getResource("FondoMario11.png")).getImage();
+    }
+    public Image pared()
+    {
+        return new ImageIcon(getClass().getResource("pared.png")).getImage();
+    }
+    public Image hongo()
+    {
+        return new ImageIcon(getClass().getResource("Hongo.png")).getImage();
+    }
+    public Image castillo()
+    {
+        return new ImageIcon(getClass().getResource("Hongo.png")).getImage();
     }
     
 }

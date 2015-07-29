@@ -43,7 +43,7 @@ public class PanelLista extends JPanel  {
        NL aux = this.lista.getPrimero();
        while(aux!=null)
        {
-           this.add(new Nodo(aux.getObjeto(),this));
+           this.add(new Nodo(aux,this));
            aux = aux.getNext();
                    
        }
@@ -57,8 +57,10 @@ public class PanelLista extends JPanel  {
         JLabel lblnombre;
         JPanel jpimg;
         PanelLista panel;
-        public Nodo(Objeto obj,PanelLista pa)
+        NL objeto;
+        public Nodo(NL obj,PanelLista pa)
         {
+            this.objeto = obj;
             this.panel = pa;
             this.setLayout(null);
             this.setSize(250,75);
@@ -69,12 +71,12 @@ public class PanelLista extends JPanel  {
                     super.paintComponent(g);
                     Dimension d = getSize();
                     setOpaque(false);
-                    g.drawImage(obj.getImage(),0,0,d.width,d.height,this);
+                    g.drawImage(obj.getObjeto().getImage(),0,0,d.width,d.height,this);
                 }
  
  
             };
-            lblnombre = new JLabel(obj.nombre);
+            lblnombre = new JLabel(obj.getObjeto().nombre);
             btnelim = new JButton("x");
             btnelim.addActionListener(this);
             jpimg.setBounds(2,2,98,70);
@@ -89,7 +91,7 @@ public class PanelLista extends JPanel  {
         public void actionPerformed(ActionEvent e) {
             if(e.getSource()==btnelim)
             {
-                lista.Eliminar();
+                lista.EliminarDeLista(objeto);
                 this.panel.llenar();
             }
         }

@@ -152,14 +152,24 @@ public class Lista {
        }
        else if(nodo==this.ultimo)
        {
+           this.ultimo = this.ultimo.getBack();
            
+           this.ultimo.setNext(null);
        }
        else
        {
            NL aux = this.primero;
            while(aux!=null)
            {
-                //if()
+                if(aux==nodo)
+                {
+                    aux.getBack().setNext(aux.getNext());
+                    aux.getNext().setBack(aux.getBack());
+                }
+                else
+                {
+                    
+                }
            }
            
        }
