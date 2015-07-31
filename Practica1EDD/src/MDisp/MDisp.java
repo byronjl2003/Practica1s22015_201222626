@@ -1,6 +1,8 @@
 package MDisp;
 
 import Objetos.Objeto;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,11 +28,12 @@ public class MDisp {
             return this.Lcolumnas.Vacio();
         }
 
-        public void Insertar(int col,int fil,int dimension,Objeto dato)
+        public NCasilla Insertar(int col,int fil,int dimension,Objeto dato)
         {
             NC Columna = this.Lcolumnas.AgregarColumna(col);
             NF Fila = this.Lcolumnas.ListaFilas.Agregar(fil);
             NCasilla casilla = Columna.Agregar(dato,dimension,Fila);
+            return casilla;
            
         }
         public int Eliminar(int num, int flag)
@@ -53,27 +56,49 @@ public class MDisp {
         }
 
         public void graficarMDispersa()
-        {/*
-            StringBuilder[] recolector = this.Lcolumnas.ListaFilas.GraficaHorizontal();
-            StringBuilder[] reco = this.Lcolumnas.GraficaVertical();
-            for (int i = 0; i < recolecto r.Length; i++)
+        {
+            FileWriter fichero = null;
+            PrintWriter pw = null;
+            try
             {
-                string mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                using (StreamWriter outfile = new StreamWriter(mydocpath + "\\GraficasArboles" + @"\Matriz_" + (i + 1) + ".txt"))
+                fichero = new FileWriter("/home/byron/MDisp.txt");
+                pw = new PrintWriter(fichero);
+                pw.println("digraph g{");
+                pw.println("ranksep = .5;splines=ortho;");
+                pw.println("{");
+                pw.println("node[shape = record]");
+                String primera ="";
+                NC primero = this.Lcolumnas.Primero;
+                NCasilla frs = primero.Primero;
+                while(frs!=null)
                 {
-                    StringBuilder gen = new StringBuilder();
-                    gen.AppendLine("digraph g{");
-                    gen.AppendLine("ranksep = .5; splines=ortho;");
-                    gen.AppendLine(recolector[i].ToString());
-                    gen.AppendLine(reco[i].ToString());
-                    gen.AppendLine("}");
-                    outfile.Write(gen.ToString());
+                    NM casilla = frs.Buscar(1);
+                    NCasilla aux2 = frs.Izquierda;
+                    while(aux2.Ptrfila==null)
+                    {
+                        aux2 = aux2.Izquierda;
+                    }
+                    
+                    primera = primera + "Nodo"+primero.numero+aux2.Ptrfila.Num+"[label = \""+"<f0>|<f1>"+casilla.ToString()+" |<f2>"+"\"]";
+                    frs = frs.Abajo;
                 }
-                
+ 
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally
+            {
+                try {
+           
+                        if (null != fichero)
+                                fichero.close();
+                    } catch (Exception e2) {
+                            e2.printStackTrace();
+                                            }
+            }
 
-            }*/
+        }
 
         }
 
     
-}
+

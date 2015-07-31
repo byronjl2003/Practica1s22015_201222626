@@ -17,7 +17,7 @@ public class Pared extends Objeto {
     public Pared(String nom,Image img)
     {
         this.nombre = nom;
-        this.id = 6;
+        this.id = 1;
         this.setCordx(0);
         this.setCordy(0); 
         this.setImage(img);

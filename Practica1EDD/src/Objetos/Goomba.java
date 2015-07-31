@@ -17,7 +17,7 @@ public class Goomba extends Objeto {
     public Goomba(String nom,Image img)
     {
         this.nombre = nom;
-        this.id = 6;
+        this.id = 2;
         this.setCordx(0);
         this.setCordy(0); 
         this.setImage(img);

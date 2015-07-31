@@ -45,6 +45,11 @@ public class imagen {
                 
         }
     }
+    public Image fondomaker()
+    {
+        return new ImageIcon(getClass().getResource("FondoMario11.png")).getImage();
+    }
+            
     public Image mario1()
     {
         return new ImageIcon(getClass().getResource("Mario1.png")).getImage();

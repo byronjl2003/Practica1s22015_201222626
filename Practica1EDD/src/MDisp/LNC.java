@@ -14,13 +14,13 @@ public class LNC {
     
     public NC Primero,Ultimo;
     public LNF ListaFilas;
-    int tam;
+    public int elementos;
     
     public LNC()
     {
         this.Primero = null;
         this.Ultimo = null;
-        this.tam = 0;
+        this.elementos = 0;
         this.ListaFilas = new LNF();
     }
     public Boolean Vacio()
@@ -32,6 +32,7 @@ public class LNC {
         NC Columna = BuscarColumna(num);
         if (Columna == null)
         { 
+            this.elementos++;
             NC nuevo = new NC(num);
                 if (Vacio())
                 {

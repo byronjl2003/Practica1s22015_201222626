@@ -26,27 +26,36 @@ import javax.swing.JScrollPane;
  * @author byron
  */
 public class PanelLista extends JPanel  {
-    JScrollPane scroll;
+    public JScrollPane scroll;
     Lista lista;
+    int posy = 0;
     public PanelLista(Lista lista)
     {
+        this.setLayout(null);
         this.lista = lista;
-        scroll = new JScrollPane();
-        this.setLayout(new GridLayout(0,1,10,10));
-        this.setPreferredSize(new Dimension(250,500));
-        scroll.setViewportView(this);
+        scroll = new JScrollPane(this);
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        this.setPreferredSize(new Dimension(250,1500));
+        
         this.setBackground(Color.MAGENTA);
+        
     }
     public void llenar()
     {
+       System.out.println("EN LLENAR HAY: "+lista.getElementos());
        this.removeAll();
        NL aux = this.lista.getPrimero();
        while(aux!=null)
        {
-           this.add(new Nodo(aux,this));
+           Nodo n = new Nodo(aux,this);
+           n.setBounds(0, posy,250,75);
+           this.add(n);
+           posy = posy+76;
            aux = aux.getNext();
                    
        }
+       this.repaint();
     }
     
     
@@ -92,6 +101,7 @@ public class PanelLista extends JPanel  {
             if(e.getSource()==btnelim)
             {
                 lista.EliminarDeLista(objeto);
+                this.panel.posy=0;
                 this.panel.llenar();
             }
         }

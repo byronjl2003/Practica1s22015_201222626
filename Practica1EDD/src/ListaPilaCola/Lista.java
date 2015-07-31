@@ -19,7 +19,7 @@ public class Lista {
     public Lista()
     {
         pila = false;
-        cola = false;
+        cola = true;
         this.elementos = 0;
         this.suelos = 0;
         this.paredes = 0;
@@ -29,33 +29,74 @@ public class Lista {
         this.hongos = 0;
         this.personajes = 0;
         this.castillos = 0;
-        this.primero = null;
-        this.ultimo = null;
+        this.primero= this.ultimo = null;
+         if(pila)
+            System.out.println("LISTA COMO PILA");
+        else if(cola)
+            System.out.println("LISTA COMO COLA");
+        else
+            System.out.println("LA LISTA NO TIENE FORMATO");
+        
     }
     private boolean Vacia()
     {
-        return getPrimero()==null;
+        return this.getPrimero()==null;
+    }
+    public Objeto Siguiente()
+    {
+        if(pila)
+            System.out.println("LISTA COMO PILA");
+        else if(cola)
+            System.out.println("LISTA COMO COLA");
+        else
+            System.out.println("LA LISTA NO TIENE FORMATO");
+            
+        if(Vacia())
+        {
+            
+            return null;
+        }
+        else
+        {
+            if(pila)
+        {
+            return this.getUltimo().getObjeto();
+        }
+        else if(cola)
+        {
+            return this.getPrimero().getObjeto();
+        }
+        else
+        {
+            System.out.println("EN Siguiente,Esta retornando nulo");
+            return null;
+        }
+        }
+        
     }
     public void Add(Objeto obj)
     {
         if(Vacia())
         {
-            this.setPrimero(new NL(obj));
-            this.setUltimo(getPrimero());
+            this.primero = new NL(obj);
+            this.ultimo = this.primero;
             this.setElementos(this.getElementos() + 1);
             ContEspecial(obj.id);
         }
         else
         {
+            
             if(obj.id==6)
             {
+                System.out.println("ENTRO A ID==6");
                 if(this.getPersonajes()==0)
                 {
+                    System.out.println("ENTRO A personajes ==0");
                     ContEspecial(obj.id);
-                    NL nuevo = new NL(obj);
-                    this.ultimo.setNext(nuevo); ;
-                    nuevo.setBack(this.getUltimo());
-                    this.setUltimo(nuevo);
+                    getUltimo().setNext(new NL(obj));
+                    getUltimo().getNext().setBack(getUltimo());
+                    this.setUltimo(getUltimo().getNext());
+                    this.setElementos(elementos+1);
                                 
                     
                 }
@@ -65,23 +106,33 @@ public class Lista {
                 if(this.getCastillos()==0)
                 {
                     ContEspecial(obj.id);
-                    NL nuevo = new NL(obj);
-                    this.ultimo.setNext(nuevo);
-                    nuevo.setBack(this.getUltimo());
-                    this.setUltimo(nuevo);                    
+                    getUltimo().setNext(new NL(obj));
+                    getUltimo().getNext().setBack(getUltimo());
+                    this.setUltimo(getUltimo().getNext());
+                    this.setElementos(elementos+1);                    
                 }
             }
             else
             {
                 ContEspecial(obj.id);
-                NL nuevo = new NL(obj);
-                this.ultimo.setNext(nuevo);
-                nuevo.setBack(this.getUltimo());
-                this.setUltimo(nuevo);
+                    getUltimo().setNext(new NL(obj));
+                    getUltimo().getNext().setBack(getUltimo());
+                    this.setUltimo(getUltimo().getNext());
+                    this.setElementos(elementos+1);
                       
             }
         
         }//else
+        
+        System.out.println("DESPUES DE AGREGAR: "+this.elementos);
+        NL aux  = this.primero;
+        while(aux!=null)
+        {
+            System.out.println(aux.getObjeto().nombre+",ID: "+aux.getObjeto().id);
+            aux = aux.getNext();
+        }
+        System.out.println("EL  ULTIMO:"+ this.ultimo.getObjeto().nombre);
+        System.out.println("EL  PRIMERO:"+ this.primero.getObjeto().nombre);
             
     }
     
@@ -123,16 +174,22 @@ public class Lista {
    {
        if(pila)
        {
-           pila = false;
+           System.out.println("BORRAR COMO PILA");
+           //pila = false;
            return EliminarAtras();
        }
        else if(cola)
        {
-           cola = false;
+           System.out.println("BORRAR COMO COLA");
+           //cola = false;
            return EliminarFrente();
        }
        else
+       {
+           System.out.println("NO BORRA NINGUNA");
            return null;
+       }
+           
    }
    
    void Descontar()
@@ -145,7 +202,8 @@ public class Lista {
        
        if(nodo==this.primero)
        {
-           this.primero.getNext().setBack(null);
+           if(this.primero.getNext()!=null)
+               this.primero.getNext().setBack(null);
            this.primero = this.primero.getNext();
            Descontar();
            
@@ -153,8 +211,8 @@ public class Lista {
        else if(nodo==this.ultimo)
        {
            this.ultimo = this.ultimo.getBack();
-           
            this.ultimo.setNext(null);
+           Descontar();
        }
        else
        {
@@ -165,10 +223,12 @@ public class Lista {
                 {
                     aux.getBack().setNext(aux.getNext());
                     aux.getNext().setBack(aux.getBack());
+                    Descontar();
+                    break;
                 }
                 else
                 {
-                    
+                    aux = aux.getNext();
                 }
            }
            
@@ -185,25 +245,51 @@ public class Lista {
     
     private void ContEspecial(int id)
     {
+        
+       // this.elementos++;
         switch(id)
        {
            case 0:
+           {
                this.setSuelos(this.getSuelos() + 1);
-               
+               break;
+           }
            case 1:
+           {
                this.setParedes(this.getParedes() + 1);
+               break;
+           }
            case 2:
+           {
                this.setGoombas(this.getGoombas() + 1);
+               break;
+           }
            case 3:
+           {
                this.setKoopas(this.getKoopas() + 1);
+               break;
+           }
            case 4:
+           {
                this.setFichas(this.getFichas() + 1);
+               break;
+           }
            case 5:
+           {
                this.setHongos(this.getHongos() + 1);
+               break;
+           }
            case 6:
+           {
                this.setPersonajes(this.getPersonajes() + 1);
+               break;
+           }
            case 7:
+           {
                this.setCastillos(this.getCastillos() + 1);
+               break;
+           }
+               
            
                
                

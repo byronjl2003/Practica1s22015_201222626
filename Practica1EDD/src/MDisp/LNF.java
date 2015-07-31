@@ -15,10 +15,11 @@ public class LNF {
     private NF Primero;
 
     private NF Ultimo;
-
+    public int elementos;
     public LNF()
     {
         this.Primero = this.Ultimo = null;
+        elementos = 0;
     }
 
     public Boolean Vacio()
@@ -30,6 +31,7 @@ public class LNF {
             NF fila = Buscar(num);
             if (fila == null)
             {
+                elementos++;
                 fila = new NF(num);
                 if (Vacio())
                 {

@@ -17,7 +17,7 @@ public class Castillo extends Objeto {
     public Castillo(String nom,Image img)
     {
         this.nombre = nom;
-        this.id = 6;
+        this.id = 7;
         this.setCordx(0);
         this.setCordy(0); 
         this.setImage(img);

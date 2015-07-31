@@ -17,7 +17,7 @@ public class Koopa extends Objeto {
     public Koopa(String nom,Image img)
     {
         this.nombre = nom;
-        this.id = 6;
+        this.id = 3;
         this.setCordx(0);
         this.setCordy(0); 
         this.setImage(img);

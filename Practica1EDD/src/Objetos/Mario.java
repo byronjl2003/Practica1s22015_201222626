@@ -21,6 +21,7 @@ public class Mario extends Objeto {
         this.id = 6;
         this.setCordx(0);
         this.setCordy(0); 
+        if(img!=null)
         this.setImage(img);
         this.setPosfx(0);
         this.setPosfy(0);
