@@ -119,7 +119,7 @@ public class VentanaPrincipal extends JPanel implements ActionListener {
     {
         maker  = new Maker(this.lista);
         Dimension dim = maker.getSize();
-        maker.scroll.setBounds(120,100,dim.width,dim.height);
+        //maker.scroll.setBounds(120,100,dim.width,dim.height);
         maker.General.setBounds(120,100,maker.General.getWidth(),maker.General.getHeight());
         this.add(maker.General);
         maker.General.setVisible(false);

@@ -25,7 +25,7 @@ public class NL {
     }
     public String Tostring()
     {
-       switch(this.getObjeto().id)
+       switch(this.getObjeto().getId())
        {
            case 0:
                return"Suelo";

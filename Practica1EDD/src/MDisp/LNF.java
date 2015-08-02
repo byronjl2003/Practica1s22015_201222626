@@ -57,6 +57,7 @@ public class LNF {
                     NF aux = this.Primero;
                     while (aux != null)
                     {
+                        System.out.println("EN EL WHILE DE LNF");
                         if (aux.Num > num)
                         {
                             fila.Next = aux;

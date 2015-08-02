@@ -16,8 +16,9 @@ public class Ficha extends Objeto {
     
     public Ficha(String nom,Image img)
     {
-        this.nombre = nom;
-        this.id = 4;
+        this.setNombre(nom);
+        this.setId(4);
+        this.viviente = false;
         this.setCordx(0);
         this.setCordy(0); 
         this.setImage(img);

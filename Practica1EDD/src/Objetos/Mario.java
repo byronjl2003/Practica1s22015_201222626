@@ -17,8 +17,8 @@ public class Mario extends Objeto {
     
     public Mario(String nom,Image img)
     {
-        this.nombre = nom;
-        this.id = 6;
+        this.setNombre(nom);
+        this.setId(6);
         this.setCordx(0);
         this.setCordy(0); 
         if(img!=null)
@@ -27,6 +27,7 @@ public class Mario extends Objeto {
         this.setPosfy(0);
         this.setVx(5);
         this.setVy(0);
+        this.viviente = true;
     }
     
     

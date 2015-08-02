@@ -15,6 +15,26 @@ import javax.swing.ImageIcon;
 public class imagen {
     
     public imagen(){}
+    public Image generalkoopa(boolean der,int num)
+    {
+        if(der)
+        {
+            if(num==1)
+                return this.derqk1();
+            else if(num==2)
+                return this.derqk2();
+                        
+                
+        }
+        else
+        {
+            if(num==1)
+                return this.izqk1();
+            else if(num==2)
+                return this.izqk2();
+        }
+        return null;
+    }
     public Image general(int id)
     {
         switch(id)

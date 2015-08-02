@@ -9,6 +9,7 @@ import ListaPilaCola.Lista;
 import ListaPilaCola.NL;
 import MDisp.NM;
 import Objetos.Objeto;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -33,11 +34,13 @@ class ImageSelection extends TransferHandler implements Transferable
   private Image image;
   Lista lista;
   Maker maker;
+  private NM casillaselect;
   
   public ImageSelection(Lista l,Maker mak)
   {
       this.lista = l;
       this.maker = mak;
+      this.casillaselect = null;
   }
 
     @Override
@@ -70,6 +73,7 @@ class ImageSelection extends TransferHandler implements Transferable
       JLabel label = (JLabel) comp;
       Icon icon = label.getIcon();
       if (icon instanceof ImageIcon) {
+          System.out.println("ES UNA INSTANCIA DE IMAGE!");
         image = ((ImageIcon) icon).getImage();
         return this;
       }
@@ -83,31 +87,51 @@ class ImageSelection extends TransferHandler implements Transferable
         return this;
       }
     }
-    else if (comp instanceof NM) 
-    {
-      NM panel = (NM) comp;
-      Image icon = panel.Dato.getImage();
-      if (icon instanceof Image) {
-        image = icon;
-        return this;
-      }
-    }
-    return null;
+    
+   
+    return this;
   }
 
     @Override
   public boolean importData(JComponent comp, Transferable t) {
     if (comp instanceof JLabel)
     {
+        
+         if(this.casillaselect!=null)
+          System.out.println("2.EL PANEL DE LA SELECION NOO ES NULO");
+      else
+          System.out.println("2.EL PANEL DE LA SELECION  ESSSSS NULO");
+      System.out.println("SE INSERTARA EN UN JLABEL");
       JLabel label = (JLabel) comp;
       if (t.isDataFlavorSupported(flavors[0])) {
         try {
           image = (Image) t.getTransferData(flavors[0]);
+          if(image==null)
+              System.out.println("LA IMAGEN ES NULA");
           ImageIcon icon = new ImageIcon(image);
-          label.setIcon(icon);
+          if(this.casillaselect!=null)
+          System.out.println("2.EL PANEL DE LA SELECION NOO ES NULO");
+      else
+          System.out.println("2.EL PANEL DE LA SELECION  ESSSSS NULO");
+          Objeto pasado = this.casillaselect.Dato;
+          if(pasado==null)
+              System.out.println("EL OBJETO PASADO Es NULO");
+          else
+              System.out.println("EL OBJETO PASADO NOO ES NULO");
+              
+          this.lista.Add(pasado);
+          this.casillaselect.Dato = null;
+          this.casillaselect.repaint();
+          this.maker.refreshActual();
           return true;
         } catch (UnsupportedFlavorException ignored) {
+            ignored.printStackTrace();
         } catch (IOException ignored) {
+            ignored.printStackTrace();
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
         }
       }
     }
@@ -133,7 +157,11 @@ class ImageSelection extends TransferHandler implements Transferable
           image = (Image) t.getTransferData(flavors[0]);
           NL aux = lista.Eliminar();
           if(aux!=null)
-              System.out.println("NL NO NULO "+aux.getObjeto().nombre);
+          {
+              System.out.println("NL NO NULO "+aux.getObjeto().getNombre());
+              panel.Dato = aux.getObjeto();
+          }
+              
           else
               System.out.println("NL ES NULO");
           panel.Dato.setImage(image);

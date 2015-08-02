@@ -30,12 +30,6 @@ public class Lista {
         this.personajes = 0;
         this.castillos = 0;
         this.primero= this.ultimo = null;
-         if(pila)
-            System.out.println("LISTA COMO PILA");
-        else if(cola)
-            System.out.println("LISTA COMO COLA");
-        else
-            System.out.println("LA LISTA NO TIENE FORMATO");
         
     }
     private boolean Vacia()
@@ -44,12 +38,7 @@ public class Lista {
     }
     public Objeto Siguiente()
     {
-        if(pila)
-            System.out.println("LISTA COMO PILA");
-        else if(cola)
-            System.out.println("LISTA COMO COLA");
-        else
-            System.out.println("LA LISTA NO TIENE FORMATO");
+        
             
         if(Vacia())
         {
@@ -81,18 +70,18 @@ public class Lista {
             this.primero = new NL(obj);
             this.ultimo = this.primero;
             this.setElementos(this.getElementos() + 1);
-            ContEspecial(obj.id);
+            ContEspecial(obj.getId());
         }
         else
         {
             
-            if(obj.id==6)
+            if(obj.getId()==6)
             {
                 System.out.println("ENTRO A ID==6");
                 if(this.getPersonajes()==0)
                 {
                     System.out.println("ENTRO A personajes ==0");
-                    ContEspecial(obj.id);
+                    ContEspecial(obj.getId());
                     getUltimo().setNext(new NL(obj));
                     getUltimo().getNext().setBack(getUltimo());
                     this.setUltimo(getUltimo().getNext());
@@ -101,11 +90,11 @@ public class Lista {
                     
                 }
             }
-            else if(obj.id==7)
+            else if(obj.getId()==7)
             {
                 if(this.getCastillos()==0)
                 {
-                    ContEspecial(obj.id);
+                    ContEspecial(obj.getId());
                     getUltimo().setNext(new NL(obj));
                     getUltimo().getNext().setBack(getUltimo());
                     this.setUltimo(getUltimo().getNext());
@@ -114,7 +103,7 @@ public class Lista {
             }
             else
             {
-                ContEspecial(obj.id);
+                ContEspecial(obj.getId());
                     getUltimo().setNext(new NL(obj));
                     getUltimo().getNext().setBack(getUltimo());
                     this.setUltimo(getUltimo().getNext());
@@ -128,11 +117,11 @@ public class Lista {
         NL aux  = this.primero;
         while(aux!=null)
         {
-            System.out.println(aux.getObjeto().nombre+",ID: "+aux.getObjeto().id);
+            System.out.println(aux.getObjeto().getNombre()+",ID: "+aux.getObjeto().getId());
             aux = aux.getNext();
         }
-        System.out.println("EL  ULTIMO:"+ this.ultimo.getObjeto().nombre);
-        System.out.println("EL  PRIMERO:"+ this.primero.getObjeto().nombre);
+        System.out.println("EL  ULTIMO:"+ this.ultimo.getObjeto().getNombre());
+        System.out.println("EL  PRIMERO:"+ this.primero.getObjeto().getNombre());
             
     }
     

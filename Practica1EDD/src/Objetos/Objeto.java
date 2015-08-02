@@ -14,10 +14,10 @@ import javax.swing.ImageIcon;
  * @author byron
  */
 public abstract class Objeto extends ImageIcon {
-    private int cordx,cordy,vx,vy,posfx,posfy;
-   
-    public int id;
-    public String nombre;
+    private int cordx,cordy,with,height,vx,vy,posfx,posfy;
+    public boolean viviente;
+    private int id;
+    private String nombre;
     public Objeto()
     {
         
@@ -27,6 +27,9 @@ public abstract class Objeto extends ImageIcon {
             
     
     public abstract void tick();
+    
+            
+    
 
     /**
      * @return the cordx
@@ -110,6 +113,62 @@ public abstract class Objeto extends ImageIcon {
      */
     public void setPosfy(int posfy) {
         this.posfy = posfy;
+    }
+
+    /**
+     * @return the with
+     */
+    public int getWith() {
+        return with;
+    }
+
+    /**
+     * @param with the with to set
+     */
+    public void setWith(int with) {
+        this.with = with;
+    }
+
+    /**
+     * @return the height
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * @param height the height to set
+     */
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the nombre
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     

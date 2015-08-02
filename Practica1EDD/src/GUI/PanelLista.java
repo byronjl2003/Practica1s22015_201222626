@@ -85,7 +85,7 @@ public class PanelLista extends JPanel  {
  
  
             };
-            lblnombre = new JLabel(obj.getObjeto().nombre);
+            lblnombre = new JLabel(obj.getObjeto().getNombre());
             btnelim = new JButton("x");
             btnelim.addActionListener(this);
             jpimg.setBounds(2,2,98,70);

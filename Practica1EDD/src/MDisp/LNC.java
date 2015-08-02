@@ -61,6 +61,7 @@ public class LNC {
                     NC aux = this.Primero;
                     while (aux != null)
                     {
+                        System.out.println("EN EL WHILE DE LNC");
                         if (aux.numero > num)
                         {
                             nuevo.Next = aux;

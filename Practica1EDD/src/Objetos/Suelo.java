@@ -16,8 +16,8 @@ public class Suelo extends Objeto {
     
     public Suelo(String nom,Image img)
     {
-        this.nombre = nom;
-        this.id = 0;
+        this.setNombre(nom);
+        this.setId(0);
         this.setCordx(0);
         this.setCordy(0); 
         this.setImage(img);
@@ -25,6 +25,7 @@ public class Suelo extends Objeto {
         this.setPosfy(0);
         this.setVx(5);
         this.setVy(0);
+        this.viviente = false;
     }
     
     

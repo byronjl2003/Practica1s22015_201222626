@@ -25,13 +25,14 @@ public class MDisp {
         }
         public Boolean Vacio()
         {
-            return this.Lcolumnas.Vacio();
+            return this.getLcolumnas().Vacio();
         }
 
-        public NCasilla Insertar(int col,int fil,int dimension,Objeto dato)
+        public NCasilla Insertar(int fil,int col,int dimension,Objeto dato)
         {
-            NC Columna = this.Lcolumnas.AgregarColumna(col);
-            NF Fila = this.Lcolumnas.ListaFilas.Agregar(fil);
+           // System.out.println("SE VA A INSERTAR EN "+fil+","+col);
+            NC Columna = this.getLcolumnas().AgregarColumna(col);
+            NF Fila = this.getLcolumnas().ListaFilas.Agregar(fil);
             NCasilla casilla = Columna.Agregar(dato,dimension,Fila);
             return casilla;
            
@@ -41,14 +42,14 @@ public class MDisp {
             if(flag==0)
             {
                 
-                int resp =  this.Lcolumnas.ListaFilas.ConexionesPorElim(num);
-                this.Lcolumnas.ListaFilas.Eliminar(num);
+                int resp =  this.getLcolumnas().ListaFilas.ConexionesPorElim(num);
+                this.getLcolumnas().ListaFilas.Eliminar(num);
                 return resp;
             }
             else if(flag==1)
             {
-                int resp =  this.Lcolumnas.ConexionesPorElim(num);
-                this.Lcolumnas.Eliminar(num);
+                int resp =  this.getLcolumnas().ConexionesPorElim(num);
+                this.getLcolumnas().Eliminar(num);
                 return resp;
             }
             return -1;
@@ -68,21 +69,71 @@ public class MDisp {
                 pw.println("{");
                 pw.println("node[shape = record]");
                 String primera ="";
-                NC primero = this.Lcolumnas.Primero;
-                NCasilla frs = primero.Primero;
-                while(frs!=null)
+                //***el primer segmento, la declaracion de todos los nodos
+                NC primero = this.getLcolumnas().Primero;
+                while(primero!=null)
                 {
-                    NM casilla = frs.Buscar(1);
-                    NCasilla aux2 = frs.Izquierda;
-                    while(aux2.Ptrfila==null)
+                    int contf=1;
+                    NCasilla frs = primero.Primero;
+                    while(frs!=null)
                     {
-                        aux2 = aux2.Izquierda;
-                    }
+                        if(primero==this.getLcolumnas().Ultimo)
+                            pw.println("Nulo"+primero.numero+contf+"[label=\"NULO!\"];");
+                            
+                        NM casilla = frs.Buscar(1);
                     
-                    primera = primera + "Nodo"+primero.numero+aux2.Ptrfila.Num+"[label = \""+"<f0>|<f1>"+casilla.ToString()+" |<f2>"+"\"]";
-                    frs = frs.Abajo;
-                }
+                        if(frs==primero.Ultimo)
+                        primera = primera + "Nodo"+primero.numero+""+contf+"[label = \""+"<f0>|<f1>"+casilla.ToString()+" |<f2>"+"\"];";
+                        else
+                            primera = primera + "Nodo"+primero.numero+""+contf+"[label = \""+"<f0>|<f1>"+casilla.ToString()+" |<f2>"+"\"];";
+                        pw.println(primera);
+                        frs = frs.Abajo;
+                        contf++;
+                    }
  
+                    
+                    primero = primero.Next;
+                   
+                }
+                //****segundo segmento,las relaciones de la primera columna;
+                pw.println("ranksep = .5;splines=ortho;");
+                pw.println("{");
+                    int contff = 1;
+                    NC columna = this.getLcolumnas().Primero;
+                    NCasilla aux = columna.Primero;
+                    while(aux!=null)
+                    {
+                        String normal="";
+                        if(aux.Abajo==null)
+                             normal=normal +"Nodo"+columna.numero+""+contff+"-> NULO;";
+                        else
+                        {
+                            int c = contff+1;
+                            normal = normal+"Nodo"+columna.numero+""+contff+" -> Nodo"+columna+""+c+";";
+                        }
+                        pw.println("normal");
+                      aux = aux.Abajo;
+                      contff++;
+                    }
+                    aux = columna.Ultimo;
+                    while(aux!=null)
+                    {
+                        contff = this.getLcolumnas().ListaFilas.elementos;
+                        String anormal="";
+                        if(aux.Arriba==null)
+                             anormal=anormal +"Nodo"+columna.numero+""+contff+"-> NULO;";
+                        else
+                        {
+                            int c = contff-1;
+                            anormal = anormal+"Nodo"+columna.numero+""+contff+" -> Nodo"+columna+""+c+";";
+                        }
+                        pw.println("normal");
+                        aux = aux.Arriba;
+                        contff--;
+                    }
+                pw.println("}");
+                    
+                //** tercer segmento,todas las relaciones horizontales
             } catch (Exception e) {
                 e.printStackTrace();
             } finally
@@ -97,6 +148,20 @@ public class MDisp {
             }
 
         }
+
+    /**
+     * @return the Lcolumnas
+     */
+    public LNC getLcolumnas() {
+        return Lcolumnas;
+    }
+
+    /**
+     * @param Lcolumnas the Lcolumnas to set
+     */
+    public void setLcolumnas(LNC Lcolumnas) {
+        this.Lcolumnas = Lcolumnas;
+    }
 
         }
 
