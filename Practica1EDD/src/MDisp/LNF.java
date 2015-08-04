@@ -12,9 +12,9 @@ package MDisp;
  */
 public class LNF {
     
-    private NF Primero;
+    public NF Primero;
 
-    private NF Ultimo;
+    public NF Ultimo;
     public int elementos;
     public LNF()
     {

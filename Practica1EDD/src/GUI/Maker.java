@@ -9,10 +9,13 @@ import Imagenes.imagen;
 import ListaPilaCola.Lista;
 import ListaPilaCola.NL;
 import MDisp.MDisp;
+import MDisp.NC;
 import MDisp.NCasilla;
+import MDisp.NF;
 import MDisp.NM;
 import Objetos.Mario;
 import Objetos.Objeto;
+import Objetos.Vacio;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -228,8 +231,62 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
         
         if(e.getSource()==this.btnplay)
         {
+            int x = 0;
+            
+            NC columna = this.matriz.getLcolumnas().Primero;
+            while(columna!=null)
+            {
+                NF fila =  this.matriz.getLcolumnas().ListaFilas.Primero;
+                int y=0;
+                while(fila!=null)
+                {
+                    NCasilla cas = columna.Buscar(fila);
+                    NM casilla = cas.Buscar(1);
+                    if(casilla.Dato!=null)
+                    {
+                        casilla.Dato.setCordx(x);
+                        casilla.Dato.setCordy(y);
+                        casilla.Dato.casillaactual = cas;
+                    }
+                    else if(casilla.Dato==null)
+                    {
+                        casilla.Dato = new Vacio();
+                        casilla.Dato.setCordx(x);
+                        casilla.Dato.setCordy(y);
+                        casilla.Dato.casillaactual = cas;
+                        
+                    }
+                    
+                    y=y+75;
+                    fila = fila.Next;
+                }
+                
+                columna = columna.Next;
+                x = x+75;
+            }
+            //se le da las posiciones iniciales a los objetos!
+            
+            // agregar a la matriz dos filas arriba(Al inicio)
+            int columnas = this.matriz.getLcolumnas().elementos;
+            for(int i=-1;i>-3;i--)
+            {
+                System.out.println("EN EL FOR1");
+                for(int j=0;j<columnas;j++)
+                {
+                    System.out.println("EN EL FOR2");
+                    this.matriz.Insertar(i, j,1,null);
+                }
+            }
+            
+            //agregar a la matriz una fila al final
+            int fila = this.matriz.getLcolumnas().ListaFilas.elementos;
+            for(int i=0;i<columnas;i++)
+            {
+                System.out.println("EN EL FOR3");
+                this.matriz.Insertar(fila, i, 1, null);
+            }
             game = new Game(this.matriz);
-            //se le da las
+            
         }
             
         else if(e.getSource()==this.btnaddC)
@@ -294,6 +351,8 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
         NM panel = (NM)e.getSource();
         this.lista.Add(panel.Dato);
         panel.Dato=null;
+        this.refreshActual();
+        panel.repaint();
         
     }
 

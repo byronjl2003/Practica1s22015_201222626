@@ -6,8 +6,10 @@
 package Objetos;
 
 import Imagenes.imagen;
+import MDisp.NCasilla;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 /**
  *
@@ -18,9 +20,11 @@ public abstract class Objeto extends ImageIcon {
     public boolean viviente;
     private int id;
     private String nombre;
+    public NCasilla casillaactual;
+    JPanel lienzo;
     public Objeto()
     {
-        
+        casillaactual = null;
         
     }
     public abstract void render(Graphics g);

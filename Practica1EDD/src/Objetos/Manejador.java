@@ -12,6 +12,7 @@ import MDisp.NC;
 import MDisp.NCasilla;
 import MDisp.NF;
 import java.awt.Graphics;
+import javax.swing.JPanel;
 
 /**
  *
@@ -23,15 +24,41 @@ public class Manejador implements Runnable {
     boolean play;
     Thread hilo;
     Graphics g;
-    
-    public Manejador(MDisp matriz,Graphics gg)
+    MDisp matriz;
+    JPanel lienzo;
+    public void renderizar()
     {
+        NL node = this.lista.getPrimero();
+        
+        while(node!=null)
+        {
+            node.getObjeto().render(g);
+            node = node.getNext();
+        }
+    }
+    public void tickear()
+    {
+        NL node = this.lista.getPrimero();
+        
+        while(node!=null)
+        {
+            node.getObjeto().tick();
+            node = node.getNext();
+        }
+    }
+    public Manejador(MDisp matriz,Graphics gg,JPanel lien)
+    {
+        play = true;
+        this.lienzo = lien;
+        this.matriz = matriz;
         this.g = gg;
         lista = new Lista();
         lvivientes = new Lista();
-        for(int i = 2;i<matriz.getLcolumnas().ListaFilas.elementos-2;i++)
+        System.out.println("Numero de Filas En el manejador:  "+this.matriz.getLcolumnas().ListaFilas.elementos);
+        System.out.println("Numero de Columnas En el manejador: "+this.matriz.getLcolumnas().elementos);
+        for(int i = 0;i<matriz.getLcolumnas().ListaFilas.elementos-3;i++)
         {
-            for(int j=0;j<matriz.getLcolumnas().elementos-1;j++)
+            for(int j=0;j<matriz.getLcolumnas().elementos;j++)
             {
                 NC columna = matriz.getLcolumnas().BuscarColumna(j);
                 NF fila = matriz.getLcolumnas().ListaFilas.Buscar(i);
@@ -39,6 +66,7 @@ public class Manejador implements Runnable {
                 Objeto obj =casilla.Buscar(1).Dato; 
                 if(obj!=null)
                 {
+                    obj.lienzo = this.lienzo;
                     lista.Add(obj);
                     if(obj.viviente)
                     {
@@ -67,6 +95,7 @@ public class Manejador implements Runnable {
         {
             while(play)
             {
+                System.out.println("EN EL WHILE INFINITO DEL GAME");
                 NL primero = this.lvivientes.getPrimero();
                 while(primero!=null)
                 {
@@ -81,7 +110,7 @@ public class Manejador implements Runnable {
         }
         catch(InterruptedException ex)
         {
-            
+            ex.printStackTrace();
         }
         
     }

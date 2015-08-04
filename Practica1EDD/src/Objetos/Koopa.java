@@ -10,6 +10,7 @@ import MDisp.NCasilla;
 import MDisp.NM;
 import java.awt.Graphics;
 import java.awt.Image;
+import javax.swing.JPanel;
 
 /**
  *
@@ -20,10 +21,10 @@ public class Koopa extends Objeto {
     private boolean caminando,cayendo,topandox,topandoy,derecha;
     imagen imagenes;
     int constante = 1,pixelesx=0,pixelesy=0;
-    NCasilla casillaactual;
+    
     public Koopa(String nom,Image img)
     {
-        
+        lienzo = null;
         caminando = true;
         cayendo = false;
         topandox = false;
@@ -50,7 +51,17 @@ public class Koopa extends Objeto {
 
     @Override
     public void render(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         if(this.lienzo==null)
+             System.out.println("EL LIENZO ES NULO");
+         else
+             System.out.println("EL LIENZO NO ES NULO");
+         if(g==null)
+             System.out.println("EL g ES NULO");
+         else
+             System.out.println("EL g NO ES NULO");
+             
+        this.lienzo.getGraphics().drawImage(imagenes.derqk1(),this.getCordx(),this.getCordy(),75,75, this.lienzo);
+        
     }
 
     @Override 
@@ -86,7 +97,7 @@ public class Koopa extends Objeto {
                    this.casillaactual = this.casillaactual.Abajo;
             }
             //todavia no a caminado nada desde su pos en la matriz actual.
-            if(casillaactual.Abajo!=null)
+            if(casillaactual.Abajo.Buscar(1).Dato.getId()==-1)
             {
                 //entonces si hay en donde sostenerse para caminar.
                 
