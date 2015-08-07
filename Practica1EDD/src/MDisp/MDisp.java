@@ -62,7 +62,7 @@ public class MDisp {
             constructor.append("digraph g{\n");
             constructor.append("node[shape = record]");
             
-            NC primero = this.getLcolumnas().Primero;
+            //NC primero = this.getLcolumnas().Primero;
             
             
             
