@@ -151,6 +151,8 @@ class ImageSelection extends TransferHandler implements Transferable
     }
     else if (comp instanceof NM)
     {
+        System.out.println("**********************************EN EL IMAGESELECTION***********************************************");
+        System.out.println("NUMERO DE ELEMENTOS EN LA LISTA ANTES DE LA TRANSFERENCIA: "+this.lista.getElementos());
       NM panel = (NM) comp;
       if (t.isDataFlavorSupported(flavors[0])) {
         try {
@@ -158,17 +160,17 @@ class ImageSelection extends TransferHandler implements Transferable
           NL aux = lista.Eliminar();
           if(aux!=null)
           {
-              System.out.println("NL NO NULO "+aux.getObjeto().getNombre());
+              //System.out.println("NL NO NULO "+aux.getObjeto().getNombre());
               panel.Dato = aux.getObjeto();
           }
               
           else
-              System.out.println("NL ES NULO");
+              //System.out.println("NL ES NULO");
           panel.Dato.setImage(image);
 //          System.out.println(lista.Siguiente().nombre);
           panel.repaint();
           maker.refreshActual();
-          
+          System.out.println("NUMERO DE ELEMENTOS EN LA LISTA DESPUES DE LA TRANSFERENCIA: "+this.lista.getElementos());
           return true;
         } catch (UnsupportedFlavorException ignored) {
             ignored.printStackTrace();

@@ -5,6 +5,7 @@
  */
 package Objetos;
 
+import GUI.Game;
 import Imagenes.imagen;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -30,7 +31,7 @@ public class Pared extends Objeto {
         this.setVx(5);
         this.setVy(0);
         this.viviente = false;
-        this.lienzo = null;
+        ;
     }
     
     
@@ -40,13 +41,18 @@ public class Pared extends Objeto {
     
 
     @Override
-    public void render(Graphics g) {
-        g.drawImage(this.getImage(),this.getCordx(),this.getCordy(),75,75, this.lienzo);
+    public void render(Graphics g,Game game) {
+        g.drawImage(this.getImage(),this.getCordx(),this.getCordy(),75,75,game);
     }
 
     @Override
     public void tick() {
         
+    }
+
+    @Override
+    public void die() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

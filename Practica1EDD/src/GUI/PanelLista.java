@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -62,11 +63,12 @@ public class PanelLista extends JPanel  {
     
     private class Nodo extends JPanel implements ActionListener
     {
-        JButton btnelim;
-        JLabel lblnombre;
+        JButton btnelim,btnmodificar;
+        JTextField lblnombre;
         JPanel jpimg;
         PanelLista panel;
         NL objeto;
+        
         public Nodo(NL obj,PanelLista pa)
         {
             this.objeto = obj;
@@ -85,14 +87,18 @@ public class PanelLista extends JPanel  {
  
  
             };
-            lblnombre = new JLabel(obj.getObjeto().getNombre());
+            lblnombre = new JTextField(obj.getObjeto().getNombre());
+            this.btnmodificar = new JButton("..");
+            this.btnmodificar.addActionListener(this);
             btnelim = new JButton("x");
             btnelim.addActionListener(this);
             jpimg.setBounds(2,2,98,70);
             this.add(jpimg);
-            lblnombre.setBounds(101,15,75,30);
+            lblnombre.setBounds(101,15,75,25);
+            this.btnmodificar.setBounds(190, 15,50,25);
             this.add(lblnombre);
-            btnelim.setBounds(190, 30, 30, 30);
+            this.add(this.btnmodificar);
+            btnelim.setBounds(190, 40,50, 25);
             this.add(btnelim);
         }
 
@@ -103,6 +109,10 @@ public class PanelLista extends JPanel  {
                 lista.EliminarDeLista(objeto);
                 this.panel.posy=0;
                 this.panel.llenar();
+            }
+            if(e.getSource()==this.btnmodificar)
+            {
+                this.objeto.getObjeto().setNombre(this.lblnombre.getText());
             }
         }
         

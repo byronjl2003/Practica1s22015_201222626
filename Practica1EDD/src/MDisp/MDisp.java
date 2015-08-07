@@ -58,6 +58,27 @@ public class MDisp {
 
         public void graficarMDispersa()
         {
+            StringBuilder constructor  = new StringBuilder();
+            constructor.append("digraph g{\n");
+            constructor.append("node[shape = record]");
+            
+            NC primero = this.getLcolumnas().Primero;
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            //************************************************
+            
             FileWriter fichero = null;
             PrintWriter pw = null;
             try

@@ -6,6 +6,8 @@
 package ListaPilaCola;
 
 import Objetos.Objeto;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
 /**
  *
@@ -67,9 +69,10 @@ public class Lista {
     {
         if(Vacia())
         {
-            this.primero = new NL(obj);
-            this.ultimo = this.primero;
+            
             this.setElementos(this.getElementos() + 1);
+            this.primero = new NL(obj,this.elementos);
+            this.ultimo = this.primero;
             ContEspecial(obj.getId());
         }
         else
@@ -82,10 +85,11 @@ public class Lista {
                 {
                     System.out.println("ENTRO A personajes ==0");
                     ContEspecial(obj.getId());
-                    getUltimo().setNext(new NL(obj));
+                    
+                    this.setElementos(elementos+1);
+                    getUltimo().setNext(new NL(obj,this.elementos));
                     getUltimo().getNext().setBack(getUltimo());
                     this.setUltimo(getUltimo().getNext());
-                    this.setElementos(elementos+1);
                                 
                     
                 }
@@ -95,20 +99,21 @@ public class Lista {
                 if(this.getCastillos()==0)
                 {
                     ContEspecial(obj.getId());
-                    getUltimo().setNext(new NL(obj));
+                    
+                    this.setElementos(elementos+1);
+                    getUltimo().setNext(new NL(obj,this.elementos));
                     getUltimo().getNext().setBack(getUltimo());
                     this.setUltimo(getUltimo().getNext());
-                    this.setElementos(elementos+1);                    
                 }
             }
             else
             {
                 ContEspecial(obj.getId());
-                    getUltimo().setNext(new NL(obj));
-                    getUltimo().getNext().setBack(getUltimo());
-                    this.setUltimo(getUltimo().getNext());
+                    
                     this.setElementos(elementos+1);
-                      
+                    getUltimo().setNext(new NL(obj,this.elementos));
+                    getUltimo().getNext().setBack(getUltimo());
+                    this.setUltimo(getUltimo().getNext());  
             }
         
         }//else
@@ -135,6 +140,7 @@ public class Lista {
                 this.setPrimero(this.ultimo = null);
             else
                 this.setPrimero(this.getPrimero().getNext());
+            this.elementos--;
             return eliminado;
         }
         else
@@ -153,6 +159,7 @@ public class Lista {
                 this.setPrimero(this.ultimo = null);
             else
                 this.setUltimo(this.getUltimo().getBack());
+            this.elementos--;
             return eliminado;
         }
         else
@@ -284,185 +291,210 @@ public class Lista {
                
        }
     }
+    
+    
+    public void Graficar(String nombre)
+    {
+        System.out.println("EN GRAFICAR DE LA LISTA");
+        StringBuilder constructor  = new StringBuilder();
+        constructor.append("digraph g{ \n");
+        constructor.append("node [shape = record ];\n");
+        //----encabezado de usuarios
+        NL aux = this.primero;
+        while(aux!=null)
+        {
+            constructor.append(aux.ToStringEncabezado()+"\n");
+            aux = aux.getNext();
+        }
+        //-- ralaciones entre usuarios
+        NL aux2 = this.primero;
+        while(aux2!=null)
+        {
+            if(aux2.getNext()!=null)
+                constructor.append(aux2.ToString()+"->"+aux2.getNext().ToString()+";\n");
+            aux2 = aux2.getNext();
+        }
+        constructor.append(";"+"\n");
+        //-- se grafica los string en cada usuario
+        
+        
+        
+        constructor.append("\n }");
+        
+        
+        
+        
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try
+        {
+            fichero = new FileWriter("/home/byron/GraficasMarioMaker/"+nombre+".dot");
+            pw = new PrintWriter(fichero);
+ 
+            
+                pw.println(constructor.toString());
+ 
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+           try {
+           // Nuevamente aprovechamos el finally para 
+           // asegurarnos que se cierra el fichero.
+           if (null != fichero)
+              fichero.close();
+           } catch (Exception e2) {
+              e2.printStackTrace();
+           }
+           
+           //....GENERACION CON DOT
+           try
+		{       
+			ProcessBuilder pbuilder;
+		    
+			/*
+			 * Realiza la construccion del comando    
+			 * en la linea de comandos esto es: 
+			 * dot -Tpng -o archivo.png archivo.dot
+			 */
+			pbuilder = new ProcessBuilder( "dot", "-Tpng", "-o", "/home/byron/GraficasMarioMaker/Lista.png", "/home/byron/GraficasMarioMaker/Lista.dot" );
+			pbuilder.redirectErrorStream( true );
+			//Ejecuta el proceso
+			pbuilder.start();
+		    
+		} catch (Exception e) { e.printStackTrace(); }
+        }
+        
+        
+        
+    }
+    
+    
 
-    /**
-     * @return the primero
-     */
+  
     public NL getPrimero() {
         return primero;
     }
 
-    /**
-     * @param primero the primero to set
-     */
+  
     public void setPrimero(NL primero) {
         this.primero = primero;
     }
 
-    /**
-     * @return the ultimo
-     */
+
     public NL getUltimo() {
         return ultimo;
     }
 
-    /**
-     * @param ultimo the ultimo to set
-     */
+  
     public void setUltimo(NL ultimo) {
         this.ultimo = ultimo;
     }
 
-    /**
-     * @return the elementos
-     */
+  
     public int getElementos() {
         return elementos;
     }
 
-    /**
-     * @param elementos the elementos to set
-     */
+  
     public void setElementos(int elementos) {
         this.elementos = elementos;
     }
 
-    /**
-     * @return the suelos
-     */
+  
     public int getSuelos() {
         return suelos;
     }
 
-    /**
-     * @param suelos the suelos to set
-     */
+  
     public void setSuelos(int suelos) {
         this.suelos = suelos;
     }
 
-    /**
-     * @return the paredes
-     */
+  
     public int getParedes() {
         return paredes;
     }
 
-    /**
-     * @param paredes the paredes to set
-     */
+   
     public void setParedes(int paredes) {
         this.paredes = paredes;
     }
 
-    /**
-     * @return the goombas
-     */
+   
     public int getGoombas() {
         return goombas;
     }
 
-    /**
-     * @param goombas the goombas to set
-     */
     public void setGoombas(int goombas) {
         this.goombas = goombas;
     }
 
-    /**
-     * @return the koopas
-     */
+   
     public int getKoopas() {
         return koopas;
     }
 
-    /**
-     * @param koopas the koopas to set
-     */
+   
     public void setKoopas(int koopas) {
         this.koopas = koopas;
     }
 
-    /**
-     * @return the fichas
-     */
+   
     public int getFichas() {
         return fichas;
     }
 
-    /**
-     * @param fichas the fichas to set
-     */
+   
     public void setFichas(int fichas) {
         this.fichas = fichas;
     }
 
-    /**
-     * @return the hongos
-     */
+   
     public int getHongos() {
         return hongos;
     }
 
-    /**
-     * @param hongos the hongos to set
-     */
+   
     public void setHongos(int hongos) {
         this.hongos = hongos;
     }
 
-    /**
-     * @return the personajes
-     */
+   
     public int getPersonajes() {
         return personajes;
     }
 
-    /**
-     * @param personajes the personajes to set
-     */
+    
     public void setPersonajes(int personajes) {
         this.personajes = personajes;
     }
 
-    /**
-     * @return the castillos
-     */
+    
     public int getCastillos() {
         return castillos;
     }
 
-    /**
-     * @param castillos the castillos to set
-     */
+   
     public void setCastillos(int castillos) {
         this.castillos = castillos;
     }
 
-    /**
-     * @return the pila
-     */
+  
     public boolean isPila() {
         return pila;
     }
 
-    /**
-     * @param pila the pila to set
-     */
+   
     public void setPila(boolean pila) {
         this.pila = pila;
     }
 
-    /**
-     * @return the cola
-     */
+   
     public boolean isCola() {
         return cola;
     }
 
-    /**
-     * @param cola the cola to set
-     */
+   
     public void setCola(boolean cola) {
         this.cola = cola;
     }

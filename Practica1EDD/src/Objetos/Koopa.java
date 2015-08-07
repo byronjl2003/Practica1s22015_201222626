@@ -5,6 +5,7 @@
  */
 package Objetos;
 
+import GUI.Game;
 import Imagenes.imagen;
 import MDisp.NCasilla;
 import MDisp.NM;
@@ -16,16 +17,16 @@ import javax.swing.JPanel;
  *
  * @author byron
  */
-public class Koopa extends Objeto {
+public class Koopa extends Objeto   {
     
     private boolean caminando,cayendo,topandox,topandoy,derecha;
     imagen imagenes;
-    int constante = 1,pixelesx=0,pixelesy=0;
+    int constante = 1,pixelesx=0,pixelesy=0,cuadros = 0;
     
     public Koopa(String nom,Image img)
     {
-        lienzo = null;
-        caminando = true;
+        
+        caminando = false;
         cayendo = false;
         topandox = false;
         topandoy=false;
@@ -41,6 +42,7 @@ public class Koopa extends Objeto {
         this.viviente = true;
         imagenes = new imagen();
         casillaactual = null;
+        this.derecha = true;
     }
     
     
@@ -50,120 +52,155 @@ public class Koopa extends Objeto {
     
 
     @Override
-    public void render(Graphics g) {
-         if(this.lienzo==null)
-             System.out.println("EL LIENZO ES NULO");
-         else
-             System.out.println("EL LIENZO NO ES NULO");
-         if(g==null)
-             System.out.println("EL g ES NULO");
-         else
-             System.out.println("EL g NO ES NULO");
-             
-        this.lienzo.getGraphics().drawImage(imagenes.derqk1(),this.getCordx(),this.getCordy(),75,75, this.lienzo);
+    public void render(Graphics g,Game game) {
+         
+        //System.out.println("EN EL REnder");
+        this.setCordx(this.getCordx() + this.getVx());
+        this.setCordy(this.getCordy() + this.getVy());
+        g.drawImage(this.imagenes.generalkoopa(derecha,constante),this.getCordx(),this.getCordy(),75,75,game);
         
     }
 
     @Override 
-    public void tick() {
-        NM nm = casillaactual.Buscar(1); 
-        if(nm.Dato.getCordx()==nm.Dato.getPosfx()&&nm.Dato.getCordy()==nm.Dato.getPosfy())
+    public void tick()
+    {
+       
+        if(this.getPosfx()==this.getCordx() && this.getPosfy()==this.getCordy())
         {
-            if(caminando)
+            System.out.println("ENTRO");
+            if(this.casillaactual.Abajo==null)
             {
-                if(this.getVx()>0)
-                {
-                    //caminando hacia la derecha
-                   NM nmder = casillaactual.Derecha.Buscar(1);
-                   nmder.Dato  = nm.Dato;
-                   nm.Dato = null;
-                   this.casillaactual = this.casillaactual.Derecha;
-                    
-                }
-                else if(this.getVx()<0)
-                {
-                    //caminando hacia la izquirda
-                   NM nmizq = casillaactual.Izquierda.Buscar(1);
-                   nmizq.Dato  = nm.Dato;
-                   nm.Dato = null;
-                   this.casillaactual = this.casillaactual.Izquierda;
-                }
-            }
-            else if(cayendo)
-            {
-                   NM nmabajo = casillaactual.Abajo.Buscar(1);
-                   nmabajo.Dato  = nm.Dato;
-                   nm.Dato = null;
-                   this.casillaactual = this.casillaactual.Abajo;
-            }
-            //todavia no a caminado nada desde su pos en la matriz actual.
-            if(casillaactual.Abajo.Buscar(1).Dato.getId()==-1)
-            {
-                //entonces si hay en donde sostenerse para caminar.
-                
-                nm.Dato.setPosfx(nm.Dato.getCordx()+75);
-                caminando = true; 
+                // actualmente koopa esta en la fila en donde debe morir
+                this.die();
             }
             else
+            if(this.casillaactual.Abajo.Buscar(1).Dato.getId()==-1)
             {
+                // La tortuga no tiene piso abajo
+                //se cambia casillaactual.
+                System.out.println("LA TORTUGA NO TIENE PISO");
+                Objeto aux = this.casillaactual.Abajo.Buscar(1).Dato;
+                this.casillaactual.Abajo.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
+                this.casillaactual.Buscar(1).Dato = aux;
                 
+                this.casillaactual = this.casillaactual.Abajo;
+                this.setPosfy(this.getCordy()+75);
+                this.setVy(+5);
+                this.setVx(0);
             }
-        }
-        
-        else if(caminando)
-        {
-            if(topandox)
+            else if(this.casillaactual.Abajo.Buscar(1).Dato.getId()==0 |this.casillaactual.Abajo.Buscar(1).Dato.getId()==1 )
             {
-                if(this.getVx()>0)
+                System.out.println("LA TORTUGA SI TIENE PISO");
+                if(this.casillaactual.Derecha==null)
                 {
-                    // esta avanzando a la derecha
-                    //*cambiar a imagen izquierda
-                    derecha = false;
-                    this.setImage(imagenes.generalkoopa(derecha,constante));
+                    System.out.println("LA TORTUGA ESTA EN EL BORDE DERECHO");
+                    derecha = false;// para cambiar la imagen de derecha a izquierda
+                    Objeto aux = this.casillaactual.Izquierda.Buscar(1).Dato;
+                    this.casillaactual.Izquierda.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
+                    this.casillaactual.Buscar(1).Dato = aux;
                     
+                    this.casillaactual = this.casillaactual.Izquierda;
+                    this.setPosfx(this.getCordx()-75);
                     this.setVx(-5);
+                    this.setVy(0);
+                    //la tortuga esta en tope derecho
+                    
+                }
+                else if(this.casillaactual.Izquierda==null)
+                {
+                    // la tortuga esta en el tope izquierdo
+                    System.out.println("LA TORTUGA ESTA EN EL BORDE IZQUIERDO");
+                    derecha = true;//para cambiar la imagen de izquierda a derecha
+                    
+                    Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
+                    this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
+                    this.casillaactual.Buscar(1).Dato = aux;
+                    
+                    this.casillaactual = this.casillaactual.Derecha;
+                    this.setPosfx(this.getCordx()+75);
+                    this.setVx(5);
                     this.setVy(0);
                     
                 }
                 else
                 {
-                    // esta avanzando a la izquierda
-                    derecha = true;
-                    this.setImage(imagenes.generalkoopa(derecha, constante));
-                    
-                    this.setVx(5);
-                    this.setVy(0);
+                    //se verifica si hay topes
+                    if((this.casillaactual.Derecha.Buscar(1).Dato.getId()==0|this.casillaactual.Derecha.Buscar(1).Dato.getId()==1)&&(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==0|this.casillaactual.Izquierda.Buscar(1).Dato.getId()==1))
+                    {
+                        System.out.println("ESTA ATRAPADO!!!!");
+                        this.setVx(0);
+                        this.setVy(0);
+                        // esta atraoado!!!!!
+                    }
+                    else if(derecha)
+                    {
+                        if(this.casillaactual.Derecha.Buscar(1).Dato.getId()==0|this.casillaactual.Derecha.Buscar(1).Dato.getId()==1)
+                        {
+                            //hay tope, se cambia de giro la imagen y la casilla a la izquierda.
+                            System.out.println("ESTA DETECTANDO EL TOPE A LA DERECHA");
+                            derecha = false;
+                            Objeto aux = this.casillaactual.Izquierda.Buscar(1).Dato;
+                            this.casillaactual.Izquierda.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
+                            this.casillaactual.Buscar(1).Dato = aux;
+                            this.casillaactual = this.casillaactual.Izquierda;
+                            this.setPosfx(this.getCordx()-75);
+                            this.setVx(-5);
+                            this.setVy(0);
+                        }
+                        else
+                        {
+                            System.out.println("EN EL ELSE DE DERECHA");
+                            derecha = true;
+                            Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
+                            this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
+                            this.casillaactual.Buscar(1).Dato = aux;
+                            
+                            this.casillaactual = this.casillaactual.Derecha;
+                            this.setPosfx(this.getCordx()+75);
+                            this.setVx(5);
+                            this.setVy(0);
+                        }
+                    }
+                    else
+                    {
+                        if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==0|this.casillaactual.Izquierda.Buscar(1).Dato.getId()==1)
+                        {
+                            //hay tope, se cambia de giro la imagen y la casilla a la izquierda.
+                             System.out.println("ESTA DETECTANDO EL TOPE A LA IZQUIERDA");
+                            derecha = true;
+                             Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
+                            this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
+                            this.casillaactual.Buscar(1).Dato = aux;
+                            
+                            this.casillaactual = this.casillaactual.Derecha;
+                            this.setPosfx(this.getCordx()+75);
+                            this.setVx(5);
+                            this.setVy(0);
+                        }
+                        else
+                        {
+                            derecha = false;
+                            Objeto aux = this.casillaactual.Izquierda.Buscar(1).Dato;
+                            this.casillaactual.Izquierda.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
+                            this.casillaactual.Buscar(1).Dato = aux;
+                            
+                            this.casillaactual = this.casillaactual.Izquierda;
+                            this.setPosfx(this.getCordx()-75);
+                            this.setVx(-5);
+                            this.setVy(0);
+                        }
+                    }
                 }
             }
-            else
-            {
-                this.setVx(5);
-                this.setVy(0);
-                if(constante==1)
-                {
-                    constante++;
-                    this.setImage(imagenes.generalkoopa(derecha, constante));
-                }
-                else if(constante==2)
-                {
-                    constante--;
-                    this.setImage(imagenes.generalkoopa(derecha, constante));
-                    
-                }
-            }
-            //this.setVx(5);
-            
-            
         }
-        
-        else if(cayendo)
-        {
-            this.setVx(0);
-            this.setVy(+5);
-        }
-        
         
     }
+
+    @Override
+    public void die() {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
     
 }

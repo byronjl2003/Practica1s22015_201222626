@@ -5,6 +5,7 @@
  */
 package Objetos;
 
+import GUI.Game;
 import Imagenes.imagen;
 import ListaPilaCola.Lista;
 import MDisp.MDisp;
@@ -52,7 +53,7 @@ public class Goomba extends ObjetoViv {
     
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics g,Game game) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -179,6 +180,11 @@ public class Goomba extends ObjetoViv {
 
     @Override
     public void aplastado() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void die() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

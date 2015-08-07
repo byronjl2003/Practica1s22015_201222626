@@ -5,6 +5,7 @@
  */
 package Objetos;
 
+import GUI.Game;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -35,12 +36,17 @@ public class Hongo extends Objeto {
     
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics g,Game game) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void tick() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void die() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

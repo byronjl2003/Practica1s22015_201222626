@@ -5,6 +5,7 @@
  */
 package Objetos;
 
+import GUI.Game;
 import java.awt.Graphics;
 
 /**
@@ -14,7 +15,7 @@ import java.awt.Graphics;
 public abstract class ObjetoViv extends Objeto {
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics g,Game game) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

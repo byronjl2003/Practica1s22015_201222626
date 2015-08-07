@@ -24,26 +24,32 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
  * @author byron
  */
-public class VentanaPrincipal extends JPanel implements ActionListener {
+public class VentanaPrincipal extends JPanel implements ActionListener,ChangeListener {
     
-    JButton btncargar,btnmaker;
+    JButton btncargar,btnmaker,btngrafica;
     JFrame vent;
     imagen imgs;
     JPanel jpcarga,jpcarga1;
     Maker maker;
     JScrollPane scroll;
+    JRadioButton radiopila,radiocola;
+    ButtonGroup bg;
     //-------elementos para el panel de carga
-   
+  
     PanelLista panellista;
     //elementos para el panel maker
     Lista lista;
@@ -71,14 +77,16 @@ public class VentanaPrincipal extends JPanel implements ActionListener {
         btncargar = new JButton("CARGAR");
         btncargar.addActionListener(this);
         btncargar.setBounds(450,10,90,25);
-        btncargar.addActionListener(this);
+        //btncargar.addActionListener(this);
         this.add(btncargar);
         btnmaker = new JButton("MAKER");
         btnmaker.addActionListener(this);
         btnmaker.setBounds(550,10, 90,25);
-        btnmaker.addActionListener(this);
+        //btnmaker.addActionListener(this);
         this.add(btnmaker);
-        
+        //this.btngrafica = new JButton("Graficar");
+        //btnmaker.addActionListener(this);
+        //btnmaker.setBounds(660,10, 90,25);
         CrearPanelCarga();
         CrearPanelMaker();
         vent.add(this);
@@ -95,7 +103,7 @@ public class VentanaPrincipal extends JPanel implements ActionListener {
         jpcarga.setLayout(null);
         jpcarga.setBounds(100,50, 800, 600);
         jpcarga1 = new JPanel();
-        jpcarga1.setBounds(0, 0, 500, 600);
+        jpcarga1.setBounds(0, 0, 500, 550);
         
         jpcarga1.setLayout(new GridLayout(4,2));
         
@@ -108,6 +116,21 @@ public class VentanaPrincipal extends JPanel implements ActionListener {
         jpcarga.add(jpcarga1);
         panellista.scroll.setBounds(500, 0, 250, 600);
         jpcarga.add(panellista.scroll);
+        this.btngrafica = new JButton("Graficar");
+        this.btngrafica.addActionListener(this);
+        bg = new ButtonGroup();
+        this.radiocola = new JRadioButton("COLA");
+        this.radiocola.addChangeListener(this);
+        this.radiopila = new JRadioButton("PILA");
+        this.radiopila.addChangeListener(this);
+        this.bg.add(radiocola);
+        this.bg.add(radiopila);
+        this.btngrafica.setBounds(50, 560, 100, 35);
+        this.jpcarga.add(this.btngrafica);
+        this.radiocola.setBounds(180, 560, 60, 35);
+        this.radiopila.setBounds(250, 560, 60, 35);
+        this.jpcarga.add(this.radiocola);
+        this.jpcarga.add(this.radiopila);
         this.jpcarga.setVisible(false);
         this.add(jpcarga);
         
@@ -152,6 +175,29 @@ public class VentanaPrincipal extends JPanel implements ActionListener {
             this.maker.General.setVisible(true);
             this.maker.refreshActual();
         }
+        else if(e.getSource()==this.btngrafica)
+        {
+            System.out.println("CLICK EN GRAFICAR!");
+            this.lista.Graficar("Lista");
+        }
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        
+        if(e.getSource()==this.radiocola)
+        {
+            System.out.println("ENTRO A LOS RADIOS");
+            this.lista.setCola(true);
+            this.lista.setPila(false);
+        }
+        else if(e.getSource()==this.radiopila)
+        {
+             System.out.println("ENTRO A LOS RADIOS");
+            this.lista.setPila(true);
+            this.lista.setCola(false);
+        }
+        
     }
     
     private class Panelito extends JPanel implements ActionListener

@@ -5,6 +5,7 @@
  */
 package Objetos;
 
+import GUI.Game;
 import Imagenes.imagen;
 import MDisp.NCasilla;
 import java.awt.Graphics;
@@ -21,16 +22,17 @@ public abstract class Objeto extends ImageIcon {
     private int id;
     private String nombre;
     public NCasilla casillaactual;
-    JPanel lienzo;
+   
     public Objeto()
     {
         casillaactual = null;
         
     }
-    public abstract void render(Graphics g);
+    public abstract void render(Graphics g,Game game);
             
     
     public abstract void tick();
+    public abstract void die();
     
             
     

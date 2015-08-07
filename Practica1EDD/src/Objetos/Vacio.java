@@ -5,6 +5,7 @@
  */
 package Objetos;
 
+import GUI.Game;
 import java.awt.Graphics;
 
 /**
@@ -31,12 +32,17 @@ public class Vacio extends Objeto {
     }
 
     @Override
-    public void render(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void render(Graphics g,Game game) {
+       
     }
 
     @Override
     public void tick() {
+       
+    }
+
+    @Override
+    public void die() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

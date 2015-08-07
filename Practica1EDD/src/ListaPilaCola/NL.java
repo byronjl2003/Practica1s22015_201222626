@@ -15,15 +15,29 @@ import Objetos.Objeto;
 public class NL {
     private Objeto objeto;
     private NL next,back;
+    private int idnode;
     
-    public NL(Objeto oj)
+    public NL(Objeto oj,int id)
     {
         this.objeto = oj;
         this.next = null;
         this.back = null;
+        this.idnode = id;
         
     }
-    public String Tostring()
+    
+    
+    public String ToStringEncabezado()
+    {
+        return "Nodo"+idnode+"[label=\"TIPO: "+this.Ttostring()+"\\"+"nNOMBRE: "+this.getObjeto().getNombre()+"\"];";
+    }
+    
+    public String ToString()
+    {
+        return "Nodo"+idnode;
+    }
+    
+    public String Ttostring()
     {
        switch(this.getObjeto().getId())
        {

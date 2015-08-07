@@ -181,24 +181,67 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
     
     
  }
+ 
+ public void AgregarFila()
+ {
+     System.out.println("FILAS ANSTE de agregar filas: "+this.matriz.getLcolumnas().ListaFilas.elementos);
+     System.out.println("COLUMNAS ANTES de agregar filas: "+this.matriz.getLcolumnas().elementos);
+     int filnueva = this.matriz.getLcolumnas().ListaFilas.elementos;
+     for(int i=0;i<this.matriz.getLcolumnas().elementos;i++)
+     {
+         
+         
+         
+         NCasilla aux = this.matriz.Insertar(filnueva,i,1,new Vacio());
+         NM auxx = aux.Buscar(1);
+         auxx.setTransferHandler(new ImageSelection(this.lista,this));
+         auxx.addMouseListener(this);
+        
+         
+         
+     }
+     System.out.println("FILAS DESPUES de agregar filas: "+this.matriz.getLcolumnas().ListaFilas.elementos);
+     System.out.println("COLUMNAS DESPUES de agregar filas: "+this.matriz.getLcolumnas().elementos);
+     MakeTablero();
+ }
+ public void AgregarColumna()
+ {
+    int colnueva = this.matriz.getLcolumnas().elementos;
+    for(int i=0;i<this.matriz.getLcolumnas().ListaFilas.elementos;i++)
+    {
+        
+        
+        NCasilla aux = this.matriz.Insertar(i,colnueva,1,new Vacio());
+        NM auxx = aux.Buscar(1);
+        auxx.setTransferHandler(new ImageSelection(this.lista,this));
+        auxx.addMouseListener(this);
+    }
+    MakeTablero(); 
+ }
  public void MakeTablero()
  {
-     this.removeAll();
+    this.removeAll();
     System.out.println("EN EL MakeTablero");
     this.setPreferredSize(new Dimension(this.matriz.getLcolumnas().elementos*75,this.matriz.getLcolumnas().ListaFilas.elementos*75));
     scroll.setViewportView(this);
-    for(int i=0;i<this.matriz.getLcolumnas().ListaFilas.elementos;i++)
-    {System.out.println("FILA: "+i);
-        for(int j=0;j<this.matriz.getLcolumnas().elementos;j++)
+    int x = 0;
+    
+    NC columna = this.matriz.getLcolumnas().Primero;
+    while(columna!=null)
+    {
+        int y=0;
+        NF fila = this.matriz.getLcolumnas().ListaFilas.Primero;
+        while(fila!=null)
         {
-            System.out.println("COLUMNA: "+j);
-            NCasilla aux = this.matriz.Insertar(i, j, 1,null);
-            NM auxx = aux.Buscar(1);
-            auxx.setTransferHandler(new ImageSelection(this.lista,this));
-            auxx.addMouseListener(this);
-            auxx.setBounds(j*75, i*75, 75, 75);
-            this.add(auxx);
+            NCasilla casilla = fila.Buscar(columna);
+            NM nodo = casilla.Buscar(1);
+            nodo.setBounds(x*75, y*75,75,75);
+            this.add(nodo);
+            y++;
+            fila = fila.Next;
         }
+        x++;
+        columna = columna.Next;
     }
     this.repaint();
     
@@ -246,6 +289,8 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
                     {
                         casilla.Dato.setCordx(x);
                         casilla.Dato.setCordy(y);
+                        casilla.Dato.setPosfx(x);
+                        casilla.Dato.setPosfy(y);
                         casilla.Dato.casillaactual = cas;
                     }
                     else if(casilla.Dato==null)
@@ -253,6 +298,8 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
                         casilla.Dato = new Vacio();
                         casilla.Dato.setCordx(x);
                         casilla.Dato.setCordy(y);
+                        casilla.Dato.setPosfx(x);
+                        casilla.Dato.setPosfy(y);
                         casilla.Dato.casillaactual = cas;
                         
                     }
@@ -274,7 +321,7 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
                 for(int j=0;j<columnas;j++)
                 {
                     System.out.println("EN EL FOR2");
-                    this.matriz.Insertar(i, j,1,null);
+                    this.matriz.Insertar(i, j,1,new Vacio());
                 }
             }
             
@@ -283,7 +330,7 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
             for(int i=0;i<columnas;i++)
             {
                 System.out.println("EN EL FOR3");
-                this.matriz.Insertar(fila, i, 1, null);
+                this.matriz.Insertar(fila, i, 1,new Vacio());
             }
             game = new Game(this.matriz);
             
@@ -291,29 +338,14 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
             
         else if(e.getSource()==this.btnaddC)
         {
-            int colnueva = this.matriz.getLcolumnas().elementos;
-            for(int i=0;i<this.matriz.getLcolumnas().ListaFilas.elementos;i++)
-            {
-                this.matriz.Insertar(i,colnueva,1,null);
-            }
-            MakeTablero();
-            
+            this.AgregarColumna();
             
         }
         else if(e.getSource()==this.btnaddF)
         {
             //aggregar fila
-            System.out.println("FILAS ANSTE de agregar filas: "+this.matriz.getLcolumnas().ListaFilas.elementos);
-            System.out.println("COLUMNAS ANTES de agregar filas: "+this.matriz.getLcolumnas().elementos);
-            int filnueva = this.matriz.getLcolumnas().ListaFilas.elementos;
-            for(int i=0;i<this.matriz.getLcolumnas().elementos;i++)
-            {
-                System.out.println(""+i+"<="+this.matriz.getLcolumnas().elementos);
-                this.matriz.Insertar(filnueva,i,1,null);
-            }
-            System.out.println("FILAS DESPUES de agregar filas: "+this.matriz.getLcolumnas().ListaFilas.elementos);
-            System.out.println("COLUMNAS DESPUES de agregar filas: "+this.matriz.getLcolumnas().elementos);
-            MakeTablero();
+            this.AgregarFila();
+            
         }
         else if(e.getSource()==this.btnelim)
         {
@@ -347,10 +379,13 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        
+        System.out.println("********************MOUSE CLICKED****************");
+        System.out.println("NUMERO DE ELEMENTOS EN LA LISTA ANTES DE QUITAR DEL PANEL Y AGREGARLA A LA LISTA: "+this.lista.getElementos());
         NM panel = (NM)e.getSource();
         this.lista.Add(panel.Dato);
-        panel.Dato=null;
+        panel.Dato=new Vacio();
+        System.out.println("NUMERO DE ELEMENTOS EN LA LISTA DESPUES DE QUITAR DEL PANEL Y AGREGARLA A LA LISTA: "+this.lista.getElementos());
+        System.out.println("ID DEL OBJETO EN EL PANEL: "+panel.Dato.getId());
         this.refreshActual();
         panel.repaint();
         
