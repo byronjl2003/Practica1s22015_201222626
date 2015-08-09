@@ -23,6 +23,10 @@ public class NCasilla {
     public NCasilla(NC columna,NF fila)
     {
         this.Primero = this.Ultimo =  null;
+        this.Arriba=null;
+        this.Abajo = null;
+        this.Derecha = null;
+        this.Izquierda = null;
         this.Ptrcolumna = columna;
         this.Ptrfila = fila;
 
@@ -190,6 +194,23 @@ public class NCasilla {
                 aux = aux.Next;
             }
             return relations;
+        }
+        public String ToStringLabel()
+        { 
+            //if(this.Primero.Dato==null)
+              //  System.out.println("EL DATO ES NULO!!!!!!!!!!!!!!!!!!!!!!!");
+            if(this.Primero.Dato.getId()==-1)
+            {
+                return this.ToString() + "[label=\"<f0>|<f1>[VACIO]|<f2>\"];\n";
+            }
+            else
+            {
+                return this.ToString()+"[label=\"<f0>|<f1>TIPO:"+this.Primero.Dato.ToString()+"\\nNOMBRE:"+this.Primero.Dato.getNombre()+"|<f2>\"];\n";
+            
+            }
+        
+           // return "ERROR!!!!!";
+            
         }
         public String ToString()
         {

@@ -28,7 +28,7 @@ public class Manejador{
     //Graphics g;
     MDisp matriz;
     Game game;
-    
+    Mario mario;
     Objeto Buscarmario()
     {
         NL nodo = this.lvivientes.getPrimero();
@@ -42,11 +42,18 @@ public class Manejador{
         return null;
                 
     }
+    
     public void oidomario(KeyEvent e)
     {
+        System.out.println("EN EL OIDO DEL MARIO");
         Objeto obj  = this.Buscarmario();
-        Mario mario = (Mario)obj;
-        mario.keyPressed(e);
+        
+        if(obj!=null)
+        {
+            Mario mario = (Mario)obj;
+            mario.keyPressed(e);
+        }
+        
     }
     
     public void Pintar(Graphics g)
@@ -66,7 +73,7 @@ public class Manejador{
     }
     public void tickear()
     {
-        NL node = this.lista.getPrimero();
+        NL node = this.lvivientes.getPrimero();
         
         while(node!=null)
         {
@@ -91,7 +98,7 @@ public class Manejador{
                 NF fila = matriz.getLcolumnas().ListaFilas.Buscar(i);
                 NCasilla casilla = columna.Buscar(fila);
                 Objeto obj =casilla.Buscar(1).Dato; 
-                if(obj!=null)
+                if(obj!=null && obj.getId()!=-1)
                 {
                     
                     lista.Add(obj);
@@ -99,6 +106,8 @@ public class Manejador{
                     {
                         this.lvivientes.Add(obj);
                     }
+                    if(obj.getId()==6)
+                        this.mario = (Mario)obj;
                 }
                 
             }

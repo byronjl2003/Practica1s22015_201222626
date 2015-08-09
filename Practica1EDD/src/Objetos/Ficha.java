@@ -6,6 +6,7 @@
 package Objetos;
 
 import GUI.Game;
+import Imagenes.imagen;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -14,9 +15,10 @@ import java.awt.Image;
  * @author byron
  */
 public class Ficha extends Objeto {
-    
+    imagen imgs;
     public Ficha(String nom,Image img)
     {
+        this.imgs = new imagen();
         this.setNombre(nom);
         this.setId(4);
         this.viviente = false;
@@ -37,12 +39,12 @@ public class Ficha extends Objeto {
 
     @Override
     public void render(Graphics g,Game game) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        g.drawImage(this.imgs.generalficha(),this.getCordx(),this.getCordy(),75,75,game);
     }
 
     @Override
     public void tick() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

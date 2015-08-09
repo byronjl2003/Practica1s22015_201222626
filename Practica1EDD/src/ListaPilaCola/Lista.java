@@ -80,10 +80,10 @@ public class Lista {
             
             if(obj.getId()==6)
             {
-                System.out.println("ENTRO A ID==6");
+                //System.out.println("ENTRO A ID==6");
                 if(this.getPersonajes()==0)
                 {
-                    System.out.println("ENTRO A personajes ==0");
+                    //System.out.println("ENTRO A personajes ==0");
                     ContEspecial(obj.getId());
                     
                     this.setElementos(elementos+1);
@@ -311,10 +311,12 @@ public class Lista {
         while(aux2!=null)
         {
             if(aux2.getNext()!=null)
-                constructor.append(aux2.ToString()+"->"+aux2.getNext().ToString()+";\n");
+                constructor.append(aux2.ToString()+":f2 -> "+aux2.getNext().ToString()+":f0 ;\n");
+            if(aux2.getBack()!=null)
+                constructor.append(aux2.ToString()+":f0 -> "+aux2.getBack().ToString()+":f2 ;\n");
             aux2 = aux2.getNext();
         }
-        constructor.append(";"+"\n");
+       
         //-- se grafica los string en cada usuario
         
         

@@ -55,6 +55,12 @@ public class Koopa extends Objeto   {
     public void render(Graphics g,Game game) {
          
         //System.out.println("EN EL REnder");
+        
+        if(constante==2)
+            constante--;
+        else
+            constante++;
+                
         this.setCordx(this.getCordx() + this.getVx());
         this.setCordy(this.getCordy() + this.getVy());
         g.drawImage(this.imagenes.generalkoopa(derecha,constante),this.getCordx(),this.getCordy(),75,75,game);
@@ -64,10 +70,10 @@ public class Koopa extends Objeto   {
     @Override 
     public void tick()
     {
-       
+        
         if(this.getPosfx()==this.getCordx() && this.getPosfy()==this.getCordy())
         {
-            System.out.println("ENTRO");
+           // System.out.println("ENTRO");
             if(this.casillaactual.Abajo==null)
             {
                 // actualmente koopa esta en la fila en donde debe morir
@@ -78,7 +84,7 @@ public class Koopa extends Objeto   {
             {
                 // La tortuga no tiene piso abajo
                 //se cambia casillaactual.
-                System.out.println("LA TORTUGA NO TIENE PISO");
+               // System.out.println("LA TORTUGA NO TIENE PISO");
                 Objeto aux = this.casillaactual.Abajo.Buscar(1).Dato;
                 this.casillaactual.Abajo.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
                 this.casillaactual.Buscar(1).Dato = aux;
@@ -90,10 +96,10 @@ public class Koopa extends Objeto   {
             }
             else if(this.casillaactual.Abajo.Buscar(1).Dato.getId()==0 |this.casillaactual.Abajo.Buscar(1).Dato.getId()==1 )
             {
-                System.out.println("LA TORTUGA SI TIENE PISO");
+               // System.out.println("LA TORTUGA SI TIENE PISO");
                 if(this.casillaactual.Derecha==null)
                 {
-                    System.out.println("LA TORTUGA ESTA EN EL BORDE DERECHO");
+                   // System.out.println("LA TORTUGA ESTA EN EL BORDE DERECHO");
                     derecha = false;// para cambiar la imagen de derecha a izquierda
                     Objeto aux = this.casillaactual.Izquierda.Buscar(1).Dato;
                     this.casillaactual.Izquierda.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
@@ -109,7 +115,7 @@ public class Koopa extends Objeto   {
                 else if(this.casillaactual.Izquierda==null)
                 {
                     // la tortuga esta en el tope izquierdo
-                    System.out.println("LA TORTUGA ESTA EN EL BORDE IZQUIERDO");
+                    //System.out.println("LA TORTUGA ESTA EN EL BORDE IZQUIERDO");
                     derecha = true;//para cambiar la imagen de izquierda a derecha
                     
                     Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
@@ -127,7 +133,7 @@ public class Koopa extends Objeto   {
                     //se verifica si hay topes
                     if((this.casillaactual.Derecha.Buscar(1).Dato.getId()==0|this.casillaactual.Derecha.Buscar(1).Dato.getId()==1)&&(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==0|this.casillaactual.Izquierda.Buscar(1).Dato.getId()==1))
                     {
-                        System.out.println("ESTA ATRAPADO!!!!");
+                       // System.out.println("ESTA ATRAPADO!!!!");
                         this.setVx(0);
                         this.setVy(0);
                         // esta atraoado!!!!!
@@ -137,7 +143,7 @@ public class Koopa extends Objeto   {
                         if(this.casillaactual.Derecha.Buscar(1).Dato.getId()==0|this.casillaactual.Derecha.Buscar(1).Dato.getId()==1)
                         {
                             //hay tope, se cambia de giro la imagen y la casilla a la izquierda.
-                            System.out.println("ESTA DETECTANDO EL TOPE A LA DERECHA");
+                          //  System.out.println("ESTA DETECTANDO EL TOPE A LA DERECHA");
                             derecha = false;
                             Objeto aux = this.casillaactual.Izquierda.Buscar(1).Dato;
                             this.casillaactual.Izquierda.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
@@ -149,7 +155,7 @@ public class Koopa extends Objeto   {
                         }
                         else
                         {
-                            System.out.println("EN EL ELSE DE DERECHA");
+                           // System.out.println("EN EL ELSE DE DERECHA");
                             derecha = true;
                             Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
                             this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
@@ -166,7 +172,7 @@ public class Koopa extends Objeto   {
                         if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==0|this.casillaactual.Izquierda.Buscar(1).Dato.getId()==1)
                         {
                             //hay tope, se cambia de giro la imagen y la casilla a la izquierda.
-                             System.out.println("ESTA DETECTANDO EL TOPE A LA IZQUIERDA");
+                           //  System.out.println("ESTA DETECTANDO EL TOPE A LA IZQUIERDA");
                             derecha = true;
                              Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
                             this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;

@@ -58,117 +58,274 @@ public class MDisp {
 
         public void graficarMDispersa()
         {
+            System.out.println("EN graficarMDispersa");
             StringBuilder constructor  = new StringBuilder();
             constructor.append("digraph g{\n");
-            constructor.append("node[shape = record]");
+            constructor.append("node[shape = record]\n");
+            NC primero = this.getLcolumnas().Primero;
+            while(primero!=null)
+            {
+                NF fila = this.getLcolumnas().ListaFilas.Primero;
+                while(fila!=null)
+                {
+                    
+                    constructor.append(primero.Buscar(fila).ToStringLabel());
+                    fila = fila.Next;
+                    
+                }
+                primero = primero.Next;
+                
+            }
+            constructor.append("ranksep = .5; splines=ortho;\n{\n");
+            NC columna = this.getLcolumnas().Primero;
+            NF fila = this.getLcolumnas().ListaFilas.Primero;
+            while(fila!=null)
+            {
+                if(fila.Next!=null)
+                    constructor.append(columna.Buscar(fila).ToString()+"->");
+                else
+                    constructor.append(columna.Buscar(fila).ToString()+"[color=white];\n");
+                fila = fila.Next;
+                    
+            }
             
-            //NC primero = this.getLcolumnas().Primero;
+            constructor.append("}\n");
             
+            NF filla = this.getLcolumnas().ListaFilas.Primero;
+            while(filla!=null)
+            {
+                constructor.append("{\nrank = same;\n");
+                NCasilla casilla = filla.Primero;
+                while(casilla!=null)
+                {
+                    if(casilla.Izquierda!=null)
+                        constructor.append(casilla.ToString()+":f0 -> "+casilla.Izquierda.ToString()+":f2;\n");
+                    if(casilla.Derecha!=null)
+                        constructor.append(casilla.ToString()+":f2 -> "+casilla.Derecha.ToString()+":f0;\n");
+                   
+                        
+                    casilla = casilla.Derecha;
+                }
+                constructor.append("}\n");
+                filla = filla.Next;
+            }
             
+            NF fi = this.Lcolumnas.ListaFilas.Primero;
+            while(fi!=null)
+            {
+                NCasilla cas = fi.Primero;
+                while(cas!=null)
+                {
+                    
+                    if(cas.Arriba!=null)
+                    {
+                        constructor.append(cas.ToString()+" -> "+cas.Arriba.ToString()+";\n");
+                       // constructor.append(cas.Arriba.ToString()+" -> "+cas.ToString()+";\n");
+                    }
+                    if(cas.Abajo!=null)
+                    {
+                        constructor.append(cas.ToString()+" -> "+cas.Abajo.ToString()+";\n");
+                        ///constructor.append(cas.Abajo.ToString()+" -> "+cas.ToString()+";\n");
+                    }
+                    cas = cas.Derecha;
+                }
+                fi = fi.Next;
+            }
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            //************************************************
-            
+            constructor.append("}\n");
+           //************************************************
             FileWriter fichero = null;
             PrintWriter pw = null;
+            
             try
             {
-                fichero = new FileWriter("/home/byron/MDisp.txt");
+                fichero = new FileWriter("/home/byron/GraficasMarioMaker/"+"matriz"+".dot");
                 pw = new PrintWriter(fichero);
-                pw.println("digraph g{");
-                pw.println("ranksep = .5;splines=ortho;");
-                pw.println("{");
-                pw.println("node[shape = record]");
-                String primera ="";
-                //***el primer segmento, la declaracion de todos los nodos
-                NC primero = this.getLcolumnas().Primero;
-                while(primero!=null)
-                {
-                    int contf=1;
-                    NCasilla frs = primero.Primero;
-                    while(frs!=null)
-                    {
-                        if(primero==this.getLcolumnas().Ultimo)
-                            pw.println("Nulo"+primero.numero+contf+"[label=\"NULO!\"];");
-                            
-                        NM casilla = frs.Buscar(1);
-                    
-                        if(frs==primero.Ultimo)
-                        primera = primera + "Nodo"+primero.numero+""+contf+"[label = \""+"<f0>|<f1>"+casilla.ToString()+" |<f2>"+"\"];";
-                        else
-                            primera = primera + "Nodo"+primero.numero+""+contf+"[label = \""+"<f0>|<f1>"+casilla.ToString()+" |<f2>"+"\"];";
-                        pw.println(primera);
-                        frs = frs.Abajo;
-                        contf++;
-                    }
  
-                    
-                    primero = primero.Next;
-                   
-                }
-                //****segundo segmento,las relaciones de la primera columna;
-                pw.println("ranksep = .5;splines=ortho;");
-                pw.println("{");
-                    int contff = 1;
-                    NC columna = this.getLcolumnas().Primero;
-                    NCasilla aux = columna.Primero;
-                    while(aux!=null)
-                    {
-                        String normal="";
-                        if(aux.Abajo==null)
-                             normal=normal +"Nodo"+columna.numero+""+contff+"-> NULO;";
-                        else
-                        {
-                            int c = contff+1;
-                            normal = normal+"Nodo"+columna.numero+""+contff+" -> Nodo"+columna+""+c+";";
-                        }
-                        pw.println("normal");
-                      aux = aux.Abajo;
-                      contff++;
-                    }
-                    aux = columna.Ultimo;
-                    while(aux!=null)
-                    {
-                        contff = this.getLcolumnas().ListaFilas.elementos;
-                        String anormal="";
-                        if(aux.Arriba==null)
-                             anormal=anormal +"Nodo"+columna.numero+""+contff+"-> NULO;";
-                        else
-                        {
-                            int c = contff-1;
-                            anormal = anormal+"Nodo"+columna.numero+""+contff+" -> Nodo"+columna+""+c+";";
-                        }
-                        pw.println("normal");
-                        aux = aux.Arriba;
-                        contff--;
-                    }
-                pw.println("}");
-                    
-                //** tercer segmento,todas las relaciones horizontales
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally
+            
+                pw.println(constructor.toString());
+ 
+            } catch (Exception e)
             {
-                try {
+                e.printStackTrace();
+            } 
+            finally
+            {
+                try
+                {
+                    if (null != fichero)
+                        fichero.close();
+                }
+                catch (Exception e2)
+                {
+                    e2.printStackTrace();
+                }
            
-                        if (null != fichero)
-                                fichero.close();
-                    } catch (Exception e2) {
-                            e2.printStackTrace();
-                                            }
-            }
-
+           //....GENERACION CON DOT
+                try
+		{       
+			ProcessBuilder pbuilder;
+		    
+			/*
+			 * Realiza la construccion del comando    
+			 * en la linea de comandos esto es: 
+			 * dot -Tpng -o archivo.png archivo.dot
+			 */
+			pbuilder = new ProcessBuilder( "dot", "-Tpng", "-o", "/home/byron/GraficasMarioMaker/matriz.png", "/home/byron/GraficasMarioMaker/matriz.dot" );
+			pbuilder.redirectErrorStream( true );
+			//Ejecuta el proceso
+			pbuilder.start();
+		    
+		} catch (Exception e) { e.printStackTrace(); }
         }
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+         public void graficarMDispersa2()
+        {
+            System.out.println("EN graficarMDispersa2!!!!");
+            StringBuilder constructor  = new StringBuilder();
+            constructor.append("digraph g{\n");
+            constructor.append("node[shape = record]\n");
+            NC primero = this.getLcolumnas().Primero;
+            while(primero!=null)
+            {
+                NF fila = this.getLcolumnas().ListaFilas.Buscar(0);
+                while(fila.Num<this.getLcolumnas().ListaFilas.elementos-2)
+                {
+                    
+                    constructor.append(primero.Buscar(fila).ToStringLabel());
+                    fila = fila.Next;
+                    
+                }
+                primero = primero.Next;
+                
+            }
+            constructor.append("ranksep = .5; splines=ortho;\n{\n");
+            NC columna = this.getLcolumnas().Primero;
+            NF fila = this.getLcolumnas().ListaFilas.Buscar(0);
+            while(fila.Num<this.getLcolumnas().ListaFilas.elementos-3)
+            {
+                if(fila.Num == this.getLcolumnas().ListaFilas.elementos-4)
+                    constructor.append(columna.Buscar(fila).ToString()+"[color=white];\n");
+                
+                else if(fila.Next!=null)
+                    constructor.append(columna.Buscar(fila).ToString()+"->");
+                
+                fila = fila.Next;
+                    
+            }
+            
+            constructor.append("}\n");
+            
+            NF filla = this.getLcolumnas().ListaFilas.Buscar(0);
+            while(filla.Num<this.getLcolumnas().ListaFilas.elementos-3)
+            {
+                constructor.append("{\nrank = same;\n");
+                NCasilla casilla = filla.Primero;
+                while(casilla!=null)
+                {
+                    if(casilla.Izquierda!=null)
+                        constructor.append(casilla.ToString()+":f0 -> "+casilla.Izquierda.ToString()+":f2;\n");
+                    if(casilla.Derecha!=null)
+                        constructor.append(casilla.ToString()+":f2 -> "+casilla.Derecha.ToString()+":f0;\n");
+                   
+                        
+                    casilla = casilla.Derecha;
+                }
+                constructor.append("}\n");
+                filla = filla.Next;
+            }
+            
+            NF fi = this.getLcolumnas().ListaFilas.Buscar(0);
+            while(fi.Num<this.getLcolumnas().ListaFilas.elementos-3)
+            {
+                NCasilla cas = fi.Primero;
+                while(cas!=null)
+                {
+                    
+                    if(cas.Arriba!=null)
+                    {
+                        if(cas.Arriba.Ptrfila.Num>=0)
+                            constructor.append(cas.ToString()+" -> "+cas.Arriba.ToString()+";\n");
+                       // constructor.append(cas.Arriba.ToString()+" -> "+cas.ToString()+";\n");
+                    }
+                    if(cas.Abajo!=null)
+                    {
+                        if(cas.Abajo.Ptrfila.Num<=this.getLcolumnas().ListaFilas.elementos-4)
+                            constructor.append(cas.ToString()+" -> "+cas.Abajo.ToString()+";\n");
+                        ///constructor.append(cas.Abajo.ToString()+" -> "+cas.ToString()+";\n");
+                    }
+                    cas = cas.Derecha;
+                }
+                fi = fi.Next;
+            }
+            
+            constructor.append("}\n");
+           //************************************************
+            FileWriter fichero = null;
+            PrintWriter pw = null;
+            
+            try
+            {
+                fichero = new FileWriter("/home/byron/GraficasMarioMaker/"+"matriz"+".dot");
+                pw = new PrintWriter(fichero);
+ 
+            
+                pw.println(constructor.toString());
+ 
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            } 
+            finally
+            {
+                try
+                {
+                    if (null != fichero)
+                        fichero.close();
+                }
+                catch (Exception e2)
+                {
+                    e2.printStackTrace();
+                }
+           
+           //....GENERACION CON DOT
+                try
+		{       
+			ProcessBuilder pbuilder;
+		    
+			/*
+			 * Realiza la construccion del comando    
+			 * en la linea de comandos esto es: 
+			 * dot -Tpng -o archivo.png archivo.dot
+			 */
+			pbuilder = new ProcessBuilder( "dot", "-Tpng", "-o", "/home/byron/GraficasMarioMaker/matriz.png", "/home/byron/GraficasMarioMaker/matriz.dot" );
+			pbuilder.redirectErrorStream( true );
+			//Ejecuta el proceso
+			pbuilder.start();
+		    
+		} catch (Exception e) { e.printStackTrace(); }
+        }
+            
+            
+        }
+
+        
+        
+        
+        
+        
 
     /**
      * @return the Lcolumnas

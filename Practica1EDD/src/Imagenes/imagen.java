@@ -13,8 +13,58 @@ import javax.swing.ImageIcon;
  * @author byron
  */
 public class imagen {
-    
-    public imagen(){}
+    public int contadorficha;
+    public imagen(){contadorficha=0;}
+    public Image generalficha()
+    {
+        contadorficha++;
+        if(contadorficha==4)
+        {
+            contadorficha =0;
+            return this.ficha4();
+        }
+        else
+        {
+            if(contadorficha==3)
+                return this.ficha3();
+            else if(contadorficha==2)
+                return this.ficha2();
+            else if(contadorficha==1)
+                return this.ficha1();
+            
+                
+        }
+        return null;
+        
+            
+            
+    }
+    public Image generalgom(boolean der, int num)
+    {
+        if(der)
+        {
+            if(num==1)
+                return this.derg1();
+            if(num==2)
+                return this.derg2();
+            if(num==3)
+                return this.derg3();
+            if(num==4)
+                return this.derg4();
+        }
+        else
+        {
+            if(num==1)
+                return this.izqg1();
+            if(num==2)
+                return this.izqg2();
+            if(num==3)
+                return this.izqg3();
+            if(num==4)
+                return this.izqg4();
+        }
+        return null;
+    }
     public Image generalkoopa(boolean der,int num)
     {
         if(der)
@@ -35,6 +85,17 @@ public class imagen {
         }
         return null;
     }
+    /*
+    public Image generalmario(boolean der,int num)
+    {
+        if(der)
+        {
+            if(num==1)
+                this.m
+        }
+            
+    }
+    */
     public Image general(int id)
     {
         switch(id)
@@ -181,7 +242,7 @@ public class imagen {
     }
     public Image castillo()
     {
-        return new ImageIcon(getClass().getResource("Hongo.png")).getImage();
+        return new ImageIcon(getClass().getResource("castillo.png")).getImage();
     }
     
 }

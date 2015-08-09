@@ -37,12 +37,14 @@ public class Hongo extends Objeto {
 
     @Override
     public void render(Graphics g,Game game) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        g.drawImage(this.getImage(),this.getCordx(),this.getCordy(),75,75,game);
+        
     }
 
     @Override
     public void tick() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

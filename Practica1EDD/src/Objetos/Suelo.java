@@ -37,7 +37,7 @@ public class Suelo extends Objeto {
 
     @Override
     public void render(Graphics g,Game game) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       g.drawImage(this.getImage(),this.getCordx(),this.getCordy(),75,75,game);
     }
 
     @Override
@@ -47,8 +47,10 @@ public class Suelo extends Objeto {
 
     @Override
     public void die() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+   
     
     
 }

@@ -29,7 +29,7 @@ public class NL {
     
     public String ToStringEncabezado()
     {
-        return "Nodo"+idnode+"[label=\"TIPO: "+this.Ttostring()+"\\"+"nNOMBRE: "+this.getObjeto().getNombre()+"\"];";
+        return "Nodo"+idnode+"[label=\"<f0>|<f1>TIPO: "+this.Ttostring()+"\\"+"nNOMBRE: "+this.getObjeto().getNombre()+"|<f2>\"];";
     }
     
     public String ToString()

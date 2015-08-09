@@ -7,6 +7,7 @@ package Objetos;
 
 import GUI.Game;
 import Imagenes.imagen;
+import ListaPilaCola.NL;
 import MDisp.NCasilla;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
@@ -22,6 +23,7 @@ public abstract class Objeto extends ImageIcon {
     private int id;
     private String nombre;
     public NCasilla casillaactual;
+    NL nodolista;
    
     public Objeto()
     {
@@ -34,7 +36,50 @@ public abstract class Objeto extends ImageIcon {
     public abstract void tick();
     public abstract void die();
     
-            
+    public String ToString()
+    {
+        switch(this.id)
+        {
+            case -1:
+            {
+                return "VACIO";
+                
+            }
+            case 0:
+            {
+                return "SUELO";
+            }
+            case 1:
+            {
+                return "PARED";
+            }
+            case 2:
+            {
+                return "GOOMBA";
+            }
+            case 3:
+            {
+                return "KOOPA";
+            }
+            case 4:
+            {
+                return "FICHA";
+            }
+            case 5:
+            {
+                return "HONGO";
+            }
+            case 6:
+            {
+                return "PERSONAJE";
+            }
+            case 7:
+            {
+                return "CASTILLO";
+            }
+        }
+        return"kdasdeerrasf";
+    }
     
 
     /**

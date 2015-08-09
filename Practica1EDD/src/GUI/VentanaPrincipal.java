@@ -168,12 +168,15 @@ public class VentanaPrincipal extends JPanel implements ActionListener,ChangeLis
         {
             this.jpcarga.setVisible(true);
             this.maker.General.setVisible(false);
+            this.panellista.posy=0;
+            this.panellista.llenar();
         }
         else if(e.getSource()==this.btnmaker)
         {
             this.jpcarga.setVisible(false);
             this.maker.General.setVisible(true);
             this.maker.refreshActual();
+            this.maker.repaint();
         }
         else if(e.getSource()==this.btngrafica)
         {
@@ -187,13 +190,13 @@ public class VentanaPrincipal extends JPanel implements ActionListener,ChangeLis
         
         if(e.getSource()==this.radiocola)
         {
-            System.out.println("ENTRO A LOS RADIOS");
+            //System.out.println("ENTRO A LOS RADIOS");
             this.lista.setCola(true);
             this.lista.setPila(false);
         }
         else if(e.getSource()==this.radiopila)
         {
-             System.out.println("ENTRO A LOS RADIOS");
+            //System.out.println("ENTRO A LOS RADIOS");
             this.lista.setPila(true);
             this.lista.setCola(false);
         }

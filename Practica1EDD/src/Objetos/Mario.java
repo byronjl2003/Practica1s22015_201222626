@@ -26,8 +26,11 @@ public class Mario extends Objeto {
     char presionado ;
     long lastKeyPress = System.currentTimeMillis();
     boolean bloqueo;
+    int puntos,vidas;
     public Mario(String nom,Image img)
     {
+        this.vidas = 1;
+        this.puntos = 0;
         imgs = new imagen();
         bloqueo = false;
         cola = new LinkedList();
@@ -137,6 +140,7 @@ public class Mario extends Objeto {
     @Override
     public void render(Graphics g,Game game) {
   
+        
         this.setCordx(this.getCordx() + this.getVx());
         this.setCordy(this.getCordy() + this.getVy());
         g.drawImage(imgs.mario1(),this.getCordx(),this.getCordy(),75,75,game);
@@ -162,8 +166,18 @@ public class Mario extends Objeto {
         if(this.getPosfx()==this.getCordx() && this.getPosfy()==this.getCordy())
         {// Cuando ya termino de recorrer un cuadro.
             //System.out.println("ENTRO");
-            
-            if((this.casillaactual.Abajo.Buscar(1).Dato.getId()==-1 |accion==0)&&cuadros==0)
+            if(this.casillaactual.Abajo.Buscar(1).Dato.getId()==3)
+            {
+                Objeto aux =  this.casillaactual.Abajo.Buscar(1).Dato;// se guarda el goomba
+                this.casillaactual.Abajo.Buscar(1).Dato = casillaactual.Buscar(1).Dato;// se pasa el mario al cuadro de abajo
+                this.casillaactual.Buscar(1).Dato = aux;
+                this.casillaactual = this.casillaactual.Abajo;
+                aux.die();
+                this.setPosfy(this.getCordy()+75);
+                this.setVy(5);
+                this.setVx(0);
+            }
+            else if((this.casillaactual.Abajo.Buscar(1).Dato.getId()==-1 |accion==0)&&cuadros==0)
             {
                 
                 //se va a caer sin traer ninguna accion de la pila
@@ -565,9 +579,10 @@ public class Mario extends Objeto {
 
     @Override
     public void die() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-        
+
+    
         
         
         

@@ -130,7 +130,7 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
         this.General.add(this.lblobjeto);
         this.scroll2.setBounds(430,10,75,75);
         this.General.add(this.scroll2);
-        this.btnplay.setBounds(510 ,20,100 ,25);
+        this.btnplay.setBounds(610 ,20,100 ,25);
         this.General.add(this.btnplay);
         this.btngraflista.setBounds(515, 15, 100, 30);
         this.General.add(this.btngraflista);
@@ -165,7 +165,7 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
     {
         for(int j=0;j<4;j++)
         {
-            NCasilla aux = this.matriz.Insertar(i, j, 1,null);
+            NCasilla aux = this.matriz.Insertar(i, j, 1,new Vacio());
             NM auxx = aux.Buscar(1);
             auxx.setTransferHandler(new ImageSelection(this.lista,this));
             auxx.addMouseListener(this);
@@ -354,10 +354,12 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
         else if(e.getSource()==this.btngraflista)
         {
             // se grafica la lista
+            this.lista.Graficar("Lista");
         }
         else if(e.getSource()==this.btngrafmatrziz)
         {
             // graficar matri
+            this.matriz.graficarMDispersa();
         }
     }
 
