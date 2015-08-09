@@ -212,10 +212,10 @@ public class VentanaPrincipal extends JPanel implements ActionListener,ChangeLis
         Lista list;
         Image imgg;
         PanelLista panellista;
-        public Panelito(Image imgg,int id,Lista l,PanelLista pa)
+        public Panelito(Image imggs,int id,Lista l,PanelLista pa)
         {
             this.panellista = pa;
-            this.imgg = imgg;
+            this.imgg = imggs;
             this.list = l;
             this.setLayout(null);
             this.id = id;

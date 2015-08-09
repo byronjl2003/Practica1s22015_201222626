@@ -69,9 +69,9 @@ public class PanelLista extends JPanel  {
         PanelLista panel;
         NL objeto;
         
-        public Nodo(NL obj,PanelLista pa)
+        public Nodo(NL objs,PanelLista pa)
         {
-            this.objeto = obj;
+            this.objeto = objs;
             this.panel = pa;
             this.setLayout(null);
             this.setSize(250,75);
@@ -82,12 +82,12 @@ public class PanelLista extends JPanel  {
                     super.paintComponent(g);
                     Dimension d = getSize();
                     setOpaque(false);
-                    g.drawImage(obj.getObjeto().getImage(),0,0,d.width,d.height,this);
+                    g.drawImage(objeto.getObjeto().getImage(),0,0,d.width,d.height,this);
                 }
  
  
             };
-            lblnombre = new JTextField(obj.getObjeto().getNombre());
+            lblnombre = new JTextField(objeto.getObjeto().getNombre());
             this.btnmodificar = new JButton("..");
             this.btnmodificar.addActionListener(this);
             btnelim = new JButton("x");
