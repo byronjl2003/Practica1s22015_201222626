@@ -19,17 +19,14 @@ import javax.swing.JPanel;
  */
 public class Koopa extends Objeto   {
     
-    private boolean caminando,cayendo,topandox,topandoy,derecha;
+    private boolean derecha;
     imagen imagenes;
     int constante = 1,pixelesx=0,pixelesy=0,cuadros = 0;
     
     public Koopa(String nom,Image img)
     {
         
-        caminando = false;
-        cayendo = false;
-        topandox = false;
-        topandoy=false;
+        
         this.setNombre(nom);
         this.setId(3);
         this.setCordx(0);

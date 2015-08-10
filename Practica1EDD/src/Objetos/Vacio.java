@@ -24,7 +24,7 @@ public class Vacio extends Objeto {
         //this.setImage(null);
         this.setPosfx(0);
         this.setPosfy(0);
-        this.setVx(5);
+        this.setVx(0);
         this.setVy(0);
         this.viviente = false;
         

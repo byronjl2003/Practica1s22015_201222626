@@ -25,14 +25,16 @@ public class Mario extends Objeto {
     LinkedList cola;
     char presionado ;
     long lastKeyPress = System.currentTimeMillis();
-    boolean bloqueo;
-    int puntos,vidas;
+    public boolean bloqueo,fatal;
+    public int puntos,vidas;
+    Game game;
     public Mario(String nom,Image img)
     {
         this.vidas = 1;
         this.puntos = 0;
         imgs = new imagen();
         bloqueo = false;
+        fatal = false;
         cola = new LinkedList();
         this.setNombre(nom);
         this.setId(6);
@@ -54,10 +56,10 @@ public class Mario extends Objeto {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         //System.out.println("presionando "+e.getKeyChar());
         //1 izquierda,2 arriba,3 derecha,4 izq-arriba,5 der-arriba,0 bajarf
-        System.out.println("EN EL KEY DE MARIO");
+       // System.out.println("EN EL KEY DE MARIO");
         if(!bloqueo)
         {
-            System.out.println("ENTRO AL IF DEL KEy");
+         //   System.out.println("ENTRO AL IF DEL KEy");
             if(e.getKeyChar()=='a')
             {
                 if(System.currentTimeMillis()-lastKeyPress<1000)
@@ -65,7 +67,7 @@ public class Mario extends Objeto {
                     if(presionado=='w')
                     {
                          cola.offer(4);
-                        System.out.println("salto izquierda");
+           //             System.out.println("salto izquierda");
                         presionado = 'p';
                     }
                     
@@ -75,7 +77,7 @@ public class Mario extends Objeto {
                 else
                 {
                     cola.offer(1);
-                    System.out.println("izquierda");
+             //       System.out.println("izquierda");
                 }
                 
                 
@@ -89,7 +91,7 @@ public class Mario extends Objeto {
                     if(presionado=='w')
                     {
                         cola.offer(5);
-                        System.out.println("salto derecha");
+               //         System.out.println("salto derecha");
                         presionado = 'p';  
                     }
                     
@@ -98,7 +100,7 @@ public class Mario extends Objeto {
                 else
                 {
                     cola.offer(3);
-                    System.out.println("derecha");
+                 //   System.out.println("derecha");
                 }
                 
             
@@ -108,7 +110,7 @@ public class Mario extends Objeto {
                 if(presionado == 'w')
                 {
                     cola.offer(2);
-                    System.out.println("SALTO");
+                   // System.out.println("SALTO");
                     presionado = 'p';
                 }
                 
@@ -124,7 +126,7 @@ public class Mario extends Objeto {
         }
         else
         {
-            System.out.println("EL OIDO ESTA BLOQUEADO!");
+          //  System.out.println("EL OIDO ESTA BLOQUEADO!");
         }
         
         
@@ -166,9 +168,18 @@ public class Mario extends Objeto {
         if(this.getPosfx()==this.getCordx() && this.getPosfy()==this.getCordy())
         {// Cuando ya termino de recorrer un cuadro.
             //System.out.println("ENTRO");
-            if(this.casillaactual.Abajo.Buscar(1).Dato.getId()==3)
+            if(this.casillaactual.Abajo==null)
             {
-                System.out.println("EN EL IF DE APLASTADO DE GOOMBA");
+                    // esta en el ultimo cuadro, se muere
+                    System.out.println("SE MUERIO MARIO");
+                    this.fatal = true;
+                    this.die();
+                    this.fatal = false;
+                
+            }
+            else if(this.casillaactual.Abajo.Buscar(1).Dato.getId()==3&&cuadros==0)
+            {
+               // System.out.println("EN EL IF DE APLASTADO DE GOOMBA");
                 Objeto aux =  this.casillaactual.Abajo.Buscar(1).Dato;// se guarda el goomba
                 this.casillaactual.Abajo.Buscar(1).Dato = casillaactual.Buscar(1).Dato;// se pasa el mario al cuadro de abajo
                 aux.casillaactual.Buscar(1).Dato = new Vacio();
@@ -179,12 +190,29 @@ public class Mario extends Objeto {
                 this.setVy(5);
                 this.setVx(0);
             }
+            else if((this.casillaactual.Abajo.Buscar(1).Dato.getId()==4||this.casillaactual.Abajo.Buscar(1).Dato.getId()==5)&&cuadros==0)
+            {
+                System.out.println("ENTRO A QUE SE VA A COMER algo CAYENDO");
+                if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==4)
+                    this.puntos++;
+                else
+                    this.vidas++;
+                Objeto aux = this.casillaactual.Abajo.Buscar(1).Dato;
+                this.casillaactual.Abajo.Buscar(1).Dato = casillaactual.Buscar(1).Dato;//se pasa a mario al cuadro de la izquierda
+                this.casillaactual.Buscar(1).Dato = new Vacio();
+                this.casillaactual = this.casillaactual.Abajo;
+                this.setPosfy(this.getCordy()+75);
+                this.setVx(0);
+                this.setVy(+5);
+                aux.die();
+            }
             else if((this.casillaactual.Abajo.Buscar(1).Dato.getId()==-1 |accion==0)&&cuadros==0)
             {
                 
                 //se va a caer sin traer ninguna accion de la pila
                 this.bloqueo = true;
-                System.out.println("EL MARIO NO TIENE PISO");
+               // System.out.println("EL MARIO NO TIENE PISO");
+                
                 Objeto aux = this.casillaactual.Abajo.Buscar(1).Dato;
                 this.casillaactual.Abajo.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
                 this.casillaactual.Buscar(1).Dato = aux;
@@ -199,10 +227,15 @@ public class Mario extends Objeto {
                 this.bloqueo=false;
                 // si hay piso para ir a traer acciones a la pila y para escuchar
                 if(cuadros==0)
+                {
+                    //System.out.println("ENTRO A CUADROS==0");
                     this.Traeraccion();
+                }
+                    
                 if(accion==-1)
                 {
                     // no hay acciones en la pila
+                   // System.out.println("NO HAY ACCIONES EN LA PILA");
                     this.setVx(0);
                     this.setVy(0);
                 }
@@ -211,14 +244,34 @@ public class Mario extends Objeto {
                     // es un movimineto a la derecha o izquierda
                     if(accion==1)
                     {
-                        
+                        //System.out.println("ENTRO A Accion==1");
                         //verificar tope a la izquierda
                         if(this.casillaactual.Izquierda!=null)
                         {
                             // Mario nO en el tope izquierdo,SE PROCEDE A VER SI HAY TOPE
-                            if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()!=0&&this.casillaactual.Izquierda.Buscar(1).Dato.getId()!=1)
+                            if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==4 ||this.casillaactual.Izquierda.Buscar(1).Dato.getId()==5)
                             {
-                                System.out.println("SE MUEVE A LA IZQUIERDA");
+                                System.out.println("ENTRO A QUE SE VA A COMER algo");
+                                if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==4)
+                                    this.puntos++;
+                                else
+                                    this.vidas++;
+                                Objeto aux = this.casillaactual.Izquierda.Buscar(1).Dato;
+                                this.casillaactual.Izquierda.Buscar(1).Dato = casillaactual.Buscar(1).Dato;//se pasa a mario al cuadro de la izquierda
+                                this.casillaactual.Buscar(1).Dato = new Vacio();
+                                this.casillaactual = this.casillaactual.Izquierda;
+                                this.setPosfx(this.getCordx()-75);
+                                this.setVx(-5);
+                                this.setVy(0);
+                                aux.die();
+                            }
+                            else if(this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2||this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2)
+                            {
+                                this.die();
+                            }
+                            else if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()!=0&&this.casillaactual.Izquierda.Buscar(1).Dato.getId()!=1)
+                            {
+                               // System.out.println("SE MUEVE A LA IZQUIERDA");
                                 //TAMPOCO HAY NINGUN TIPO DE TOPE, se procede a avanzar a la izquierda
                                 Objeto aux = this.casillaactual.Izquierda.Buscar(1).Dato;
                                 this.casillaactual.Izquierda.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
@@ -237,14 +290,37 @@ public class Mario extends Objeto {
                     }
                     else if(accion==3)
                     {
-                        
+                        //System.out.println("ENTRO A Accion==3");
                         // es un movimiento a la derecha
                         if(this.casillaactual.Derecha!=null)
                         {
+                            
+                            
                             // Mario nO en el tope izquierdo,SE PROCEDE A VER SI HAY TOPE
-                            if(this.casillaactual.Derecha.Buscar(1).Dato.getId()!=0&&this.casillaactual.Derecha.Buscar(1).Dato.getId()!=1)
+                            
+                            if(this.casillaactual.Derecha.Buscar(1).Dato.getId()==4 ||this.casillaactual.Derecha.Buscar(1).Dato.getId()==5)
                             {
-                                System.out.println("SE MUEVE A LA DERECHA");
+                                System.out.println("ENTRO A QUE SE VA A COMER algo");
+                                if(this.casillaactual.Derecha.Buscar(1).Dato.getId()==4)
+                                    this.puntos++;
+                                else
+                                    this.vidas++;
+                                Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
+                                this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;//se pasa a mario al cuadro de la izquierda
+                                this.casillaactual.Buscar(1).Dato = new Vacio();
+                                this.casillaactual = this.casillaactual.Derecha;
+                                this.setPosfx(this.getCordx()+75);
+                                this.setVx(5);
+                                this.setVy(0);
+                                aux.die();
+                            }
+                            else if(this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2||this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2)
+                            {
+                                this.die();
+                            }
+                            else if(this.casillaactual.Derecha.Buscar(1).Dato.getId()!=0&&this.casillaactual.Derecha.Buscar(1).Dato.getId()!=1)
+                            {
+                               // System.out.println("SE MUEVE A LA DERECHA");
                                 Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
                                 this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
                                 this.casillaactual.Buscar(1).Dato = aux;
@@ -262,11 +338,29 @@ public class Mario extends Objeto {
                 }// fin del if del movimiento de derecha o izquierda
                 else if(accion==2)
                 {
+                    System.out.println("ENTRO A ACCION2");
                     // ES UN SALTO
                     if(cuadros==0)
                     {
-                        
-                        if(this.casillaactual.Arriba.Buscar(1).Dato.getId()!=0||this.casillaactual.Arriba.Buscar(1).Dato.getId()!=1)
+                        System.out.println("ENTRO A CUADROS==0");
+                        if(this.casillaactual.Arriba.Buscar(1).Dato.getId()==4 ||this.casillaactual.Arriba.Buscar(1).Dato.getId()==5)
+                        {
+                            System.out.println("ENTRO A QUE SE VA A COMER algo para arriba 1r cuadro");
+                                if(this.casillaactual.Arriba.Buscar(1).Dato.getId()==4)
+                                    this.puntos++;
+                                else
+                                    this.vidas++;
+                                Objeto aux = this.casillaactual.Arriba.Buscar(1).Dato;
+                                this.casillaactual.Arriba.Buscar(1).Dato = casillaactual.Buscar(1).Dato;//se pasa a mario al cuadro de la izquierda
+                                this.casillaactual.Buscar(1).Dato = new Vacio();
+                                this.casillaactual = this.casillaactual.Arriba;
+                                this.setPosfy(this.getCordy()-75);
+                                this.setVx(0);
+                                this.setVy(-5);
+                                cuadros=1;//primer cuadro saltado
+                                aux.die();
+                        }
+                        else if((this.casillaactual.Arriba.Buscar(1).Dato.getId()!=0)&&this.casillaactual.Arriba.Buscar(1).Dato.getId()!=1)
                         {
                             System.out.println("1 CUADRO SALTO");
                             // verifica si el cuadro de arriba no tiene algo con que topar
@@ -281,14 +375,38 @@ public class Mario extends Objeto {
                             cuadros=1;//primer cuadro saltado
                             
                         }
-                        cuadros=0;
+                        else
+                        {
+                            accion=-1;
+                            this.setVx(0);
+                            this.setVy(0);
+                            
+                        }
+                       // cuadros=0;
                         
                     }
                     else if(cuadros==1)
                     {
+                        System.out.println("ENTRO A CUADROS==1");
                         
                         cuadros=0;
-                        if(this.casillaactual.Arriba.Buscar(1).Dato.getId()!=0||this.casillaactual.Arriba.Buscar(1).Dato.getId()!=1)
+                        if(this.casillaactual.Arriba.Buscar(1).Dato.getId()==4 ||this.casillaactual.Arriba.Buscar(1).Dato.getId()==5)
+                        {
+                            System.out.println("ENTRO A QUE SE VA A COMER algo para arriba 2r cuadro");
+                                if(this.casillaactual.Arriba.Buscar(1).Dato.getId()==4)
+                                    this.puntos++;
+                                else
+                                    this.vidas++;
+                                Objeto aux = this.casillaactual.Arriba.Buscar(1).Dato;
+                                this.casillaactual.Arriba.Buscar(1).Dato = casillaactual.Buscar(1).Dato;//se pasa a mario al cuadro de la izquierda
+                                this.casillaactual.Buscar(1).Dato = new Vacio();
+                                this.casillaactual = this.casillaactual.Arriba;
+                                this.setPosfy(this.getCordy()-75);
+                                this.setVx(0);
+                                this.setVy(-5);
+                                aux.die();
+                        }
+                        else if((this.casillaactual.Arriba.Buscar(1).Dato.getId()!=0)&&(this.casillaactual.Arriba.Buscar(1).Dato.getId()!=1))
                         {
                             System.out.println("2 CUADRO SALTO");
                             Objeto aux = this.casillaactual.Arriba.Buscar(1).Dato;
@@ -301,19 +419,48 @@ public class Mario extends Objeto {
                             this.setVy(-5);
                             
                         }
+                        else
+                        {
+                            
+                            accion=-1;
+                            this.setVx(0);
+                            this.setVy(0);
+                        }
                         
                             
                         
+                    }
+                    else
+                    {
+                        System.out.println("HAY UN PROBLEMA CON LOS CUADROS DE SALTO");
                     }
                    
                 }
                 else if(accion==4)
                 {
+                    System.out.println("ENTRO A Accion==4");
                     // ES UN SALTO A LA IZQUIERDA
                     if(cuadros==0)
                     {
                         System.out.println("1 CUADRO SALTO");
-                        if(this.casillaactual.Arriba.Buscar(1).Dato.getId()!=0||this.casillaactual.Arriba.Buscar(1).Dato.getId()!=1)
+                        if(this.casillaactual.Arriba.Buscar(1).Dato.getId()==4 ||this.casillaactual.Arriba.Buscar(1).Dato.getId()==5)
+                        {
+                            System.out.println("ENTRO A QUE SE VA A COMER algo para arriba 2r cuadro");
+                                if(this.casillaactual.Arriba.Buscar(1).Dato.getId()==4)
+                                    this.puntos++;
+                                else
+                                    this.vidas++;
+                                Objeto aux = this.casillaactual.Arriba.Buscar(1).Dato;
+                                this.casillaactual.Arriba.Buscar(1).Dato = casillaactual.Buscar(1).Dato;//se pasa a mario al cuadro de la izquierda
+                                this.casillaactual.Buscar(1).Dato = new Vacio();
+                                this.casillaactual = this.casillaactual.Arriba;
+                                this.setPosfy(this.getCordy()-75);
+                                this.setVx(0);
+                                this.setVy(-5);
+                                cuadros=2;//primer cuadro saltado
+                                aux.die();
+                        }
+                        else if((this.casillaactual.Arriba.Buscar(1).Dato.getId()!=0)&&(this.casillaactual.Arriba.Buscar(1).Dato.getId()!=1))
                         {
                             // verifica si el cuadro de arriba no tiene algo con que topar
                             Objeto aux = this.casillaactual.Arriba.Buscar(1).Dato;
@@ -326,14 +473,31 @@ public class Mario extends Objeto {
                             this.setVy(-5);
                             cuadros=2;//primer cuadro saltado
                             
+                            
                         }
                         
                     }
                     else if(cuadros==2)
                     {
                         System.out.println("2 CUADRO SALTO");
-                        
-                        if(this.casillaactual.Arriba.Buscar(1).Dato.getId()!=0||this.casillaactual.Arriba.Buscar(1).Dato.getId()!=1)
+                        if(this.casillaactual.Arriba.Buscar(1).Dato.getId()==4 ||this.casillaactual.Arriba.Buscar(1).Dato.getId()==5)
+                        {
+                            System.out.println("ENTRO A QUE SE VA A COMER algo para arriba 2r cuadro");
+                                if(this.casillaactual.Arriba.Buscar(1).Dato.getId()==4)
+                                    this.puntos++;
+                                else
+                                    this.vidas++;
+                                Objeto aux = this.casillaactual.Arriba.Buscar(1).Dato;
+                                this.casillaactual.Arriba.Buscar(1).Dato = casillaactual.Buscar(1).Dato;//se pasa a mario al cuadro de la izquierda
+                                this.casillaactual.Buscar(1).Dato = new Vacio();
+                                this.casillaactual = this.casillaactual.Arriba;
+                                this.setPosfy(this.getCordy()-75);
+                                this.setVx(0);
+                                this.setVy(-5);
+                                cuadros--;//primer cuadro saltado
+                                aux.die();
+                        }
+                        else if((this.casillaactual.Arriba.Buscar(1).Dato.getId()!=0)&&(this.casillaactual.Arriba.Buscar(1).Dato.getId()!=1))
                         {
                             Objeto aux = this.casillaactual.Arriba.Buscar(1).Dato;
                             this.casillaactual.Arriba.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
@@ -355,7 +519,27 @@ public class Mario extends Objeto {
                         if(this.casillaactual.Izquierda!=null)
                         {
                             // Mario nO en el tope izquierdo,SE PROCEDE A VER SI HAY TOPE
-                            if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()!=0&&this.casillaactual.Izquierda.Buscar(1).Dato.getId()!=1)
+                            if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==4 ||this.casillaactual.Izquierda.Buscar(1).Dato.getId()==5)
+                            {
+                                System.out.println("ENTRO A QUE SE VA A COMER algo");
+                                if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==4)
+                                    this.puntos++;
+                                else
+                                    this.vidas++;
+                                Objeto aux = this.casillaactual.Izquierda.Buscar(1).Dato;
+                                this.casillaactual.Izquierda.Buscar(1).Dato = casillaactual.Buscar(1).Dato;//se pasa a mario al cuadro de la izquierda
+                                this.casillaactual.Buscar(1).Dato = new Vacio();
+                                this.casillaactual = this.casillaactual.Izquierda;
+                                this.setPosfx(this.getCordx()-75);
+                                this.setVx(-5);
+                                this.setVy(0);
+                                aux.die();
+                            }
+                            else if(this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2||this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2)
+                            {
+                                this.die();
+                            }
+                            else if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()!=0&&this.casillaactual.Izquierda.Buscar(1).Dato.getId()!=1)
                             {
                                 System.out.println("SE MUEVE A LA IZQUIERDA");
                                 //TAMPOCO HAY NINGUN TIPO DE TOPE, se procede a avanzar a la izquierda
@@ -379,11 +563,29 @@ public class Mario extends Objeto {
                 }
                 else if(accion==5)
                 {
+                    System.out.println("ENTRO A Accion==5");
                     // ES UN SALTO A LA DERECHA
                     if(cuadros==0)
                     {
                         System.out.println("1 CUADRO SALTO");
-                        if(this.casillaactual.Arriba.Buscar(1).Dato.getId()!=0||this.casillaactual.Arriba.Buscar(1).Dato.getId()!=1)
+                        if(this.casillaactual.Arriba.Buscar(1).Dato.getId()==4 ||this.casillaactual.Arriba.Buscar(1).Dato.getId()==5)
+                        {
+                            System.out.println("ENTRO A QUE SE VA A COMER algo para arriba 2r cuadro");
+                                if(this.casillaactual.Arriba.Buscar(1).Dato.getId()==4)
+                                    this.puntos++;
+                                else
+                                    this.vidas++;
+                                Objeto aux = this.casillaactual.Arriba.Buscar(1).Dato;
+                                this.casillaactual.Arriba.Buscar(1).Dato = casillaactual.Buscar(1).Dato;//se pasa a mario al cuadro de la izquierda
+                                this.casillaactual.Buscar(1).Dato = new Vacio();
+                                this.casillaactual = this.casillaactual.Arriba;
+                                this.setPosfy(this.getCordy()-75);
+                                this.setVx(0);
+                                this.setVy(-5);
+                                cuadros=2;//primer cuadro saltado
+                                aux.die();
+                        }
+                        else if((this.casillaactual.Arriba.Buscar(1).Dato.getId()!=0)&&(this.casillaactual.Arriba.Buscar(1).Dato.getId()!=1))
                         {
                             // verifica si el cuadro de arriba no tiene algo con que topar
                             Objeto aux = this.casillaactual.Arriba.Buscar(1).Dato;
@@ -396,14 +598,31 @@ public class Mario extends Objeto {
                             this.setVy(-5);
                             cuadros=2;//primer cuadro saltado
                             
+                            
                         }
                         
                     }
                     else if(cuadros==2)
                     {
                         System.out.println("2 CUADRO SALTO");
-                        
-                        if(this.casillaactual.Arriba.Buscar(1).Dato.getId()!=0||this.casillaactual.Arriba.Buscar(1).Dato.getId()!=1)
+                        if(this.casillaactual.Arriba.Buscar(1).Dato.getId()==4 ||this.casillaactual.Arriba.Buscar(1).Dato.getId()==5)
+                        {
+                            System.out.println("ENTRO A QUE SE VA A COMER algo para arriba 2r cuadro");
+                                if(this.casillaactual.Arriba.Buscar(1).Dato.getId()==4)
+                                    this.puntos++;
+                                else
+                                    this.vidas++;
+                                Objeto aux = this.casillaactual.Arriba.Buscar(1).Dato;
+                                this.casillaactual.Arriba.Buscar(1).Dato = casillaactual.Buscar(1).Dato;//se pasa a mario al cuadro de la izquierda
+                                this.casillaactual.Buscar(1).Dato = new Vacio();
+                                this.casillaactual = this.casillaactual.Arriba;
+                                this.setPosfy(this.getCordy()-75);
+                                this.setVx(0);
+                                this.setVy(-5);
+                                cuadros--;//primer cuadro saltado
+                                aux.die();
+                        }
+                        else if((this.casillaactual.Arriba.Buscar(1).Dato.getId()!=0)&&(this.casillaactual.Arriba.Buscar(1).Dato.getId()!=1))
                         {
                             Objeto aux = this.casillaactual.Arriba.Buscar(1).Dato;
                             this.casillaactual.Arriba.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
@@ -425,7 +644,27 @@ public class Mario extends Objeto {
                         if(this.casillaactual.Derecha!=null)
                         {
                             // Mario nO en el tope izquierdo,SE PROCEDE A VER SI HAY TOPE
-                            if(this.casillaactual.Derecha.Buscar(1).Dato.getId()!=0&&this.casillaactual.Derecha.Buscar(1).Dato.getId()!=1)
+                            if(this.casillaactual.Derecha.Buscar(1).Dato.getId()==4 ||this.casillaactual.Derecha.Buscar(1).Dato.getId()==5)
+                            {
+                                System.out.println("ENTRO A QUE SE VA A COMER algo");
+                                if(this.casillaactual.Derecha.Buscar(1).Dato.getId()==4)
+                                    this.puntos++;
+                                else
+                                    this.vidas++;
+                                Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
+                                this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;//se pasa a mario al cuadro de la izquierda
+                                this.casillaactual.Buscar(1).Dato = new Vacio();
+                                this.casillaactual = this.casillaactual.Derecha;
+                                this.setPosfx(this.getCordx()+75);
+                                this.setVx(5);
+                                this.setVy(0);
+                                aux.die();
+                            }
+                            else if(this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2||this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2)
+                            {
+                                this.die();
+                            }
+                            else if(this.casillaactual.Derecha.Buscar(1).Dato.getId()!=0&&this.casillaactual.Derecha.Buscar(1).Dato.getId()!=1)
                             {
                                 System.out.println("SE MUEVE A LA DERECHA");
                                 Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
@@ -448,142 +687,39 @@ public class Mario extends Objeto {
                 }
                 
             }
-        }// fin del if de entrada
-            
-            
-            
-            
-            /*
-            if(this.casillaactual.Abajo==null)
-            {
-                // actualmente koopa esta en la fila en donde debe morir
-                this.die();
-            }
-            else if(this.casillaactual.Abajo.Buscar(1).Dato.getId()==-1)
-            {
-                // La tortuga no tiene piso abajo
-                //se cambia casillaactual.
-                System.out.println("LA TORTUGA NO TIENE PISO");
-                Objeto aux = this.casillaactual.Abajo.Buscar(1).Dato;
-                this.casillaactual.Abajo.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
-                this.casillaactual.Buscar(1).Dato = aux;
-                
-                this.casillaactual = this.casillaactual.Abajo;
-                this.setPosfy(this.getCordy()+75);
-                this.setVy(+5);
-                this.setVx(0);
-            }
-            else if(this.casillaactual.Abajo.Buscar(1).Dato.getId()==0 |this.casillaactual.Abajo.Buscar(1).Dato.getId()==1 )
-            {
-                System.out.println("LA TORTUGA SI TIENE PISO");
-                if(this.casillaactual.Derecha==null)
-                {
-                    System.out.println("LA TORTUGA ESTA EN EL BORDE DERECHO");
-                    derecha = false;// para cambiar la imagen de derecha a izquierda
-                    Objeto aux = this.casillaactual.Izquierda.Buscar(1).Dato;
-                    this.casillaactual.Izquierda.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
-                    this.casillaactual.Buscar(1).Dato = aux;
-                    
-                    this.casillaactual = this.casillaactual.Izquierda;
-                    this.setPosfx(this.getCordx()-75);
-                    this.setVx(-5);
-                    this.setVy(0);
-                    //la tortuga esta en tope derecho
-                    
-                }
-                else if(this.casillaactual.Izquierda==null)
-                {
-                    // la tortuga esta en el tope izquierdo
-                    System.out.println("LA TORTUGA ESTA EN EL BORDE IZQUIERDO");
-                    derecha = true;//para cambiar la imagen de izquierda a derecha
-                    
-                    Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
-                    this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
-                    this.casillaactual.Buscar(1).Dato = aux;
-                    
-                    this.casillaactual = this.casillaactual.Derecha;
-                    this.setPosfx(this.getCordx()+75);
-                    this.setVx(5);
-                    this.setVy(0);
-                    
-                }
-                else
-                {
-                    //se verifica si hay topes
-                    if((this.casillaactual.Derecha.Buscar(1).Dato.getId()==0|this.casillaactual.Derecha.Buscar(1).Dato.getId()==1)&&(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==0|this.casillaactual.Izquierda.Buscar(1).Dato.getId()==1))
-                    {
-                        System.out.println("ESTA ATRAPADO!!!!");
-                        this.setVx(0);
-                        this.setVy(0);
-                        // esta atraoado!!!!!
-                    }
-                    else if(derecha)
-                    {
-                        if(this.casillaactual.Derecha.Buscar(1).Dato.getId()==0|this.casillaactual.Derecha.Buscar(1).Dato.getId()==1)
-                        {
-                            //hay tope, se cambia de giro la imagen y la casilla a la izquierda.
-                            System.out.println("ESTA DETECTANDO EL TOPE A LA DERECHA");
-                            derecha = false;
-                            Objeto aux = this.casillaactual.Izquierda.Buscar(1).Dato;
-                            this.casillaactual.Izquierda.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
-                            this.casillaactual.Buscar(1).Dato = aux;
-                            this.casillaactual = this.casillaactual.Izquierda;
-                            this.setPosfx(this.getCordx()-75);
-                            this.setVx(-5);
-                            this.setVy(0);
-                        }
-                        else
-                        {
-                            System.out.println("EN EL ELSE DE DERECHA");
-                            derecha = true;
-                            Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
-                            this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
-                            this.casillaactual.Buscar(1).Dato = aux;
-                            
-                            this.casillaactual = this.casillaactual.Derecha;
-                            this.setPosfx(this.getCordx()+75);
-                            this.setVx(5);
-                            this.setVy(0);
-                        }
-                    }
-                    else
-                    {
-                        if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==0|this.casillaactual.Izquierda.Buscar(1).Dato.getId()==1)
-                        {
-                            //hay tope, se cambia de giro la imagen y la casilla a la izquierda.
-                             System.out.println("ESTA DETECTANDO EL TOPE A LA IZQUIERDA");
-                            derecha = true;
-                             Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
-                            this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
-                            this.casillaactual.Buscar(1).Dato = aux;
-                            
-                            this.casillaactual = this.casillaactual.Derecha;
-                            this.setPosfx(this.getCordx()+75);
-                            this.setVx(5);
-                            this.setVy(0);
-                        }
-                        else
-                        {
-                            derecha = false;
-                            Objeto aux = this.casillaactual.Izquierda.Buscar(1).Dato;
-                            this.casillaactual.Izquierda.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
-                            this.casillaactual.Buscar(1).Dato = aux;
-                            
-                            this.casillaactual = this.casillaactual.Izquierda;
-                            this.setPosfx(this.getCordx()-75);
-                            this.setVx(-5);
-                            this.setVy(0);
-                        }
-                    }
-                }
-            }
-            */
+        }
         }
 
     @Override
-    public void die() {
+    public void die() 
+    {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("EN EL DIE");
+        if(fatal)
+        {
+            // se cayo, no importa las vidas
+            this.game.play = false;
+            this.game.finish = true;
+            
+            fatal = false;
+            
+        }
+        else
+        {
+            if(vidas>1)
+            {
+                vidas--;
+            }
+            else
+            {
+                this.game.finish = true;
+                this.game.play = false;
+            }
+                
+        }
     }
+
+    
 
     
         

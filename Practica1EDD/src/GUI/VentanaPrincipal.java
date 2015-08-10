@@ -39,7 +39,7 @@ import javax.swing.event.ChangeListener;
  *
  * @author byron
  */
-public class VentanaPrincipal extends JPanel implements ActionListener,ChangeListener {
+public class VentanaPrincipal extends JPanel implements ActionListener {
     
     JButton btncargar,btnmaker,btngrafica;
     JFrame vent;
@@ -122,9 +122,11 @@ public class VentanaPrincipal extends JPanel implements ActionListener,ChangeLis
         this.btngrafica.addActionListener(this);
         bg = new ButtonGroup();
         this.radiocola = new JRadioButton("COLA");
-        this.radiocola.addChangeListener(this);
+        //this.radiocola.addChangeListener(this);
+        this.radiocola.addActionListener(this);
         this.radiopila = new JRadioButton("PILA");
-        this.radiopila.addChangeListener(this);
+        //this.radiopila.addChangeListener(this);
+        this.radiopila.addActionListener(this);
         this.bg.add(radiocola);
         this.bg.add(radiopila);
         this.btngrafica.setBounds(50, 560, 100, 35);
@@ -186,25 +188,23 @@ public class VentanaPrincipal extends JPanel implements ActionListener,ChangeLis
             System.out.println("CLICK EN GRAFICAR!");
             this.lista.Graficar("Lista");
         }
-    }
-
-    @Override
-    public void stateChanged(ChangeEvent e) {
-        
-        if(e.getSource()==this.radiocola)
+        else if(e.getSource()==this.radiocola)
         {
-            //System.out.println("ENTRO A LOS RADIOS");
+            System.out.println("EN EL RADIO COLA");
             this.lista.setCola(true);
             this.lista.setPila(false);
+            this.maker.refreshActual();
         }
         else if(e.getSource()==this.radiopila)
         {
-            //System.out.println("ENTRO A LOS RADIOS");
-            this.lista.setPila(true);
+            System.out.println("EN EL RADIO PILA");
             this.lista.setCola(false);
+            this.lista.setPila(true);
+            this.maker.refreshActual();
         }
-        
     }
+
+    
     
     private class Panelito extends JPanel implements ActionListener
     {

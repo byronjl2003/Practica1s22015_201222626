@@ -139,7 +139,7 @@ public class MDisp {
             
             try
             {
-                fichero = new FileWriter("/home/byron/GraficasMarioMaker/"+"matriz"+".dot");
+                fichero = new FileWriter("C:\\Users\\byron\\Desktop\\GraficasMarioMaker\\"+"matriz"+".dot");
                 pw = new PrintWriter(fichero);
  
             
@@ -171,7 +171,7 @@ public class MDisp {
 			 * en la linea de comandos esto es: 
 			 * dot -Tpng -o archivo.png archivo.dot
 			 */
-			pbuilder = new ProcessBuilder( "dot", "-Tpng", "-o", "/home/byron/GraficasMarioMaker/matriz.png", "/home/byron/GraficasMarioMaker/matriz.dot" );
+			pbuilder = new ProcessBuilder( "dot", "-Tpng", "-o", "C:\\Users\\byron\\Desktop\\GraficasMarioMaker\\matriz.png", "C:\\Users\\byron\\Desktop\\GraficasMarioMaker\\matriz.dot" );
 			pbuilder.redirectErrorStream( true );
 			//Ejecuta el proceso
 			pbuilder.start();
@@ -278,7 +278,7 @@ public class MDisp {
             
             try
             {
-                fichero = new FileWriter("/home/byron/GraficasMarioMaker/"+"matriz"+".dot");
+                fichero = new FileWriter("C:\\Users\\byron\\Desktop\\GraficasMarioMaker\\"+"matriz"+".dot");
                 pw = new PrintWriter(fichero);
  
             
@@ -310,7 +310,7 @@ public class MDisp {
 			 * en la linea de comandos esto es: 
 			 * dot -Tpng -o archivo.png archivo.dot
 			 */
-			pbuilder = new ProcessBuilder( "dot", "-Tpng", "-o", "/home/byron/GraficasMarioMaker/matriz.png", "/home/byron/GraficasMarioMaker/matriz.dot" );
+			pbuilder = new ProcessBuilder( "dot", "-Tpng", "-o", "C:\\Users\\byron\\Desktop\\GraficasMarioMaker\\matriz.png", "C:\\Users\\byron\\Desktop\\GraficasMarioMaker\\matriz.dot" );
 			pbuilder.redirectErrorStream( true );
 			//Ejecuta el proceso
 			pbuilder.start();

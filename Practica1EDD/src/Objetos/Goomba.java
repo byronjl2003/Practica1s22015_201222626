@@ -171,11 +171,13 @@ public class Goomba extends Objeto {
                             this.setVx(-5);
                             this.setVy(0);
                         }
-                        else
+                        
                         {
                            // System.out.println("EN EL ELSE DE DERECHA");
+                            
                             derecha = true;
                             Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
+                            
                             this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
                             this.casillaactual.Buscar(1).Dato = aux;
                             

@@ -174,10 +174,11 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
         }
     }
     
-    this.repaint();
+    
     this.scroll.setBounds(20,100,this.getWidth()+400,this.getHeight()+300);
     refreshActual();
     this.General.add(this.scroll);
+    this.repaint();
     
     
  }

@@ -51,18 +51,18 @@ public class Lista {
         else
         {
             if(pila)
-        {
-            return this.getUltimo().getObjeto();
-        }
-        else if(cola)
-        {
-            return this.getPrimero().getObjeto();
-        }
-        else
-        {
-            System.out.println("EN Siguiente,Esta retornando nulo");
-            return null;
-        }
+            {
+                return this.getUltimo().getObjeto();
+            }
+            else if(cola)
+            {
+                return this.getPrimero().getObjeto();
+            }
+            else
+            {
+                System.out.println("EN Siguiente,Esta retornando nulo");
+                return null;
+            }
         }
         
     }

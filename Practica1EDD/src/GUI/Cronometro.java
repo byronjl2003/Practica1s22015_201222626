@@ -22,20 +22,21 @@ public class Cronometro extends JPanel implements Runnable  {
     
     JLabel lblseg,lblmin;
     int minutos=0,segundos=0;
-    boolean start = true;
+    boolean start = true,finish = true;
     
     public Cronometro()
     {
+        
         this.lblseg = new JLabel();
         this.lblseg.setText(segundos+"");
         this.lblmin = new JLabel();
         this.lblmin.setText(minutos+"");
         lblseg.setOpaque(false);
         lblseg.setForeground(Color.ORANGE);
-        lblseg.setFont(new Font("Courier New", Font.ITALIC, 12));
+        lblseg.setFont(new Font("Courier New", Font.ITALIC,20));
         lblmin.setOpaque(false);
         lblmin.setForeground(Color.ORANGE);
-        lblmin.setFont(new Font("Courier New", Font.ITALIC, 12));
+        lblmin.setFont(new Font("Courier New", Font.ITALIC, 20));
         this.setBackground(Color.BLACK);
         this.setLayout(new GridLayout(1,2));
         this.add(this.lblmin);
@@ -61,22 +62,23 @@ public class Cronometro extends JPanel implements Runnable  {
     }
     @Override
     public void run() {
-        while(true)
+        while(!finish)
         {
+            System.out.println("11");
             while(start)
             {
+                System.out.println("22");
                 if(segundos==59)
-            {
-                
-                minutos++;
-                segundos=0;
-            }
-            else
-            {
-                segundos++;
-            }
-            this.lblseg.setText(segundos+"");
-            this.lblmin.setText(minutos+"");
+                {
+                    minutos++;
+                    segundos=0;
+                }
+                else
+                {
+                    segundos++;
+                }
+                this.lblseg.setText(segundos+"");
+                this.lblmin.setText(minutos+"");
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
