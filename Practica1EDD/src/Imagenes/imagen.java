@@ -51,6 +51,9 @@ public class imagen {
                 return this.derg3();
             if(num==4)
                 return this.derg4();
+            if(num==6)
+                return this.derg6();
+                
         }
         else
         {
@@ -62,6 +65,8 @@ public class imagen {
                 return this.izqg3();
             if(num==4)
                 return this.izqg4();
+            if(num==6)
+                return this.izqg6();
         }
         return null;
     }
@@ -203,6 +208,10 @@ public class imagen {
     {
         return new ImageIcon(getClass().getResource("IzqGoomba5.png")).getImage();
     }
+    public Image izqg6()
+    {
+        return new ImageIcon(getClass().getResource("IzqGoomba6.png")).getImage();
+    }
     public Image derg1()
     {
         return new ImageIcon(getClass().getResource("DerGoomba1.png")).getImage();
@@ -222,6 +231,10 @@ public class imagen {
     public Image derg5()
     {
         return new ImageIcon(getClass().getResource("DerGoomba5.png")).getImage();
+    }
+    public Image derg6()
+    {
+        return new ImageIcon(getClass().getResource("DerGoomba6.png")).getImage();
     }
     public Image fondov()
     {

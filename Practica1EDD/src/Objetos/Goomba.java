@@ -21,19 +21,18 @@ import java.awt.Image;
  * @author byron
  */
 public class Goomba extends Objeto {
-    private boolean caminando,cayendo,topandox,topandoy,derecha;
+    private boolean aplastado,derecha;
     imagen imagenes;
-    int constante = 1,pixelesx=0,pixelesy=0;
+    int constante = 1,pixelesx=0,pixelesy=0,cnstaplastado;
+    
     //NCasilla casillaactual;
     public Goomba(String nom,Image img)
     {
         
-        caminando = true;
-        cayendo = false;
-        topandox = false;
-        topandoy=false;
+        
+        aplastado=false;
         this.setNombre(nom);
-        this.setId(3);
+        this.setId(2);
         this.setCordx(0);
         this.setCordy(0); 
         this.setImage(img);
@@ -54,14 +53,36 @@ public class Goomba extends Objeto {
 
     @Override
     public void render(Graphics g,Game game) {
-        if(constante==2)
-            constante--;
+        if(aplastado)
+        {
+            if(this.cnstaplastado!=4)
+            {
+                this.cnstaplastado++;
+                constante = 6;
+            }
+            else
+            {
+                //ya se aplasto quitarlo de la lista de render y de vivientes
+                this.lista.EliminarDeLista(this.nodol);
+                this.listaviv.EliminarDeLista(this.nodolviv);
+            }
+            
+        }
         else
-            constante++;
-                
-        this.setCordx(this.getCordx() + this.getVx());
-        this.setCordy(this.getCordy() + this.getVy());
+        {
+            if(constante==2)
+                constante--;
+            else
+                constante++;
+            this.setCordx(this.getCordx() + this.getVx());
+            this.setCordy(this.getCordy() + this.getVy());
+            
+        }
         g.drawImage(this.imagenes.generalgom(derecha,constante),this.getCordx(),this.getCordy(),75,75,game);
+        
+                
+        
+        
     }
 
     @Override 
@@ -201,8 +222,10 @@ public class Goomba extends Objeto {
 
     
     @Override
-    public void die() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void die() 
+    {
+        this.aplastado = true;
+        
     }
     
 }

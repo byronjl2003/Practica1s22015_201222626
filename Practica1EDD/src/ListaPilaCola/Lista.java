@@ -17,6 +17,7 @@ public class Lista {
     
     private  NL primero, ultimo;
     private int elementos,suelos,paredes,goombas,koopas,fichas,hongos,personajes,castillos;
+    int ids = 0;
     private boolean pila,cola;
     public Lista()
     {
@@ -65,15 +66,17 @@ public class Lista {
         }
         
     }
-    public void Add(Objeto obj)
+    public NL Add(Objeto obj)
     {
         if(Vacia())
         {
             
             this.setElementos(this.getElementos() + 1);
-            this.primero = new NL(obj,this.elementos);
+            this.primero = new NL(obj,this.ids);
+            ids++;
             this.ultimo = this.primero;
             ContEspecial(obj.getId());
+            return this.primero;
         }
         else
         {
@@ -85,14 +88,18 @@ public class Lista {
                 {
                     //System.out.println("ENTRO A personajes ==0");
                     ContEspecial(obj.getId());
-                    
+                    NL nodo = new NL(obj,ids);
+                    ids++;
                     this.setElementos(elementos+1);
-                    getUltimo().setNext(new NL(obj,this.elementos));
-                    getUltimo().getNext().setBack(getUltimo());
-                    this.setUltimo(getUltimo().getNext());
-                                
+                    this.ultimo.setNext(nodo);
+                    nodo.setBack(this.ultimo);
+                    this.ultimo = nodo;
+                    return nodo;            
                     
                 }
+                else
+                    return null;
+                    
             }
             else if(obj.getId()==7)
             {
@@ -101,33 +108,31 @@ public class Lista {
                     ContEspecial(obj.getId());
                     
                     this.setElementos(elementos+1);
-                    getUltimo().setNext(new NL(obj,this.elementos));
-                    getUltimo().getNext().setBack(getUltimo());
-                    this.setUltimo(getUltimo().getNext());
+                    NL nodo = new NL(obj,this.ids);
+                    ids++;
+                    this.ultimo.setNext(nodo);
+                    nodo.setBack(this.ultimo);
+                    this.ultimo = nodo;
+                    return nodo;
                 }
+                else
+                    return null;
             }
             else
             {
-                ContEspecial(obj.getId());
+                    ContEspecial(obj.getId());
                     
                     this.setElementos(elementos+1);
-                    getUltimo().setNext(new NL(obj,this.elementos));
-                    getUltimo().getNext().setBack(getUltimo());
-                    this.setUltimo(getUltimo().getNext());  
+                    NL nodo = new NL(obj,ids);
+                    ids++;
+                    this.ultimo.setNext(nodo);
+                    nodo.setBack(this.ultimo);
+                    this.ultimo = nodo;
+                    return nodo;
             }
         
         }//else
-        
-        System.out.println("DESPUES DE AGREGAR: "+this.elementos);
-        NL aux  = this.primero;
-        while(aux!=null)
-        {
-            System.out.println(aux.getObjeto().getNombre()+",ID: "+aux.getObjeto().getId());
-            aux = aux.getNext();
-        }
-        System.out.println("EL  ULTIMO:"+ this.ultimo.getObjeto().getNombre());
-        System.out.println("EL  PRIMERO:"+ this.primero.getObjeto().getNombre());
-            
+                    
     }
     
     
@@ -136,6 +141,7 @@ public class Lista {
         if(!Vacia())
         {
             NL eliminado = this.getPrimero();
+            this.Descontar(eliminado.getObjeto().getId());
             if(this.getPrimero()==this.getUltimo())
                 this.setPrimero(this.ultimo = null);
             else
@@ -155,6 +161,7 @@ public class Lista {
         if(!Vacia())
         {
             NL eliminado = this.getUltimo();
+            this.Descontar(eliminado.getObjeto().getId());
             if(this.getPrimero()==this.getUltimo())
                 this.setPrimero(this.ultimo = null);
             else
@@ -188,9 +195,51 @@ public class Lista {
            
    }
    
-   void Descontar()
+   void Descontar(int id)
    {
-       
+       switch(id)
+       {
+           case 0:
+           {
+               this.suelos--;;
+               break;
+           }
+           case 1:
+           {
+               this.paredes--;
+               break;
+           }
+           case 2:
+           {
+               this.goombas--;
+               break;
+           }
+           case 3:
+           {
+               this.koopas--;
+               break;
+           }
+           case 4:
+           {
+               this.fichas--;
+               break;
+           }
+           case 5:
+           {
+               this.hongos--;
+               break;
+           }
+           case 6:
+           {
+               this.personajes--;
+               break;
+           }
+           case 7:
+           {
+               this.castillos--;
+               break;
+           }
+   }
    }
    
    public void EliminarDeLista(NL nodo)
@@ -201,14 +250,14 @@ public class Lista {
            if(this.primero.getNext()!=null)
                this.primero.getNext().setBack(null);
            this.primero = this.primero.getNext();
-           Descontar();
+           Descontar(nodo.getObjeto().getId());
            
        }
        else if(nodo==this.ultimo)
        {
            this.ultimo = this.ultimo.getBack();
            this.ultimo.setNext(null);
-           Descontar();
+           Descontar(nodo.getObjeto().getId());
        }
        else
        {
@@ -219,7 +268,7 @@ public class Lista {
                 {
                     aux.getBack().setNext(aux.getNext());
                     aux.getNext().setBack(aux.getBack());
-                    Descontar();
+                    Descontar(nodo.getObjeto().getId());
                     break;
                 }
                 else
@@ -292,7 +341,19 @@ public class Lista {
        }
     }
     
-    
+    public StringBuilder Restantes()
+    {
+        StringBuilder resp = new StringBuilder();
+        resp.append("Personajes: "+this.personajes+"\n");
+        resp.append("Castillos: "+this.castillos+"\n");
+        resp.append("Goombas: "+this.goombas+"\n");
+        resp.append("Koopas: "+this.koopas+"\n");
+        resp.append("Suelos: "+this.suelos+"\n");
+        resp.append("Paredes: "+this.paredes+"\n");
+        resp.append("Hongos: "+this.hongos+"\n");
+        resp.append("Fichas: "+this.fichas+"\n");
+        return resp;
+    }
     public void Graficar(String nombre)
     {
         System.out.println("EN GRAFICAR DE LA LISTA");
@@ -330,7 +391,7 @@ public class Lista {
         PrintWriter pw = null;
         try
         {
-            fichero = new FileWriter("/home/byron/GraficasMarioMaker/"+nombre+".dot");
+            fichero = new FileWriter("C:\\Users\\byron\\Desktop\\GraficasMarioMaker\\"+nombre+".dot");
             pw = new PrintWriter(fichero);
  
             
@@ -358,7 +419,7 @@ public class Lista {
 			 * en la linea de comandos esto es: 
 			 * dot -Tpng -o archivo.png archivo.dot
 			 */
-			pbuilder = new ProcessBuilder( "dot", "-Tpng", "-o", "/home/byron/GraficasMarioMaker/Lista.png", "/home/byron/GraficasMarioMaker/Lista.dot" );
+			pbuilder = new ProcessBuilder( "dot", "-Tpng", "-o", "C:\\Users\\byron\\Desktop\\GraficasMarioMaker/Lista.png", "C:\\Users\\byron\\Desktop\\GraficasMarioMaker\\Lista.dot" );
 			pbuilder.redirectErrorStream( true );
 			//Ejecuta el proceso
 			pbuilder.start();

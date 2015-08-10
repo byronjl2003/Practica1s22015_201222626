@@ -128,7 +128,7 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
         this.lblobjeto.setBounds(350, 10, 75, 75);
         
         this.General.add(this.lblobjeto);
-        this.scroll2.setBounds(430,10,75,75);
+        this.scroll2.setBounds(410,10,100,75);
         this.General.add(this.scroll2);
         this.btnplay.setBounds(610 ,20,100 ,25);
         this.General.add(this.btnplay);
@@ -260,6 +260,21 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
          this.lblobjeto.setIcon(null);
      }
  }
+ private void ElimFoC()
+ {
+     if(this.radiocolumna.isSelected())
+     {
+         // se quiere borrar una columna
+         int col = Integer.parseInt(this.txtnum.getText());
+         this.matriz.Eliminar(col,1);
+     }
+     else if(this.radiofila.isSelected())
+     {
+         int fil = Integer.parseInt(this.txtnum.getText());
+         this.matriz.Eliminar(fil,0);
+     }
+ }
+         
  protected void paintComponent(Graphics g)
  {
      
@@ -350,6 +365,8 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
         else if(e.getSource()==this.btnelim)
         {
             // se elimina la fila o columna seleccionada
+            if(!this.txtnum.getText().equals(""))
+                this.ElimFoC();
         }
         else if(e.getSource()==this.btngraflista)
         {
@@ -389,7 +406,9 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
         System.out.println("NUMERO DE ELEMENTOS EN LA LISTA DESPUES DE QUITAR DEL PANEL Y AGREGARLA A LA LISTA: "+this.lista.getElementos());
         System.out.println("ID DEL OBJETO EN EL PANEL: "+panel.Dato.getId());
         this.refreshActual();
+        
         panel.repaint();
+        this.areatxt.setText(this.lista.Restantes().toString());
         
     }
 

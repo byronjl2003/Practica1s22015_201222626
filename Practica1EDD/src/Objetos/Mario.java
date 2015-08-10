@@ -168,11 +168,13 @@ public class Mario extends Objeto {
             //System.out.println("ENTRO");
             if(this.casillaactual.Abajo.Buscar(1).Dato.getId()==3)
             {
+                System.out.println("EN EL IF DE APLASTADO DE GOOMBA");
                 Objeto aux =  this.casillaactual.Abajo.Buscar(1).Dato;// se guarda el goomba
                 this.casillaactual.Abajo.Buscar(1).Dato = casillaactual.Buscar(1).Dato;// se pasa el mario al cuadro de abajo
-                this.casillaactual.Buscar(1).Dato = aux;
+                aux.casillaactual.Buscar(1).Dato = new Vacio();
                 this.casillaactual = this.casillaactual.Abajo;
                 aux.die();
+                
                 this.setPosfy(this.getCordy()+75);
                 this.setVy(5);
                 this.setVx(0);
@@ -263,9 +265,10 @@ public class Mario extends Objeto {
                     // ES UN SALTO
                     if(cuadros==0)
                     {
-                        System.out.println("1 CUADRO SALTO");
+                        
                         if(this.casillaactual.Arriba.Buscar(1).Dato.getId()!=0||this.casillaactual.Arriba.Buscar(1).Dato.getId()!=1)
                         {
+                            System.out.println("1 CUADRO SALTO");
                             // verifica si el cuadro de arriba no tiene algo con que topar
                             Objeto aux = this.casillaactual.Arriba.Buscar(1).Dato;
                             this.casillaactual.Arriba.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
@@ -278,14 +281,16 @@ public class Mario extends Objeto {
                             cuadros=1;//primer cuadro saltado
                             
                         }
+                        cuadros=0;
                         
                     }
                     else if(cuadros==1)
                     {
-                        System.out.println("2 CUADRO SALTO");
+                        
                         cuadros=0;
                         if(this.casillaactual.Arriba.Buscar(1).Dato.getId()!=0||this.casillaactual.Arriba.Buscar(1).Dato.getId()!=1)
                         {
+                            System.out.println("2 CUADRO SALTO");
                             Objeto aux = this.casillaactual.Arriba.Buscar(1).Dato;
                             this.casillaactual.Arriba.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
                             this.casillaactual.Buscar(1).Dato = aux;
@@ -294,15 +299,13 @@ public class Mario extends Objeto {
                             this.setPosfy(this.getCordy()-75);
                             this.setVx(0);
                             this.setVy(-5);
-                            //cuadros--;
+                            
                         }
                         
                             
                         
                     }
-                         
-                    else
-                        cuadros--;
+                   
                 }
                 else if(accion==4)
                 {

@@ -7,6 +7,7 @@ package Objetos;
 
 import GUI.Game;
 import Imagenes.imagen;
+import ListaPilaCola.Lista;
 import ListaPilaCola.NL;
 import MDisp.NCasilla;
 import java.awt.Graphics;
@@ -23,12 +24,14 @@ public abstract class Objeto extends ImageIcon {
     private int id;
     private String nombre;
     public NCasilla casillaactual;
-    NL nodolista;
+    NL nodol,nodolviv;
+    Lista lista,listaviv;
    
     public Objeto()
     {
         casillaactual = null;
-        
+        nodol =null;
+        nodolviv = null;
     }
     public abstract void render(Graphics g,Game game);
             

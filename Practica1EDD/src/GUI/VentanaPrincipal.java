@@ -25,6 +25,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -57,8 +58,9 @@ public class VentanaPrincipal extends JPanel implements ActionListener,ChangeLis
     {
         
        
-        
+       // imagen imagenn = new imagen();
         lista = new Lista();
+        //lista.Add(new Pared("pared",imagenn.pared()));
         panellista = new PanelLista(lista);
         imgs = new imagen();
         vent= new JFrame("MARIO MAKER!");
@@ -177,6 +179,7 @@ public class VentanaPrincipal extends JPanel implements ActionListener,ChangeLis
             this.maker.General.setVisible(true);
             this.maker.refreshActual();
             this.maker.repaint();
+            this.maker.areatxt.setText(this.lista.Restantes().toString());
         }
         else if(e.getSource()==this.btngrafica)
         {

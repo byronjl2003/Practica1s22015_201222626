@@ -101,10 +101,15 @@ public class Manejador{
                 if(obj!=null && obj.getId()!=-1)
                 {
                     
-                    lista.Add(obj);
+                   NL node =  this.lista.Add(obj);
+                   obj.nodol = node;
+                   obj.lista = this.lista;
+                   
                     if(obj.viviente)
                     {
-                        this.lvivientes.Add(obj);
+                        NL nodo = this.lvivientes.Add(obj);
+                        obj.nodolviv = nodo;
+                        obj.listaviv = this.lvivientes;
                     }
                     if(obj.getId()==6)
                         this.mario = (Mario)obj;

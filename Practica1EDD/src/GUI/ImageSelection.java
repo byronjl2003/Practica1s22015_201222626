@@ -171,6 +171,7 @@ class ImageSelection extends TransferHandler implements Transferable
           panel.repaint();
           maker.refreshActual();
           System.out.println("NUMERO DE ELEMENTOS EN LA LISTA DESPUES DE LA TRANSFERENCIA: "+this.lista.getElementos());
+          maker.areatxt.setText(maker.lista.Restantes().toString());
           return true;
         } catch (UnsupportedFlavorException ignored) {
             ignored.printStackTrace();

@@ -103,7 +103,7 @@ public class Game extends JPanel implements Runnable,ActionListener{
     }
      protected void paintComponent(Graphics g)
     {
-        System.out.println("PAINTCOMPONENT");
+       // System.out.println("PAINTCOMPONENT");
         super.paintComponent(g);
         Dimension d = getSize();
         g.setColor(Color.red);
@@ -124,7 +124,7 @@ public class Game extends JPanel implements Runnable,ActionListener{
             this.repaint();
             
             try {
-                Thread.sleep(10);
+                Thread.sleep(100);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
             }

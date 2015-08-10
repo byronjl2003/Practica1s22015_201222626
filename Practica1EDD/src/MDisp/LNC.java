@@ -103,6 +103,7 @@ public class LNC {
             return 0;
             
     }
+    
     public void Eliminar(int num)
     {
         NC elim = BuscarColumna(num);
