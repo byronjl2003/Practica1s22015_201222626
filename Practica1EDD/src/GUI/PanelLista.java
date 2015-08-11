@@ -37,7 +37,7 @@ public class PanelLista extends JPanel  {
         scroll = new JScrollPane(this);
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        this.setPreferredSize(new Dimension(250,1500));
+        this.setPreferredSize(new Dimension(250,5000));
         
         this.setBackground(Color.MAGENTA);
         
