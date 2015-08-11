@@ -64,10 +64,10 @@ public class Cronometro extends JPanel implements Runnable  {
     public void run() {
         while(!finish)
         {
-            System.out.println("11");
+            //System.out.println("11");
             while(start)
             {
-                System.out.println("22");
+               // System.out.println("22");
                 if(segundos==59)
                 {
                     minutos++;

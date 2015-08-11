@@ -112,7 +112,7 @@ public class Game extends JPanel implements Runnable,ActionListener{
         this.setLayout(null);
         this.ventana.add(this);
         play = true;
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         ventana.setVisible(true);
         mario = (Mario)this.handler.Buscarmario();
         
@@ -149,10 +149,10 @@ public class Game extends JPanel implements Runnable,ActionListener{
     public void run() {
        while(!finish)
        {
-          System.out.println(1);
+          //System.out.println(1);
         while(play)
         {
-           System.out.println(2); 
+           //System.out.println(2); 
             //System.out.println("EN EL RUN!");
             this.repaint();
             this.refrescarmario();
@@ -166,10 +166,21 @@ public class Game extends JPanel implements Runnable,ActionListener{
        }
        this.cronometro.stop();
        this.cronometro.finish = true;
-       System.out.println("SALIO DEL JUEGO por QUe MUriO mARIO");
        this.refrescarmario();
-       this.imagenfondo = this.imgs.gameover();
-       this.repaint();
+       if(this.mario.vidas==0)
+       {
+           //mario murio
+           System.out.println("SALIO DEL JUEGO por QUe MUriO mARIO");
+           this.imagenfondo = this.imgs.gameover();
+           this.repaint();
+       }
+       else
+       {
+           System.out.println("MARIO GANO");
+           this.imagenfondo = this.imgs.win();
+           this.repaint();
+       }
+       
        //this.handler.Terminar();
         
         

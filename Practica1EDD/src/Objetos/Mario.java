@@ -155,10 +155,69 @@ public class Mario extends Objeto {
             contador = 1;
         }
         
-                
-                    
-        this.setCordx(this.getCordx() + this.getVx());
-        this.setCordy(this.getCordy() + this.getVy());
+        if(this.getVx()==0&&this.getVy()==0)
+        {
+            
+        }
+        else if(this.getVx()!=0)
+        {
+            if(this.getVx()>0)
+            {
+                if((this.getCordx()+this.getVx()+5)>this.getPosfx())
+                {
+                    this.setCordx(this.getCordx() + this.getVx());
+                    this.setCordy(this.getCordy() + this.getVy());
+                }
+                else
+                {
+                    this.setCordx(this.getCordx() + this.getVx()+5);
+                    this.setCordy(this.getCordy() + this.getVy());
+                }
+            }
+            else
+            {
+                if((this.getCordx()+this.getVx()-5)<this.getPosfx())
+                {
+                    this.setCordx(this.getCordx() + this.getVx());
+                    this.setCordy(this.getCordy() + this.getVy());
+                }
+                else
+                {
+                    this.setCordx(this.getCordx() + this.getVx()-5);
+                    this.setCordy(this.getCordy() + this.getVy());
+                }
+            }
+        }
+        else
+        {
+           if(this.getVy()>0)
+            {
+                if((this.getCordy()+this.getVy()+5)>this.getPosfy())
+                {
+                    this.setCordx(this.getCordx() + this.getVx());
+                    this.setCordy(this.getCordy() + this.getVy());
+                }
+                else
+                {
+                    this.setCordx(this.getCordx() + this.getVx());
+                    this.setCordy(this.getCordy() + this.getVy()+5);
+                }
+            }
+            else
+            {
+                if((this.getCordy()+this.getVy()-5)<this.getPosfy())
+                {
+                    this.setCordx(this.getCordx() + this.getVx());
+                    this.setCordy(this.getCordy() + this.getVy());
+                }
+                else
+                {
+                    this.setCordx(this.getCordx() + this.getVx());
+                    this.setCordy(this.getCordy() + this.getVy()-5);
+                }
+            }
+        }
+        
         g.drawImage(imgs.generalmario(derecha,contador),this.getCordx(),this.getCordy(),75,75,game);
     }
     
@@ -178,7 +237,6 @@ public class Mario extends Objeto {
     @Override
     public void tick() {
         
-        
         if(this.getPosfx()==this.getCordx() && this.getPosfy()==this.getCordy())
         {// Cuando ya termino de recorrer un cuadro.
             //System.out.println("ENTRO");
@@ -191,9 +249,9 @@ public class Mario extends Objeto {
                     this.fatal = false;
                 
             }
-            else if(this.casillaactual.Abajo.Buscar(1).Dato.getId()==3&&cuadros==0)
+            else if(this.casillaactual.Abajo.Buscar(1).Dato.getId()==2&&cuadros==0)
             {
-               // System.out.println("EN EL IF DE APLASTADO DE GOOMBA");
+               System.out.println("EN EL IF DE APLASTADO DE GOOMBA");
                 Objeto aux =  this.casillaactual.Abajo.Buscar(1).Dato;// se guarda el goomba
                 this.casillaactual.Abajo.Buscar(1).Dato = casillaactual.Buscar(1).Dato;// se pasa el mario al cuadro de abajo
                 aux.casillaactual.Buscar(1).Dato = new Vacio();
@@ -203,6 +261,16 @@ public class Mario extends Objeto {
                 this.setPosfy(this.getCordy()+75);
                 this.setVy(5);
                 this.setVx(0);
+            }
+            else if(this.casillaactual.Abajo.Buscar(1).Dato.getId()==3&&cuadros==0)
+            {
+                System.out.println("EN EL IF DE APLASTADO DE KOOPA");
+                //Objeto aux =  this.casillaactual.Abajo.Buscar(1).Dato;// se guarda el koopa
+                this.die();
+                this.setVx(0);
+                this.setVy(0);
+                
+                
             }
             else if((this.casillaactual.Abajo.Buscar(1).Dato.getId()==4||this.casillaactual.Abajo.Buscar(1).Dato.getId()==5)&&cuadros==0)
             {
@@ -280,7 +348,7 @@ public class Mario extends Objeto {
                                 this.setVy(0);
                                 aux.die();
                             }
-                            else if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==2||this.casillaactual.Izquierda.Buscar(1).Dato.getId()==2)
+                            else if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==2||this.casillaactual.Izquierda.Buscar(1).Dato.getId()==3)
                             {
                                 System.out.println("ENTRO A QUE SE VA A MOVER A LA IZQUIERDA PERO HAY UN GOOMBA ");
                                 
@@ -316,6 +384,13 @@ public class Mario extends Objeto {
                                     
                                 }
                                 
+                            }
+                            else if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==7)
+                            {
+                                this.setPosfx(this.getCordx()-75);
+                                this.setVx(-5);
+                                this.setVy(0);
+                                this.win();
                             }
                             else if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()!=0&&this.casillaactual.Izquierda.Buscar(1).Dato.getId()!=1)
                             {
@@ -364,10 +439,52 @@ public class Mario extends Objeto {
                                 this.setVy(0);
                                 aux.die();
                             }
-                            else if(this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2||this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2)
+                            else if(this.casillaactual.Derecha.Buscar(1).Dato.getId()==2||this.casillaactual.Derecha.Buscar(1).Dato.getId()==3)
                             {
+                                
+                                System.out.println("ENTRO A QUE SE VA A MOVER A LA DERECHA PERO HAY UN GOOMBA o koopa ");
+                                
                                 derecha = true;
                                 this.die();
+                                if(vidas!=0)
+                                {
+                                    //mario sigue vivo despues de descontarle la vida
+                                    // se raliza un movimiento a la izquierda normal.
+                                    derecha = true;
+                                    Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
+                                    this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
+                                    this.casillaactual.Buscar(1).Dato = aux;
+                            
+                                    this.casillaactual = this.casillaactual.Derecha;
+                                    this.setPosfx(this.getCordx()+75);
+                                    
+                                    this.setVx(+5);
+                                    this.setVy(0);
+                                    if(aux.getVx()< 0)
+                                    {
+                                        // hiva a la derecha
+                                        System.out.println("El mario hiva a la derecha y el goomba a la izquierda");
+                                        aux.setPosfx(aux.getCordx() - 75);
+                                        aux.setVx(-5);
+                                        aux.setVy(0);
+                                    }
+                                    else
+                                    {
+                                        //hiva a la izquierda
+                                        System.out.println("El mario hiva a la izquierda y el goomba a la izquierda, LO ALZANZO");
+                                    }
+                                    
+                                }
+                                
+                                
+                                
+                            }
+                            else if(this.casillaactual.Derecha.Buscar(1).Dato.getId()==7)
+                            {
+                                this.setPosfx(this.getCordx()+75);
+                                this.setVx(+5);
+                                this.setVy(0);
+                                this.win();
                             }
                             else if(this.casillaactual.Derecha.Buscar(1).Dato.getId()!=0&&this.casillaactual.Derecha.Buscar(1).Dato.getId()!=1)
                             {
@@ -588,7 +705,7 @@ public class Mario extends Objeto {
                                 this.setVy(0);
                                 aux.die();
                             }
-                            else if(this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2||this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2)
+                            else if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==2||this.casillaactual.Derecha.Buscar(1).Dato.getId()==3)
                             {
                                 derecha = false;
                                 this.die();
@@ -716,7 +833,7 @@ public class Mario extends Objeto {
                                 this.setVy(0);
                                 aux.die();
                             }
-                            else if(this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2||this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2)
+                            else if(this.casillaactual.Derecha.Buscar(1).Dato.getId()==2||this.casillaactual.Derecha.Buscar(1).Dato.getId()==2)
                             {
                                 derecha = true;
                                 this.die();
@@ -746,6 +863,7 @@ public class Mario extends Objeto {
                 
             }
         }
+        
         }
 
     @Override
@@ -780,6 +898,13 @@ public class Mario extends Objeto {
             }
                 
         }
+    }
+    
+    public void win()
+    {
+        System.out.println("EN EL WIN");
+        this.game.finish = true;
+        this.game.play = false;
     }
 
     

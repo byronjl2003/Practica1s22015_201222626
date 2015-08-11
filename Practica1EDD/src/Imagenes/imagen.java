@@ -157,6 +157,10 @@ public class imagen {
                 
         }
     }
+    public Image win()
+    {
+        return new ImageIcon(getClass().getResource("win.png")).getImage();
+    }
     public Image gameover()
     {
         return new ImageIcon(getClass().getResource("gameOver.jpg")).getImage();
