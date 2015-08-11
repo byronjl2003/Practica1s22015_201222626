@@ -81,16 +81,32 @@ public class LNF {
     
     public int ConexionesPorElim(int num)
     {
-        NF col = Buscar(num);
-        if(col!=null)
+        System.out.println("EN CONEXIONESPORELIM DE LNF");
+        NF fila = Buscar(num);
+        if(fila!=null)
         {
-            NCasilla casilla = col.Primero;
+            NCasilla casilla = fila.Primero;
             while(casilla!=null)
             {
-                if(casilla.Derecha!=null)
-                    casilla.Derecha.Izquierda = casilla.Izquierda;
-                if(casilla.Izquierda!=null)
-                    casilla.Izquierda.Derecha = casilla.Derecha;
+                if(casilla.Arriba==null)
+                {
+                    casilla.Ptrcolumna.Primero = casilla.Abajo;
+                }
+                else
+                {
+                    casilla.Arriba.Abajo = casilla.Abajo;
+                }
+                if(casilla.Abajo==null)
+                {
+                    casilla.Ptrcolumna.Ultimo = casilla.Arriba;
+                }
+                else
+                {
+                    casilla.Abajo.Arriba = casilla.Arriba;
+                }
+                    
+                casilla = casilla.Derecha;
+                
             }
             return 1;
         }
@@ -99,6 +115,17 @@ public class LNF {
             
     }
     
+    public void Reenumerar()
+    {
+        NF fila = this.Primero;
+        int conta = 0;
+        while(fila!=null)
+        {
+            fila.Num = conta;
+            conta++;
+            fila = fila.Next;
+        }
+    }
     public void Eliminar(int num)
     {
         NF elim = Buscar(num);
@@ -109,6 +136,7 @@ public class LNF {
                 if(elim.Next!=null)
                     elim.Next.Back = null;
                 this.Primero = elim.Next;
+                this.elementos--;
             
         
             }
@@ -117,13 +145,16 @@ public class LNF {
                 if(elim.Back!=null)
                     elim.Back.Next = null;
                 this.Ultimo = elim.Back;
+                this.elementos--;
             
             }
             else
             {
                 elim.Back.Next = elim.Next;
                 elim.Next.Back = elim.Back;
+                this.elementos--;
             }
+            this.Reenumerar();
             
         }
         

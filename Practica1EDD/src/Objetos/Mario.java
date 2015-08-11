@@ -20,12 +20,13 @@ import java.util.Queue;
  */
 public class Mario extends Objeto {
     imagen imgs;
+    int contador=0;
     int accion = -1;
     int cuadros = 0;
     LinkedList cola;
     char presionado ;
     long lastKeyPress = System.currentTimeMillis();
-    public boolean bloqueo,fatal;
+    public boolean bloqueo,fatal,derecha;
     public int puntos,vidas;
     Game game;
     public Mario(String nom,Image img)
@@ -142,10 +143,19 @@ public class Mario extends Objeto {
     @Override
     public void render(Graphics g,Game game) {
   
+        if(accion!=-1)
+        {
+            if(contador==4)
+            contador=1;
+        else
+            contador++;
+        }
         
+                
+                    
         this.setCordx(this.getCordx() + this.getVx());
         this.setCordy(this.getCordy() + this.getVy());
-        g.drawImage(imgs.mario1(),this.getCordx(),this.getCordy(),75,75,game);
+        g.drawImage(imgs.generalmario(derecha,contador),this.getCordx(),this.getCordy(),75,75,game);
     }
     
     private void Traeraccion()
@@ -247,10 +257,11 @@ public class Mario extends Objeto {
                         //System.out.println("ENTRO A Accion==1");
                         //verificar tope a la izquierda
                         if(this.casillaactual.Izquierda!=null)
-                        {
+                        {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
                             // Mario nO en el tope izquierdo,SE PROCEDE A VER SI HAY TOPE
                             if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==4 ||this.casillaactual.Izquierda.Buscar(1).Dato.getId()==5)
                             {
+                                derecha = false;
                                 System.out.println("ENTRO A QUE SE VA A COMER algo");
                                 if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==4)
                                     this.puntos++;
@@ -267,12 +278,14 @@ public class Mario extends Objeto {
                             }
                             else if(this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2||this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2)
                             {
+                                derecha = false;
                                 this.die();
                             }
                             else if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()!=0&&this.casillaactual.Izquierda.Buscar(1).Dato.getId()!=1)
                             {
                                // System.out.println("SE MUEVE A LA IZQUIERDA");
                                 //TAMPOCO HAY NINGUN TIPO DE TOPE, se procede a avanzar a la izquierda
+                                derecha = false;
                                 Objeto aux = this.casillaactual.Izquierda.Buscar(1).Dato;
                                 this.casillaactual.Izquierda.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
                                 this.casillaactual.Buscar(1).Dato = aux;
@@ -300,6 +313,7 @@ public class Mario extends Objeto {
                             
                             if(this.casillaactual.Derecha.Buscar(1).Dato.getId()==4 ||this.casillaactual.Derecha.Buscar(1).Dato.getId()==5)
                             {
+                                derecha = true;
                                 System.out.println("ENTRO A QUE SE VA A COMER algo");
                                 if(this.casillaactual.Derecha.Buscar(1).Dato.getId()==4)
                                     this.puntos++;
@@ -316,10 +330,12 @@ public class Mario extends Objeto {
                             }
                             else if(this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2||this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2)
                             {
+                                derecha = true;
                                 this.die();
                             }
                             else if(this.casillaactual.Derecha.Buscar(1).Dato.getId()!=0&&this.casillaactual.Derecha.Buscar(1).Dato.getId()!=1)
                             {
+                                derecha = true;
                                // System.out.println("SE MUEVE A LA DERECHA");
                                 Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
                                 this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
@@ -521,6 +537,7 @@ public class Mario extends Objeto {
                             // Mario nO en el tope izquierdo,SE PROCEDE A VER SI HAY TOPE
                             if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==4 ||this.casillaactual.Izquierda.Buscar(1).Dato.getId()==5)
                             {
+                                derecha = false;
                                 System.out.println("ENTRO A QUE SE VA A COMER algo");
                                 if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==4)
                                     this.puntos++;
@@ -537,10 +554,12 @@ public class Mario extends Objeto {
                             }
                             else if(this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2||this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2)
                             {
+                                derecha = false;
                                 this.die();
                             }
                             else if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()!=0&&this.casillaactual.Izquierda.Buscar(1).Dato.getId()!=1)
                             {
+                                derecha = false;
                                 System.out.println("SE MUEVE A LA IZQUIERDA");
                                 //TAMPOCO HAY NINGUN TIPO DE TOPE, se procede a avanzar a la izquierda
                                 Objeto aux = this.casillaactual.Izquierda.Buscar(1).Dato;
@@ -646,6 +665,7 @@ public class Mario extends Objeto {
                             // Mario nO en el tope izquierdo,SE PROCEDE A VER SI HAY TOPE
                             if(this.casillaactual.Derecha.Buscar(1).Dato.getId()==4 ||this.casillaactual.Derecha.Buscar(1).Dato.getId()==5)
                             {
+                                derecha = true;
                                 System.out.println("ENTRO A QUE SE VA A COMER algo");
                                 if(this.casillaactual.Derecha.Buscar(1).Dato.getId()==4)
                                     this.puntos++;
@@ -662,10 +682,12 @@ public class Mario extends Objeto {
                             }
                             else if(this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2||this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2)
                             {
+                                derecha = true;
                                 this.die();
                             }
                             else if(this.casillaactual.Derecha.Buscar(1).Dato.getId()!=0&&this.casillaactual.Derecha.Buscar(1).Dato.getId()!=1)
                             {
+                                derecha = true;
                                 System.out.println("SE MUEVE A LA DERECHA");
                                 Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
                                 this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;

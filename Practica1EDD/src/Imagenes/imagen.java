@@ -39,6 +39,32 @@ public class imagen {
             
             
     }
+    public Image generalmario(boolean der, int num)
+    {
+        if(der)
+        {
+            if(num==1)
+                return this.mario1();
+            else if(num==2)
+                return this.mario2();
+            else if(num==3)
+                return this.mario3();
+            else if(num==4)
+                return this.mario4();
+        }
+        else
+        {
+            if(num==1)
+                return this.izqmario1();
+            else if(num==2)
+                return this.izqmario2();
+            else if(num==3)
+                return this.izqmario3();
+            else if(num==4)
+                return this.izqmario4();
+        }
+        return null;
+    }
     public Image generalgom(boolean der, int num)
     {
         if(der)
@@ -152,6 +178,31 @@ public class imagen {
     {
         return new ImageIcon(getClass().getResource("Mario4.png")).getImage();
     }
+    
+    
+    public Image izqmario1()
+    {
+        return new ImageIcon(getClass().getResource("Marioizq1.png")).getImage();
+    }
+    public Image izqmario2()
+    {
+        return new ImageIcon(getClass().getResource("Marioizq2.png")).getImage();
+    }
+    public Image izqmario3()
+    {
+        return new ImageIcon(getClass().getResource("Marioizq3.png")).getImage();
+    }
+    public Image izqmario4()
+    {
+        return new ImageIcon(getClass().getResource("Marioizq4.png")).getImage();
+    }
+    
+    
+    
+    
+    
+    
+    
     public Image piso()
     {
         return new ImageIcon(getClass().getResource("piso.png")).getImage();

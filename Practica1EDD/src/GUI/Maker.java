@@ -263,6 +263,7 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
  }
  private void ElimFoC()
  {
+     System.out.println("EN ElimFoC");
      if(this.radiocolumna.isSelected())
      {
          // se quiere borrar una columna
@@ -274,6 +275,7 @@ public class Maker extends JPanel implements ChangeListener,ActionListener,Mouse
          int fil = Integer.parseInt(this.txtnum.getText());
          this.matriz.Eliminar(fil,0);
      }
+     MakeTablero();
  }
          
  protected void paintComponent(Graphics g)

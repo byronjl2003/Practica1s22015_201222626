@@ -39,15 +39,17 @@ public class MDisp {
         }
         public int Eliminar(int num, int flag)
         {
+            System.out.println("EN ELIMINAR DE MDisp");
             if(flag==0)
             {
-                
+                System.out.println("SE VA A ELIMINAR UNA FILA");
                 int resp =  this.getLcolumnas().ListaFilas.ConexionesPorElim(num);
                 this.getLcolumnas().ListaFilas.Eliminar(num);
                 return resp;
             }
             else if(flag==1)
             {
+                System.out.println("SE VA A ELIMINAR UNA COLUMNA");
                 int resp =  this.getLcolumnas().ConexionesPorElim(num);
                 this.getLcolumnas().Eliminar(num);
                 return resp;

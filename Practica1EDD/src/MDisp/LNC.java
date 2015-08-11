@@ -86,16 +86,38 @@ public class LNC {
     
     public int ConexionesPorElim(int num)
     {
+        System.out.println("EN CONEXIONESPORELIM DE LNC");
         NC col = BuscarColumna(num);
+        
         if(col!=null)
         {
+            System.out.println("SE VA A ELIMINAR LA COLUMNA "+col.numero);
             NCasilla casilla = col.Primero;
             while(casilla!=null)
             {
-                if(casilla.Derecha!=null)
-                    casilla.Derecha.Izquierda = casilla.Izquierda;
-                if(casilla.Izquierda!=null)
+                if(casilla.Izquierda==null)
+                {
+                    // es la primera columna
+                    casilla.Ptrfila.Primero = casilla.Derecha;
+                    //casilla.Derecha.Ptrfila = casilla.Ptrfila;
+                    
+                }
+                else
+                {
                     casilla.Izquierda.Derecha = casilla.Derecha;
+                }
+                    
+                if(casilla.Derecha==null)
+                {
+                    //Es la ultima columna
+                    casilla.Ptrfila.Ultimo = casilla.Izquierda;
+                }
+                else
+                {
+                    casilla.Derecha.Izquierda = casilla.Izquierda;
+                }
+                    
+                casilla = casilla.Abajo;
             }
             return 1;
         }
@@ -103,7 +125,17 @@ public class LNC {
             return 0;
             
     }
-    
+    public void Reenumerar()
+    {
+        NC col = this.Primero;
+        int conta = 0;
+        while(col!=null)
+        {
+            col.numero = conta;
+            conta++;
+            col = col.Next;
+        }
+    }
     public void Eliminar(int num)
     {
         NC elim = BuscarColumna(num);
@@ -114,6 +146,7 @@ public class LNC {
                 if(elim.Next!=null)
                     elim.Next.Back = null;
                 this.Primero = elim.Next;
+                this.elementos--;
             
         
             }
@@ -122,14 +155,15 @@ public class LNC {
                 if(elim.Back!=null)
                     elim.Back.Next = null;
                 this.Ultimo = elim.Back;
-            
+                this.elementos--;
             }
             else
             {
                 elim.Back.Next = elim.Next;
                 elim.Next.Back = elim.Back;
+                this.elementos--;
             }
-            
+            this.Reenumerar();
         }
         
     }

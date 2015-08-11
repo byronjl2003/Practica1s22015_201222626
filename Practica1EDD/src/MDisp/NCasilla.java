@@ -214,7 +214,7 @@ public class NCasilla {
         }
         public String ToString()
         {
-            return "Casilla"+this.Ptrcolumna.numero+this.Ptrfila.Num;
+            return "Casilla"+this.Ptrfila.Num+this.Ptrcolumna.numero;
         }
 
     
