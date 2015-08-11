@@ -22,7 +22,7 @@ public class Cronometro extends JPanel implements Runnable  {
     
     JLabel lblseg,lblmin;
     int minutos=0,segundos=0;
-    boolean start = true,finish = true;
+    boolean start = true,finish = false;
     
     public Cronometro()
     {

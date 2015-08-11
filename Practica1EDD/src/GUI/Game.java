@@ -13,6 +13,7 @@ import Objetos.Mario;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -41,8 +42,11 @@ public class Game extends JPanel implements Runnable,ActionListener{
     public boolean play,finish;
     Thread juego,crono;
     Mario mario;
+    Image imagenfondo;
     public Game(MDisp mat)
     {
+         imgs = new imagen();
+         this.imagenfondo = imgs.fondoj();
         this.finish = false;
         addKeyListener(new KeyListener() {
 			@Override
@@ -64,7 +68,7 @@ public class Game extends JPanel implements Runnable,ActionListener{
 		
         
         
-        imgs = new imagen();
+       
         this.matriz = mat;
         //this.lviv = lvivientes;
         handler = new Manejador(this.matriz,this);
@@ -126,7 +130,7 @@ public class Game extends JPanel implements Runnable,ActionListener{
         Dimension d = getSize();
         g.setColor(Color.red);
         
-        g.drawImage(imgs.fondoj(), 0,0, d.width, d.height, this);
+        g.drawImage(this.imagenfondo, 0,0, d.width, d.height, this);
         this.handler.Pintar(g);
      
     }
@@ -163,6 +167,9 @@ public class Game extends JPanel implements Runnable,ActionListener{
        this.cronometro.stop();
        this.cronometro.finish = true;
        System.out.println("SALIO DEL JUEGO por QUe MUriO mARIO");
+       this.refrescarmario();
+       this.imagenfondo = this.imgs.gameover();
+       this.repaint();
        //this.handler.Terminar();
         
         

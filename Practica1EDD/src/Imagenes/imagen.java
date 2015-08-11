@@ -157,6 +157,10 @@ public class imagen {
                 
         }
     }
+    public Image gameover()
+    {
+        return new ImageIcon(getClass().getResource("gameOver.jpg")).getImage();
+    }
     public Image fondomaker()
     {
         return new ImageIcon(getClass().getResource("FondoMario11.png")).getImage();

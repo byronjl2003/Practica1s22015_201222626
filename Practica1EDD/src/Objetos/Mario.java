@@ -150,6 +150,10 @@ public class Mario extends Objeto {
         else
             contador++;
         }
+        else
+        {
+            contador = 1;
+        }
         
                 
                     
@@ -276,10 +280,42 @@ public class Mario extends Objeto {
                                 this.setVy(0);
                                 aux.die();
                             }
-                            else if(this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2||this.casillaactual.Derecha.Buscar(vidas).Dato.getId()==2)
+                            else if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==2||this.casillaactual.Izquierda.Buscar(1).Dato.getId()==2)
                             {
+                                System.out.println("ENTRO A QUE SE VA A MOVER A LA IZQUIERDA PERO HAY UN GOOMBA ");
+                                
                                 derecha = false;
                                 this.die();
+                                if(vidas!=0)
+                                {
+                                    //mario sigue vivo despues de descontarle la vida
+                                    // se raliza un movimiento a la izquierda normal.
+                                    derecha = false;
+                                    Objeto aux = this.casillaactual.Izquierda.Buscar(1).Dato;
+                                    this.casillaactual.Izquierda.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
+                                    this.casillaactual.Buscar(1).Dato = aux;
+                            
+                                    this.casillaactual = this.casillaactual.Izquierda;
+                                    this.setPosfx(this.getCordx()-75);
+                                    
+                                    this.setVx(-5);
+                                    this.setVy(0);
+                                    if(aux.getVx()> 0)
+                                    {
+                                        // hiva a la derecha
+                                        System.out.println("El mario hiva a la izquierda y el goomba a la derecha");
+                                        aux.setPosfx(aux.getCordx() + 75);
+                                        aux.setVx(+5);
+                                        aux.setVy(0);
+                                    }
+                                    else
+                                    {
+                                        //hiva a la izquierda
+                                        System.out.println("El mario hiva a la izquierda y el goomba a la izquierda, LO ALZANZO");
+                                    }
+                                    
+                                }
+                                
                             }
                             else if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()!=0&&this.casillaactual.Izquierda.Buscar(1).Dato.getId()!=1)
                             {
@@ -720,6 +756,10 @@ public class Mario extends Objeto {
         if(fatal)
         {
             // se cayo, no importa las vidas
+            Vacio vacio = new Vacio();
+            vacio.setCordx(this.getCordx());
+            vacio.setCordy(this.getCordy());
+            this.casillaactual.Buscar(1).Dato =vacio; 
             this.game.play = false;
             this.game.finish = true;
             
@@ -734,6 +774,7 @@ public class Mario extends Objeto {
             }
             else
             {
+                vidas--;
                 this.game.finish = true;
                 this.game.play = false;
             }
