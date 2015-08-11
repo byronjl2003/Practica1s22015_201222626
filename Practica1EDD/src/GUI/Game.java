@@ -149,10 +149,10 @@ public class Game extends JPanel implements Runnable,ActionListener{
     public void run() {
        while(!finish)
        {
-          //System.out.println(1);
+          System.out.println(1);
         while(play)
         {
-           //System.out.println(2); 
+           System.out.println(2); 
             //System.out.println("EN EL RUN!");
             this.repaint();
             this.refrescarmario();

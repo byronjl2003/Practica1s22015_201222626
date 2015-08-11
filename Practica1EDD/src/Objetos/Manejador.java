@@ -45,7 +45,7 @@ public class Manejador{
     
     public void oidomario(KeyEvent e)
     {
-        System.out.println("EN EL OIDO DEL MARIO");
+        //System.out.println("EN EL OIDO DEL MARIO");
         Objeto obj  = this.Buscarmario();
         
         if(obj!=null)
@@ -91,20 +91,17 @@ public class Manejador{
         
         lista = new Lista();
         lvivientes = new Lista();
-        System.out.println("Numero de Filas En el manejador:  "+this.matriz.getLcolumnas().ListaFilas.elementos);
-        System.out.println("Numero de Columnas En el manejador: "+this.matriz.getLcolumnas().elementos);
+       // System.out.println("Numero de Filas En el manejador:  "+this.matriz.getLcolumnas().ListaFilas.elementos);
+        //System.out.println("Numero de Columnas En el manejador: "+this.matriz.getLcolumnas().elementos);
         this.primerllenado();
-        if(this.matrizbackup==null)
-            System.out.println("NO SIRVIO DARLE LA INSTANCIA");
-        else
-            System.out.println("SI SIRVIO DARLE LA INSTANCIA");
+       
             
         
         for(int i = 0;i<this.matriz.getLcolumnas().ListaFilas.elementos-3;i++)
         {
             for(int j=0;j<this.matriz.getLcolumnas().elementos;j++)
             {
-                System.out.println(i+","+j+" del contructor");
+                //System.out.println(i+","+j+" del contructor");
                 NC columna = this.matriz.getLcolumnas().BuscarColumna(j);
                 NF fila = this.matriz.getLcolumnas().ListaFilas.Buscar(i);
                 NCasilla casilla = columna.Buscar(fila);
@@ -115,10 +112,10 @@ public class Manejador{
                    NL node =  this.lista.Add(obj);
                    obj.nodol = node;
                    obj.lista = this.lista;
-                   System.out.println("SE INCERTO EN LISTA NORMAL"); 
+                   //System.out.println("SE INCERTO EN LISTA NORMAL"); 
                     if(obj.viviente)
                     {
-                        System.out.println("SE INCERTO EN LISTA VIVIENTE"); 
+                      //  System.out.println("SE INCERTO EN LISTA VIVIENTE"); 
                         NL nodo = this.lvivientes.Add(obj);
                         obj.nodolviv = nodo;
                         obj.listaviv = this.lvivientes;
@@ -139,7 +136,7 @@ public class Manejador{
     
     private void primerllenado()
     {
-        System.out.println("PRIMER LLENADO");
+        //System.out.println("PRIMER LLENADO");
         this.matrizbackup= new MDisp();
         NF filla = this.matriz.getLcolumnas().ListaFilas.Primero;
             while(filla!=null)
@@ -175,7 +172,7 @@ public class Manejador{
                         }
                         case 1:
                         {
-                            System.out.println("SE INGRESARON PARED!");
+                          //  System.out.println("SE INGRESARON PARED!");
                             Pared pared = new Pared(obj.getNombre(),obj.getImage());
                             pared.setCordx(obj.getCordx());
                             pared.setCordy(obj.getCordy());
@@ -268,26 +265,26 @@ public class Manejador{
     }
     private void segundollenado()
     {
-        System.out.println("SEGUNDO LLENADO");
+        //System.out.println("SEGUNDO LLENADO");
         this.matriz= new MDisp();
         NF filla = this.matrizbackup.getLcolumnas().ListaFilas.Primero;
-        System.out.println("CUANTAS FILAS TIENE MBACKUP: "+this.matrizbackup.getLcolumnas().ListaFilas.elementos);
-        System.out.println("CUANTAS COLUMNAS TIENE EL MBACKUP: "+this.matrizbackup.getLcolumnas().elementos);
+        //System.out.println("CUANTAS FILAS TIENE MBACKUP: "+this.matrizbackup.getLcolumnas().ListaFilas.elementos);
+       // System.out.println("CUANTAS COLUMNAS TIENE EL MBACKUP: "+this.matrizbackup.getLcolumnas().elementos);
             System.out.println(filla.Num+"<"+(this.matrizbackup.getLcolumnas().ListaFilas.elementos-3));
             while(filla!=null)
             {
-               System.out.println("1 WHILE");
+              // System.out.println("1 WHILE");
                 NCasilla casilla = filla.Primero;
                 while(casilla!=null)
                 {
-                    System.out.println("2 WHILE");
+                   // System.out.println("2 WHILE");
                     Objeto obj = casilla.Buscar(1).Dato;
                     switch(obj.getId())
                     {
                         
                         case -1:
                         {
-                            System.out.println("SE INGRESARON VACIOS!!!!!");
+                           // System.out.println("SE INGRESARON VACIOS!!!!!");
                             Vacio vacio = new Vacio();
                             vacio.setCordx(obj.getCordx());
                             vacio.setCordy(obj.getCordy());
@@ -310,7 +307,7 @@ public class Manejador{
                         }
                         case 1:
                         {
-                            System.out.println("SE INGRESARON PAREDES!");
+                            //System.out.println("SE INGRESARON PAREDES!");
                             Pared pared = new Pared(obj.getNombre(),obj.getImage());
                             pared.setCordx(obj.getCordx());
                             pared.setCordy(obj.getCordy());
@@ -402,7 +399,7 @@ public class Manejador{
     }
     public void Reiniciar()
     {
-        System.out.println("EN REINICIAR");
+        //System.out.println("EN REINICIAR");
         this.game.play = false;
         if(this.mario!=null)
             this.mario.bloqueo = true;
@@ -421,14 +418,14 @@ public class Manejador{
                 Objeto obj =casilla.Buscar(1).Dato; 
                 if(obj!=null && obj.getId()!=-1)
                 {
-                   System.out.println("SEGUNDO LLENADO,SE INCERTO EN LISTA NORMAL"); 
+                   //System.out.println("SEGUNDO LLENADO,SE INCERTO EN LISTA NORMAL"); 
                    NL node =  this.lista.Add(obj);
                    obj.nodol = node;
                    obj.lista = this.lista;
                    
                     if(obj.viviente)
                     {
-                        System.out.println("SEGUNDO LLENADO,SE INCERTO EN LISTA VIVIENTES"); 
+                        //System.out.println("SEGUNDO LLENADO,SE INCERTO EN LISTA VIVIENTES"); 
                         NL nodo = this.lvivientes.Add(obj);
                         obj.nodolviv = nodo;
                         obj.listaviv = this.lvivientes;

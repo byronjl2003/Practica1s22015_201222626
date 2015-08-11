@@ -100,7 +100,7 @@ public class VentanaPrincipal extends JPanel implements ActionListener {
     void CrearPanelCarga()
     {
         
-        System.out.println("EN CrearPanelCarga");
+        //System.out.println("EN CrearPanelCarga");
         jpcarga = new JPanel();
         jpcarga.setLayout(null);
         jpcarga.setBounds(100,50, 800, 600);
@@ -185,19 +185,19 @@ public class VentanaPrincipal extends JPanel implements ActionListener {
         }
         else if(e.getSource()==this.btngrafica)
         {
-            System.out.println("CLICK EN GRAFICAR!");
+            //System.out.println("CLICK EN GRAFICAR!");
             this.lista.Graficar("Lista");
         }
         else if(e.getSource()==this.radiocola)
         {
-            System.out.println("EN EL RADIO COLA");
+            //System.out.println("EN EL RADIO COLA");
             this.lista.setCola(true);
             this.lista.setPila(false);
             this.maker.refreshActual();
         }
         else if(e.getSource()==this.radiopila)
         {
-            System.out.println("EN EL RADIO PILA");
+           // System.out.println("EN EL RADIO PILA");
             this.lista.setCola(false);
             this.lista.setPila(true);
             this.maker.refreshActual();

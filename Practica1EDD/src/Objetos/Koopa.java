@@ -151,7 +151,7 @@ public class Koopa extends Objeto   {
                         }
                         else if(this.casillaactual.Derecha.Buscar(1).Dato.getId()==6)
                         {
-                            System.out.println("es un mario!, iendo hacia la derecha");
+                           // System.out.println("es un mario!, iendo hacia la derecha");
                             Mario mario = (Mario)this.casillaactual.Derecha.Buscar(1).Dato;
                             mario.die();
                             if(this.casillaactual.Derecha.Buscar(1).Dato.getId()==6)

@@ -60,7 +60,7 @@ public class Lista {
             }
             else
             {
-                System.out.println("EN Siguiente,Esta retornando nulo");
+                //System.out.println("EN Siguiente,Esta retornando nulo");
                 return null;
             }
         }
@@ -177,19 +177,19 @@ public class Lista {
    {
        if(pila)
        {
-           System.out.println("BORRAR COMO PILA");
+           //System.out.println("BORRAR COMO PILA");
            //pila = false;
            return EliminarAtras();
        }
        else if(cola)
        {
-           System.out.println("BORRAR COMO COLA");
+          // System.out.println("BORRAR COMO COLA");
            //cola = false;
            return EliminarFrente();
        }
        else
        {
-           System.out.println("NO BORRA NINGUNA");
+           //System.out.println("NO BORRA NINGUNA");
            return null;
        }
            

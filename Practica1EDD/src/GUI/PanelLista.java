@@ -44,7 +44,7 @@ public class PanelLista extends JPanel  {
     }
     public void llenar()
     {
-       System.out.println("EN LLENAR HAY: "+lista.getElementos());
+       //System.out.println("EN LLENAR HAY: "+lista.getElementos());
        this.removeAll();
        NL aux = this.lista.getPrimero();
        while(aux!=null)
