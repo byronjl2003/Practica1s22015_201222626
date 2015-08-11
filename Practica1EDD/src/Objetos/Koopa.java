@@ -65,7 +65,7 @@ public class Koopa extends Objeto   {
     }
 
     @Override 
-    public void tick()
+   public void tick()
     {
         
         if(this.getPosfx()==this.getCordx() && this.getPosfy()==this.getCordy())
@@ -150,11 +150,81 @@ public class Koopa extends Objeto   {
                             this.setVx(-5);
                             this.setVy(0);
                         }
+                        else if(this.casillaactual.Derecha.Buscar(1).Dato.getId()==6)
+                        {
+                            //es un mario!
+                            Mario mario = (Mario)this.casillaactual.Derecha.Buscar(1).Dato;
+                            mario.die();
+                            if(this.casillaactual.Derecha.Buscar(1).Dato.getId()==6)
+                            {
+                                // despues de morir mario sigue con vida
+                                if(this.casillaactual.Derecha.Derecha!=null)
+                                {
+                                    if(this.casillaactual.Derecha.Derecha.Buscar(1).Dato.getId()==-1)
+                                    {
+                                        // esta vacia la casilla derecha de mario
+                                        derecha = true;
+                                        Objeto aux = this.casillaactual.Derecha.Derecha.Buscar(1).Dato;
+                                        this.casillaactual.Derecha.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
+                                        this.casillaactual.Buscar(1).Dato = aux;
+                            
+                                        this.casillaactual = this.casillaactual.Derecha.Derecha;
+                                        this.setPosfx(this.getCordx()+150);
+                                        this.setVx(10);
+                                        this.setVy(0);
+                                   
+                                        
+                                    }
+                                    else
+                                    {
+                                        derecha = false;
+                                        Objeto aux = this.casillaactual.Izquierda.Buscar(1).Dato;
+                                        this.casillaactual.Izquierda.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
+                                        this.casillaactual.Buscar(1).Dato = aux;
+                            
+                                        this.casillaactual = this.casillaactual.Izquierda;
+                                        this.setPosfx(this.getCordx()-75);
+                                        this.setVx(-5);
+                                        this.setVy(0);
+                                    }
+                                }
+                               
+                               else
+                               {
+                                   derecha = false;
+                                    Objeto aux = this.casillaactual.Izquierda.Buscar(1).Dato;
+                                    this.casillaactual.Izquierda.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
+                                    this.casillaactual.Buscar(1).Dato = aux;
+                            
+                                    this.casillaactual = this.casillaactual.Izquierda;
+                                    this.setPosfx(this.getCordx()-75);
+                                    this.setVx(-5);
+                                    this.setVy(0);
+                               }
+                            }
+                            else
+                            {
+                                derecha = true;
+                                Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
+                            
+                                this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
+                                this.casillaactual.Buscar(1).Dato = aux;
+                            
+                                this.casillaactual = this.casillaactual.Derecha;
+                                this.setPosfx(this.getCordx()+75);
+                                this.setVx(5);
+                                this.setVy(0);
+                            }
+                            
+                            
+                        }
                         else
                         {
                            // System.out.println("EN EL ELSE DE DERECHA");
+                            
                             derecha = true;
                             Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
+                            
                             this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
                             this.casillaactual.Buscar(1).Dato = aux;
                             
@@ -166,6 +236,7 @@ public class Koopa extends Objeto   {
                     }
                     else
                     {
+                        //izq
                         if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==0|this.casillaactual.Izquierda.Buscar(1).Dato.getId()==1)
                         {
                             //hay tope, se cambia de giro la imagen y la casilla a la izquierda.
@@ -180,6 +251,75 @@ public class Koopa extends Objeto   {
                             this.setVx(5);
                             this.setVy(0);
                         }
+                        else if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==6)
+                        {
+                            //es un mario!
+                            Mario mario = (Mario)this.casillaactual.Izquierda.Buscar(1).Dato;
+                            mario.die();
+                            if(this.casillaactual.Izquierda.Buscar(1).Dato.getId()==6)
+                            {
+                                // despues de morir mario sigue con vida
+                                if(this.casillaactual.Izquierda.Izquierda!=null)
+                                {
+                                    if(this.casillaactual.Izquierda.Izquierda.Buscar(1).Dato.getId()==-1)
+                                    {
+                                        // esta vacia la casilla izquierda de mario
+                                        derecha = false;
+                                        Objeto aux = this.casillaactual.Izquierda.Izquierda.Buscar(1).Dato;
+                                        this.casillaactual.Izquierda.Izquierda.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
+                                        this.casillaactual.Buscar(1).Dato = aux;
+                            
+                                        this.casillaactual = this.casillaactual.Izquierda.Izquierda;
+                                        this.setPosfx(this.getCordx()-150);
+                                        this.setVx(-10);
+                                        this.setVy(0);
+                                   
+                                        
+                                    }
+                                    else
+                                    {
+                                        derecha = true;
+                                        Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
+                                        this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
+                                        this.casillaactual.Buscar(1).Dato = aux;
+                            
+                                        this.casillaactual = this.casillaactual.Derecha;
+                                        this.setPosfx(this.getCordx()+75);
+                                        this.setVx(+5);
+                                        this.setVy(0);
+                                    }
+                                }
+                               
+                               else
+                               {
+                                   derecha = true;
+                                    Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
+                                    this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
+                                    this.casillaactual.Buscar(1).Dato = aux;
+                            
+                                    this.casillaactual = this.casillaactual.Derecha;
+                                    this.setPosfx(this.getCordx()+75);
+                                    this.setVx(5);
+                                    this.setVy(0);
+                               }
+                            }
+                            else
+                            {
+                                derecha = true;
+                                Objeto aux = this.casillaactual.Derecha.Buscar(1).Dato;
+                            
+                                this.casillaactual.Derecha.Buscar(1).Dato = casillaactual.Buscar(1).Dato;
+                                this.casillaactual.Buscar(1).Dato = aux;
+                            
+                                this.casillaactual = this.casillaactual.Derecha;
+                                this.setPosfx(this.getCordx()+75);
+                                this.setVx(5);
+                                this.setVy(0);
+                            }
+                            
+                            
+                        }
+                        //****************************
                         else
                         {
                             derecha = false;
